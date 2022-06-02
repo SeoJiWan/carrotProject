@@ -1,0 +1,30 @@
+package repository;
+
+import java.util.List;
+import domain.Member;
+
+public class MemoryMemberRepository implements UserRepository{
+
+	// 필드
+	private 
+	
+	
+	
+	@Override
+	public void save(Member member) {
+		
+	}
+
+	@Override
+	public void findById(String id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Member> findAllMembers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
