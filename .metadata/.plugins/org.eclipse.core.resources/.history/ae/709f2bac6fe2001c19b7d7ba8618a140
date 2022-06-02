@@ -1,0 +1,21 @@
+package test;
+
+import domain.Member;
+import repository.MemoryMemberRepository;
+import service.MemberService;
+
+public class MemberServiceTest {
+	
+	public static void main(String[] args) {
+		
+		MemberService memberService = new MemberService(MemoryMemberRepository.getMemberRepository());
+		
+		Member member = new Member((long) 123, "jiwan", 1111, "범물동");
+		
+		memberService.join(member);
+		
+		
+		
+	}
+
+}

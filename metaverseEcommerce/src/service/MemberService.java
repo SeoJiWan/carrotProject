@@ -18,15 +18,15 @@ public class MemberService {
 	
 	
 	// 메서드
-	void join(Member member) {
+	public void join(Member member) {
 		memberRepository.save(member);
 	}
 	
-	Member findMember(Long id) {
+	public Member findMember(Long id) {
 		return memberRepository.findById(id);
 	}
 	
-	List<Member> findMembers() {
+	public List<Member> findMembers() {
 		return memberRepository.findAllMembers();
 	}
 

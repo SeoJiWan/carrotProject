@@ -1,0 +1,37 @@
+package test;
+
+import java.util.List;
+
+import domain.Member;
+import repository.MemoryMemberRepository;
+import service.MemberService;
+
+public class MemberServiceTest {
+	
+	public static void main(String[] args) {
+		
+		MemberService memberService = new MemberService(MemoryMemberRepository.getMemberRepository());
+		
+		Member memberA = new Member((long) 123, "jiwan", 1111, "범물동");
+		Member memberB = new Member((long) 1223, "ji", 2221, "수성구");
+		Member memberC = new Member((long) 1243, "wan", 11222, "반월당");
+		
+		memberService.join(memberA);
+		memberService.join(memberB);
+		memberService.join(memberC);
+		
+		Member findMember = memberService.findMember(memberA.getId());
+		System.out.println(findMember.getName());
+		System.out.println(memberA.getName());
+		
+		List<Member> findMembers = memberService.findMembers();
+		System.out.println(findMembers.size());
+		for (Member member : findMembers) {
+			member.showMemberInfo();
+		}
+		
+		
+		
+	}
+
+}

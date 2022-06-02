@@ -50,4 +50,16 @@ public class Member {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	
+	public String showMemberInfo() {
+		return toString();
+	}
+
+
+	@Override
+	public String toString() {
+		return "Member [id = " + id + ", name = " + name + ", phoneNum = " + phoneNum + ", address = " + address + "]";
+	}
+	
+	
 }
