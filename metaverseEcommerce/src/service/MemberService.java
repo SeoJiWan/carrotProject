@@ -1,8 +1,8 @@
 package service;
 
 import java.util.List;
-
 import domain.Member;
+import domain.Product;
 import repository.MemberRepository;
 
 public class MemberService {
@@ -28,6 +28,14 @@ public class MemberService {
 	
 	public List<Member> findMembers() {
 		return memberRepository.findAllMembers();
+	}
+	
+	public void postProduct(Product product) {
+		
+	}
+	
+	public void purchaseProduct(Product product) {
+		
 	}
 
 }

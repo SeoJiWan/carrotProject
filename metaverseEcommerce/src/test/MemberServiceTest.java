@@ -10,34 +10,30 @@ public class MemberServiceTest {
 	
 	public static void main(String[] args) {
 		
+		// 인스턴스 생성
 		MemberService memberService = new MemberService(MemoryMemberRepository.getMemberRepository());
 		
-		Member memberA = new Member((long) 123, "jiwan", 1111, "범물동");
-		Member memberB = new Member((long) 1223, "ji", 2221, "수성구");
-		Member memberC = new Member((long) 1243, "wan", 11222, "반월당");
+		// given
+		Member memberA = new Member(123L, "jiwan", 1111, "범물동");
+		Member memberB = new Member(1223L, "ji", 2221, "수성구");
+		Member memberC = new Member(1243L, "wan", 11222, "반월당");
 		
+		// join Test
 		memberService.join(memberA);
 		memberService.join(memberB);
 		memberService.join(memberC);
-		
+
+		// findMember Test
 		Member findMember = memberService.findMember(memberA.getId());
-		System.out.println(findMember.getName());
-		System.out.println(memberA.getName());
+		System.out.println(findMember.getName().equals(memberA.getName()));
 		
+		// findMembers Test
 		List<Member> findMembers = memberService.findMembers();
 		System.out.println(findMembers.size());
-		findMembers.get(0).showMemberInfo();
 		
 		for (int i = 0; i < findMembers.size(); i++) {
-			findMembers.get(i).showMemberInfo();
+			System.out.println(findMembers.get(i));
 		}
-		
-		for (Member member : findMembers) {
-			member.showMemberInfo();
-		}
-		
-		
-		
 	}
 
 }

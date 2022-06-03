@@ -4,14 +4,16 @@
     <fullyQualifiedTypeName name="repository.UserRepository"/>
     <fullyQualifiedTypeName name="java.util.Map"/>
     <fullyQualifiedTypeName name="java.util.HashMap"/>
-    <fullyQualifiedTypeName name="java.util.LinkedList"/>
     <fullyQualifiedTypeName name="java.lang.Long"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="java.util.AbstractSequentialList"/>
     <fullyQualifiedTypeName name="repository.MemberRepository"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="service.MemberService"/>
     <fullyQualifiedTypeName name="repository.MemoryMemberRepository"/>
     <fullyQualifiedTypeName name="domain.Member"/>
     <fullyQualifiedTypeName name="java.lang.String"/>
+    <fullyQualifiedTypeName name="java.util.LinkedList"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="domain.Product"/>
+    <fullyQualifiedTypeName name="repository.ProductRepository"/>
 </qualifiedTypeNameHistroy>
