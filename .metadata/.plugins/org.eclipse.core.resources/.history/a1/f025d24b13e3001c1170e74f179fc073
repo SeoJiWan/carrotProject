@@ -1,0 +1,45 @@
+package repository;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import domain.Product;
+
+public class MemoryProductRepository implements ProductRepository {
+
+	// 필드
+	private MemoryProductRepository memoryProductRepository = new MemoryProductRepository();
+	private Map<String, Product> store = new HashMap<String, Product>();
+
+	// 생성자
+	private MemoryProductRepository() {
+
+	}
+
+	// 메서드
+	public MemoryProductRepository getMemoryProductRepository() {
+		return memoryProductRepository;
+	}
+
+	@Override
+	public void save(Product product) {
+		store.put(product.getProductName(), product);
+	}
+
+	@Override
+	public Product findByName(String name) {
+		return store.get(name);
+	}
+
+	@Override
+	public List<Product> findProducts() {
+		List<Product> list = new LinkedList<Product>();
+		for (Map.Entry<String, Product> entry : store.entrySet()) {
+			Product val = entry.getValue();
+			list.add(val);
+		}
+		return list;
+	}
+
+}

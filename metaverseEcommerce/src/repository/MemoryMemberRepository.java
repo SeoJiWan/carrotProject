@@ -1,7 +1,7 @@
 package repository;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -37,9 +37,10 @@ public class MemoryMemberRepository implements MemberRepository{
 
 	@Override
 	public List<Member> findAllMembers() {
-		List<Member> list = new ArrayList<Member>();
-		for (int i = 0; i < store.size(); i++) {
-			list.add(store.get(i));
+		List<Member> list = new LinkedList<Member>();
+		for (Map.Entry<Long, Member> entry : store.entrySet()) {
+			Member val = entry.getValue();
+			list.add(val);
 		}
 		return list;
 	}

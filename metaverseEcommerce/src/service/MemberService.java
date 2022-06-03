@@ -1,19 +1,22 @@
 package service;
 
 import java.util.List;
-
 import domain.Member;
+import domain.Product;
 import repository.MemberRepository;
+import repository.ProductRepository;
 
 public class MemberService {
 	
 	// 필드
 	private final MemberRepository memberRepository;
+	private final ProductRepository productRepository;
 
 	
 	// 생성자
-	public MemberService(MemberRepository memberRepository) {
+	public MemberService(MemberRepository memberRepository, ProductRepository productRepository) {
 		this.memberRepository = memberRepository;
+		this.productRepository = productRepository;
 	}
 	
 	
@@ -28,6 +31,14 @@ public class MemberService {
 	
 	public List<Member> findMembers() {
 		return memberRepository.findAllMembers();
+	}
+	
+	public void postProduct(Product product) {
+		productRepository.save(product);
+	}
+	
+	public void purchaseProduct(Product product) {
+		
 	}
 
 }

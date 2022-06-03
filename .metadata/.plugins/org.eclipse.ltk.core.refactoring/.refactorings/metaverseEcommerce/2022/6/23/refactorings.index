@@ -3,3 +3,4 @@
 1654067907488	Rename type 'UserRepository'
 1654172998050	Extract local variable 'findMember'
 1654173084432	Extract local variable 'findMembers'
+1654215891475	Extract local variable 'showMemberInfo'
