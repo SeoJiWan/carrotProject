@@ -4,7 +4,6 @@ import java.util.List;
 
 import domain.Member;
 import repository.MemoryMemberRepository;
-import repository.MemoryProductRepository;
 import service.MemberService;
 
 public class MemberServiceTest {
@@ -12,7 +11,7 @@ public class MemberServiceTest {
 	public static void main(String[] args) {
 		
 		// 인스턴스 생성
-		MemberService memberService = new MemberService(MemoryMemberRepository.getMemberRepository(), MemoryProductRepository.getMemoryProductRepository());
+		MemberService memberService = new MemberService(MemoryMemberRepository.getMemberRepository());
 		
 		// given
 		Member memberA = new Member(123L, "jiwan", 1111, "범물동");

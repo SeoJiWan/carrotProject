@@ -12,9 +12,9 @@ public class MemoryProductRepository implements ProductRepository {
 	 * 필드
 	 */
 	// 싱글톤 인스턴스 생성
-	private static MemoryProductRepository memoryProductRepository = new MemoryProductRepository();
+	private MemoryProductRepository memoryProductRepository = new MemoryProductRepository();
 	// 상품 저장소
-	private static Map<String, Product> store = new HashMap<String, Product>(); 
+	private Map<String, Product> store = new HashMap<String, Product>(); 
 
 	
 	/*
@@ -29,7 +29,7 @@ public class MemoryProductRepository implements ProductRepository {
 	 * 메서드
 	 */
 	// 싱글톤 -> 메서드 활용해 private 인스턴스 생성
-	public static MemoryProductRepository getMemoryProductRepository() {
+	public MemoryProductRepository getMemoryProductRepository() {
 		return memoryProductRepository;
 	}
 

@@ -8,44 +8,30 @@ import domain.Product;
 
 public class MemoryProductRepository implements ProductRepository {
 
-	/*
-	 * 필드
-	 */
-	// 싱글톤 인스턴스 생성
-	private static MemoryProductRepository memoryProductRepository = new MemoryProductRepository();
-	// 상품 저장소
-	private static Map<String, Product> store = new HashMap<String, Product>(); 
+	// 필드
+	private MemoryProductRepository memoryProductRepository = new MemoryProductRepository();
+	private Map<String, Product> store = new HashMap<String, Product>();
 
-	
-	/*
-	 * 생성자
-	 */
+	// 생성자
 	private MemoryProductRepository() {
 
 	}
 
-	
-	/*
-	 * 메서드
-	 */
-	// 싱글톤 -> 메서드 활용해 private 인스턴스 생성
-	public static MemoryProductRepository getMemoryProductRepository() {
+	// 메서드
+	public MemoryProductRepository getMemoryProductRepository() {
 		return memoryProductRepository;
 	}
 
-	// 상품 저장
 	@Override
 	public void save(Product product) {
 		store.put(product.getProductName(), product);
 	}
 
-	// 상품 검색
 	@Override
 	public Product findByName(String name) {
 		return store.get(name);
 	}
 
-	// 모든 상품 검색
 	@Override
 	public List<Product> findProducts() {
 		List<Product> list = new LinkedList<Product>();
