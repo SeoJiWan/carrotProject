@@ -9,5 +9,5 @@ public interface MemberRepository {
 	
 	Member findById(Long id);
 	
-	List<Member> findAllMembers();
+	List<Member> findAll();
 }

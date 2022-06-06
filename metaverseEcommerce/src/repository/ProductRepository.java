@@ -10,6 +10,8 @@ public interface ProductRepository {
 	
 	Product findByName(String name);
 	
-	List<Product> findProducts();
+	List<Product> findAll();
+	
+	public void removeStock(int quantity, Product product);
 
 }

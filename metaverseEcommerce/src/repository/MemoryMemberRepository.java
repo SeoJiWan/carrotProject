@@ -9,18 +9,24 @@ import domain.Member;
 
 public class MemoryMemberRepository implements MemberRepository{
 
-	// 필드
+	/*
+	 * 필드
+	 */
 	private static MemberRepository memberRepository = new MemoryMemberRepository();
 	private static Map<Long, Member> store = new HashMap<Long, Member>();
 	
 	
-	// 생성자
+	/*
+	 * 생성자
+	 */
 	private MemoryMemberRepository() {
 		
 	}
 	
 	
-	// 메서드
+	/*
+	 * 메서드
+	 */
 	public static MemberRepository getMemberRepository() {
 		return memberRepository;
 	}
@@ -36,7 +42,7 @@ public class MemoryMemberRepository implements MemberRepository{
 	}
 
 	@Override
-	public List<Member> findAllMembers() {
+	public List<Member> findAll() {
 		List<Member> list = new LinkedList<Member>();
 		for (Map.Entry<Long, Member> entry : store.entrySet()) {
 			Member val = entry.getValue();

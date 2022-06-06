@@ -1,5 +1,8 @@
 package domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Member {
 	
 	// 필드
@@ -7,15 +10,7 @@ public class Member {
 	private String name;
 	private int phoneNum;
 	private String address;
-	
-	
-	// 생성자
-	public Member(Long id, String name, int phoneNum, String address) {
-		this.id = id;
-		this.name = name;
-		this.phoneNum = phoneNum;
-		this.address = address;
-	}
+	private List<Order> orders = new ArrayList<>();
 
 	
 	// 메서드
@@ -51,10 +46,20 @@ public class Member {
 		this.address = address;
 	}
 	
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+	
+	public void addOrder(Order order) {
+		orders.add(order);
+	}
+
 	@Override
 	public String toString() {
 		return "Member [id = " + id + ", name = " + name + ", phoneNum = " + phoneNum + ", address = " + address + "]";
 	}
-	
-	
 }

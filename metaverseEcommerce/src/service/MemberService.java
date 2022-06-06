@@ -8,37 +8,35 @@ import repository.ProductRepository;
 
 public class MemberService {
 	
-	// 필드
+	/*
+	 * 필드
+	 */
 	private final MemberRepository memberRepository;
-	private final ProductRepository productRepository;
 
 	
-	// 생성자
-	public MemberService(MemberRepository memberRepository, ProductRepository productRepository) {
+	/*
+	 * 생성자
+	 */
+	public MemberService(MemberRepository memberRepository) {
 		this.memberRepository = memberRepository;
-		this.productRepository = productRepository;
 	}
 	
 	
-	// 메서드
+	/*
+	 * 메서드
+	 */
+	// 회원가입
 	public void join(Member member) {
 		memberRepository.save(member);
 	}
 	
+	// 단일 회원조회
 	public Member findMember(Long id) {
 		return memberRepository.findById(id);
 	}
 	
-	public List<Member> findMembers() {
-		return memberRepository.findAllMembers();
+	// 전체 회원조회
+	public List<Member> findAllMembers() {
+		return memberRepository.findAll();
 	}
-	
-	public void postProduct(Product product) {
-		productRepository.save(product);
-	}
-	
-	public void purchaseProduct(Product product) {
-		
-	}
-
 }
