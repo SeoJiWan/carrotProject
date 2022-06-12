@@ -2,9 +2,7 @@ package service;
 
 import java.util.List;
 import domain.Member;
-import domain.Product;
 import repository.MemberRepository;
-import repository.ProductRepository;
 
 public class MemberService {
 	

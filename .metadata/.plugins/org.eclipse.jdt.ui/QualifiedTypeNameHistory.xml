@@ -6,10 +6,8 @@
     <fullyQualifiedTypeName name="java.util.LinkedList"/>
     <fullyQualifiedTypeName name="java.lang.String"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="repository.TradeRepository"/>
     <fullyQualifiedTypeName name="repository.MemoryTradeRepository"/>
-    <fullyQualifiedTypeName name="java.lang.Long"/>
     <fullyQualifiedTypeName name="domain.Trade"/>
     <fullyQualifiedTypeName name="java.util.Map"/>
     <fullyQualifiedTypeName name="java.util.HashMap"/>
@@ -17,14 +15,21 @@
     <fullyQualifiedTypeName name="exception.NotEnoughStockException"/>
     <fullyQualifiedTypeName name="java.lang.Override"/>
     <fullyQualifiedTypeName name="domain.Order"/>
-    <fullyQualifiedTypeName name="service.OrderService"/>
-    <fullyQualifiedTypeName name="repository.MemoryOrderRepository"/>
-    <fullyQualifiedTypeName name="domain.Member"/>
-    <fullyQualifiedTypeName name="domain.Product"/>
     <fullyQualifiedTypeName name="repository.MemberRepository"/>
     <fullyQualifiedTypeName name="repository.ProductRepository"/>
     <fullyQualifiedTypeName name="service.MemberService"/>
     <fullyQualifiedTypeName name="repository.MemoryMemberRepository"/>
     <fullyQualifiedTypeName name="service.ProductService"/>
     <fullyQualifiedTypeName name="repository.MemoryProductRepository"/>
+    <fullyQualifiedTypeName name="domain.Post"/>
+    <fullyQualifiedTypeName name="service.PostService"/>
+    <fullyQualifiedTypeName name="repository.PostRepository"/>
+    <fullyQualifiedTypeName name="repository.MemoryPostRepository"/>
+    <fullyQualifiedTypeName name="domain.Product"/>
+    <fullyQualifiedTypeName name="domain.Member"/>
+    <fullyQualifiedTypeName name="java.lang.Long"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="service.OrderService"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
+    <fullyQualifiedTypeName name="repository.MemoryOrderRepository"/>
 </qualifiedTypeNameHistroy>

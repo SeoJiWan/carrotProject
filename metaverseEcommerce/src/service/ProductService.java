@@ -24,11 +24,6 @@ public class ProductService {
 	/*
 	 * 메서드
 	 */
-	// 상품 등록
-	public void post(Product product) {
-		productRepository.save(product);
-	}
-	
 	// 상품 조회
 	public Product findProduct(String name) {
 		return productRepository.findByName(name);

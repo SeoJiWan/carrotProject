@@ -3,7 +3,7 @@ package domain;
 public class Order {
 	
 	// 필드
-	private Long orderId; // PK
+	private static Long orderId = 0L; // PK
 	private Product product; // FK
 	private Member member; // FK
 	private int orderPrice; // 주문 가격
@@ -16,7 +16,8 @@ public class Order {
 	}
 
 	public void setOrderId(Long orderId) {
-		this.orderId = orderId;
+		orderId++;
+		Order.orderId = orderId;
 	}
 
 	public Product getProduct() {
@@ -50,5 +51,19 @@ public class Order {
 	public void setCount(int count) {
 		this.count = count;
 	}
+
+	@Override
+	public String toString() {
+		return "Order details [buyer = " + member.getName() +
+				", seller = " + product.getSeller() + 
+				", productName = " + product.getName() + 
+				", productPrice = " + orderPrice +
+				", orderQuantity = " + count + 
+				", totalPrice = " + (orderPrice * count) +
+				"]";
+				
+	}
+	
+	
 
 }

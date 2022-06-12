@@ -1,5 +1,7 @@
 package service;
 
+import java.util.List;
+
 import domain.Member;
 import domain.Order;
 import domain.Product;
@@ -38,12 +40,14 @@ public class OrderService {
 		
 		Order order = createOrder(member, product, product.getPrice(), count);
 		orderRepository.save(order);
+//		System.out.println("save cnt");
 		member.addOrder(order);
 	}
 	
 	// 주문 내역 생성
 	public Order createOrder(Member member, Product product, int orderPrice, int count) {
 		Order order = new Order();
+		order.setOrderId(order.getOrderId()); 
 		order.setMember(member);
 		order.setProduct(product);
 		order.setOrderPrice(orderPrice);
@@ -57,6 +61,11 @@ public class OrderService {
 	// 주문 내역 확인
 	public Order findOrder(Long id) {
 		return orderRepository.findById(id);
+	}
+	
+	// 전체 주문 내역 확인
+	public List<Order> findAllOrders() {
+		return orderRepository.findAll();
 	}
 
 }

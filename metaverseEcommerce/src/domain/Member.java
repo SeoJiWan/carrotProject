@@ -11,6 +11,7 @@ public class Member {
 	private int phoneNum;
 	private String address;
 	private List<Order> orders = new ArrayList<>();
+	private List<Post> posts = new ArrayList<>();
 
 	
 	// 메서드
@@ -56,6 +57,10 @@ public class Member {
 	
 	public void addOrder(Order order) {
 		orders.add(order);
+	}
+	
+	public void addPost(Post post) {
+		posts.add(post);
 	}
 
 	@Override

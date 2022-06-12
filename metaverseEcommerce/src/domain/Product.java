@@ -11,12 +11,17 @@ public class Product {
 	private int  price;
 	private int stockQuantity;
 	private List<Order> orders = new ArrayList<>();
+	private String seller;
 
 
 	// 메서드
 	@Override
 	public String toString() {
-		return "Product [productName = " + name + ", productPrice = " + price + "]";
+		return "Product [seller = " + getSeller() + 
+				", productName = " + name + 
+				", productPrice = " + price + 
+				", stockQuantity = " + stockQuantity + 
+				"]";
 	}
 
 	public Long getProductId() {
@@ -58,5 +63,14 @@ public class Product {
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
 	}
+
+	public String getSeller() {
+		return seller;
+	}
+
+	public void setSeller(String seller) {
+		this.seller = seller;
+	}
+	
 	
 }
