@@ -1,53 +1,85 @@
 package repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Set;
 import domain.Member;
 
-public class MemoryMemberRepository implements MemberRepository{
+public class MemoryMemberRepository implements MemberRepository {
 
 	/*
-	 * 필드
+	 * Field
 	 */
-	private static MemberRepository memberRepository = new MemoryMemberRepository();
-	private static Map<Long, Member> store = new HashMap<Long, Member>();
-	
+	// 싱글톤
+	private static MemberRepository memberRepository = null;
+	private static Map<Integer, Member> store = new HashMap<Integer, Member>();
+	private static int sequence = 0;
+
 	
 	/*
-	 * 생성자
+	 * Constructor
 	 */
-	private MemoryMemberRepository() {
-		
-	}
-	
+	// 싱글톤
+	private MemoryMemberRepository() {}
+
 	
 	/*
-	 * 메서드
+	 * Method
 	 */
+	// 싱글톤 -> 메서드로 인스턴스 생성
 	public static MemberRepository getMemberRepository() {
+		if (memberRepository == null) {
+			memberRepository = new MemoryMemberRepository();
+		}
 		return memberRepository;
 	}
-	
+
 	@Override
-	public void save(Member member) {
-		store.put(member.getId(), member);
+	public void insert(Member member) {
+		member.setMemberId(++sequence);
+		store.put(member.getMemberId(), member);
 	}
 
 	@Override
-	public Member findById(Long id) {
-		return store.get(id);
+	public void update(Member member) {
+		if (store.containsKey(member.getMemberId())) {
+			store.put(member.getMemberId(), member);
+		}
+		else {
+			System.out.println("해당 유저가 존재하지 않습니다.");
+		}
 	}
 
 	@Override
-	public List<Member> findAll() {
-		List<Member> list = new LinkedList<Member>();
-		for (Map.Entry<Long, Member> entry : store.entrySet()) {
-			Member val = entry.getValue();
-			list.add(val);
+	public void delete(int memberId) {
+		if (store.containsKey(memberId)) {
+			store.remove(memberId);
+		} else {
+			System.out.println("해당 유저가 존재하지 않습니다.");
+		}
+	}
+
+	@Override
+	public Member selectOne(int memberId) {
+		if (store.containsKey(memberId)) {
+			return store.get(memberId);
+		} else {
+			System.out.println("해당 유저가 존재하지 않습니다.");
+			return null;
+		}
+	}
+
+	@Override
+	public List<Member> selectAll() {
+		List<Member> list = new ArrayList<Member>();
+
+		Set<Integer> set = store.keySet();
+		for (Integer key : set) {
+			list.add(store.get(key));
 		}
 		return list;
 	}
+
 }

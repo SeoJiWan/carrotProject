@@ -7,13 +7,13 @@ import repository.MemberRepository;
 public class MemberService {
 	
 	/*
-	 * 필드
+	 * Field
 	 */
 	private final MemberRepository memberRepository;
 
 	
 	/*
-	 * 생성자
+	 * Constructor
 	 */
 	public MemberService(MemberRepository memberRepository) {
 		this.memberRepository = memberRepository;
@@ -21,20 +21,49 @@ public class MemberService {
 	
 	
 	/*
-	 * 메서드
+	 * Method
 	 */
 	// 회원가입
-	public void join(Member member) {
-		memberRepository.save(member);
+	public void joinMember(Member member) {
+		memberRepository.insert(member);
+	}
+	
+	// 회원수정
+	public void modifyMember(Member member) {
+		memberRepository.update(member);
+	}
+	
+	// 회원삭제
+	public void deleteMember(int memberId) {
+		memberRepository.delete(memberId);
 	}
 	
 	// 단일 회원조회
-	public Member findMember(Long id) {
-		return memberRepository.findById(id);
+	public Member findOneMember(int memberId) {
+		return memberRepository.selectOne(memberId);
 	}
 	
 	// 전체 회원조회
 	public List<Member> findAllMembers() {
-		return memberRepository.findAll();
+		return memberRepository.selectAll();
+	}
+	
+	// 로그인
+	public Member logIn(String identification, String password) {
+		Member logInMember = null;
+		
+		List<Member> list = findAllMembers();
+		
+		for (Member member : list) {
+			if (member.getIdentification().equals(identification) 
+					&& member.getPassword().equals(password)) {
+				logInMember = member;
+				System.out.println(identification + " 님, 로그인 하였습니다.");
+				return logInMember;
+			}
+		}
+		System.out.println("아이디 또는 비밀번호를 잘못 입력했습니다.");
+		return null;
+		
 	}
 }

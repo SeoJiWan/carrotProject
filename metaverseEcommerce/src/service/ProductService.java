@@ -6,32 +6,50 @@ import domain.Product;
 import repository.ProductRepository;
 
 public class ProductService {
-	
+
 	/*
-	 * 필드
+	 * Field
 	 */
-	private ProductRepository productRepository;
-	
-	
+	private final ProductRepository productRepository;
+
 	/*
-	 * 생성자
+	 * Constructor
 	 */
 	public ProductService(ProductRepository productRepository) {
 		this.productRepository = productRepository;
 	}
-	
-	
+
 	/*
-	 * 메서드
+	 * Method
 	 */
-	// 상품 조회
-	public Product findProduct(String name) {
-		return productRepository.findByName(name);
+	// 상품 등록
+	public void saveProduct(Product product) {
+		productRepository.insert(product);
+	}
+
+	// 상품 수정
+	public void modifyProduct(Product product) {
+		productRepository.update(product);
+	}
+
+	// 상품 삭제
+	public void deleteProduct(int productId) {
+		productRepository.delete(productId);
+	}
+
+	// 상품 단건조회 - 상품번호
+	public Product findOneProductById(int productId) {
+		return productRepository.selectOne(productId);
+	}
+
+	// 상품 단건조회 - 상품이름
+	public Product findOneProductById(String name) {
+		return productRepository.selectOne(name);
 	}
 	
-	// 상품 전체 조회
+	// 전체 상품조회
 	public List<Product> findAllProducts() {
-		return productRepository.findAll();
+		return productRepository.selectAll();
 	}
 
 }

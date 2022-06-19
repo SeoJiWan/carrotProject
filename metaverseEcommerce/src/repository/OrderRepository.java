@@ -6,10 +6,14 @@ import domain.Order;
 
 public interface OrderRepository {
 
-	void save(Order order);
-
-	Order findById(Long id);
+	void insert(Order order);
 	
-	public List<Order> findAll();
+	void update(Order order);
+	
+	void delete(int orderId);
+
+	Order selectOne(int orderId);
+	
+	List<Order> selectAll();
 
 }

@@ -1,13 +1,20 @@
 package repository;
 
 import java.util.List;
+
 import domain.Member;
 
 public interface MemberRepository {
 
-	void save(Member member);
+	void insert(Member member);
 	
-	Member findById(Long id);
+	void update(Member member);
 	
-	List<Member> findAll();
+	void delete(int memberId);
+	
+	Member selectOne(int memberId);
+	
+//	Member selectOne(String identification);
+	
+	List<Member> selectAll();
 }

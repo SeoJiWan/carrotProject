@@ -1,70 +1,54 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Member {
 	
-	// 필드
-	private Long id;
-	private String name;
-	private int phoneNum;
+	/*
+	 * Field
+	 */
+	private int memberId;
+	private String identification;
+	private String password;
+	private String phoneNumber;
 	private String address;
-	private List<Order> orders = new ArrayList<>();
-	private List<Post> posts = new ArrayList<>();
 
 	
-	// 메서드
-	public Long getId() {
-		return id;
+	/*
+	 * Method
+	 */
+	public int getMemberId() {
+		return memberId;
 	}
-
-	public void setId(Long id) {
-		this.id = id;
+	public void setMemberId(int memberId) {
+		this.memberId = memberId;
 	}
-
-	public String getName() {
-		return name;
+	public String getIdentification() {
+		return identification;
 	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setIdentification(String identification) {
+		this.identification = identification;
 	}
-
-	public int getPhoneNum() {
-		return phoneNum;
+	public String getPassword() {
+		return password;
 	}
-
-	public void setPhoneNum(int phoneNum) {
-		this.phoneNum = phoneNum;
+	public void setPassword(String password) {
+		this.password = password;
 	}
-
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 	public String getAddress() {
 		return address;
 	}
-
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
-	public List<Order> getOrders() {
-		return orders;
-	}
-
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
-	}
-	
-	public void addOrder(Order order) {
-		orders.add(order);
-	}
-	
-	public void addPost(Post post) {
-		posts.add(post);
-	}
-
 	@Override
 	public String toString() {
-		return "Member [id = " + id + ", name = " + name + ", phoneNum = " + phoneNum + ", address = " + address + "]";
+		return "Member [memberId=" + memberId + ", identification=" + identification + ", password=" + password
+				+ ", phoneNumber=" + phoneNumber + ", address=" + address + "]";
 	}
+	
 }

@@ -6,12 +6,15 @@ import domain.Product;
 
 public interface ProductRepository {
 	
-	void save(Product product);
+	void insert(Product product);
 	
-	Product findByName(String name);
+	void update(Product product);
 	
-	List<Product> findAll();
+	void delete(int proudctId);
 	
-	public void removeStock(int quantity, Product product);
-
+	Product selectOne(int proudctId);
+	
+	Product selectOne(String name);
+	
+	List<Product> selectAll();
 }

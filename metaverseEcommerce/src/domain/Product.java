@@ -1,76 +1,66 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import exception.NotEnoughStockException;
 
 public class Product {
 	
-	// 필드
-	private Long productId;
+	/*
+	 * Field
+	 */
+	private int productId;
 	private String name;
-	private int  price;
-	private int stockQuantity;
-	private List<Order> orders = new ArrayList<>();
-	private String seller;
+	private int quantity;
+	private int price;
+	private String description;
+//	private String image;
 
-
-	// 메서드
-	@Override
-	public String toString() {
-		return "Product [seller = " + getSeller() + 
-				", productName = " + name + 
-				", productPrice = " + price + 
-				", stockQuantity = " + stockQuantity + 
-				"]";
-	}
-
-	public Long getProductId() {
+	
+	/*
+	 * Method - getter, setter
+	 */
+	public int getProductId() {
 		return productId;
 	}
-
-	public void setProductId(Long productId) {
+	public void setProductId(int productId) {
 		this.productId = productId;
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 	public int getPrice() {
 		return price;
 	}
-
 	public void setPrice(int price) {
 		this.price = price;
 	}
-
-	public int getStockQuantity() {
-		return stockQuantity;
+	public String getDescription() {
+		return description;
 	}
-
-	public void setStockQuantity(int stockQuantity) {
-		this.stockQuantity = stockQuantity;
+	public void setDescription(String description) {
+		this.description = description;
 	}
-
-	public List<Order> getOrders() {
-		return orders;
-	}
-
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
-	}
-
-	public String getSeller() {
-		return seller;
-	}
-
-	public void setSeller(String seller) {
-		this.seller = seller;
+	@Override
+	public String toString() {
+		return "Product [productId=" + productId + ", name=" + name + ", quantity=" + quantity + ", price=" + price
+				+ ", description=" + description + "]";
 	}
 	
-	
+	// -- 비즈니스 로직 -- // 
+	public void removeQuantity(int orderQuantity, Product product) {
+		int restQuantity = product.getQuantity() - orderQuantity;
+		
+		if (restQuantity < 0) {
+			throw new NotEnoughStockException("상품수량이 부족합니다.");
+		}
+		product.setQuantity(restQuantity);
+	}
 }

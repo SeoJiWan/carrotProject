@@ -2,68 +2,48 @@ package domain;
 
 public class Order {
 	
-	// 필드
-	private static Long orderId = 0L; // PK
-	private Product product; // FK
-	private Member member; // FK
-	private int orderPrice; // 주문 가격
-	private int count; // 주문 수량
+	/*
+	 * Field
+	 */
+	private int orderId;
+	private int buyerId;
+	private int saleId;
+	private int orderPrice;
+	private int orderQuantity;
+
+
+	/*
+	 * Method
+	 */
 	
-	
-	// 메서드
-	public Long getOrderId() {
+	public int getOrderId() {
 		return orderId;
 	}
-
-	public void setOrderId(Long orderId) {
-		orderId++;
-		Order.orderId = orderId;
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
 	}
-
-	public Product getProduct() {
-		return product;
+	public int getBuyerId() {
+		return buyerId;
 	}
-
-	public void setProduct(Product product) {
-		this.product = product;
+	public void setBuyerId(int buyerId) {
+		this.buyerId = buyerId;
 	}
-
-	public Member getMember() {
-		return member;
+	public int getSaleId() {
+		return saleId;
 	}
-
-	public void setMember(Member member) {
-		this.member = member;
+	public void setSaleId(int saleId) {
+		this.saleId = saleId;
 	}
-
 	public int getOrderPrice() {
 		return orderPrice;
 	}
-
 	public void setOrderPrice(int orderPrice) {
 		this.orderPrice = orderPrice;
 	}
-
-	public int getCount() {
-		return count;
+	public int getOrderQuantity() {
+		return orderQuantity;
 	}
-
-	public void setCount(int count) {
-		this.count = count;
+	public void setOrderQuantity(int orderQuantity) {
+		this.orderQuantity = orderQuantity;
 	}
-
-	@Override
-	public String toString() {
-		return "Order details [buyer = " + member.getName() +
-				", seller = " + product.getSeller() + 
-				", productName = " + product.getName() + 
-				", productPrice = " + orderPrice +
-				", orderQuantity = " + count + 
-				", totalPrice = " + (orderPrice * count) +
-				"]";
-				
-	}
-	
-	
-
 }

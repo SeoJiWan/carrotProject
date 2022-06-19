@@ -2,27 +2,19 @@ package service;
 
 import java.util.List;
 
-import domain.Member;
 import domain.Order;
-import domain.Product;
-import repository.MemberRepository;
-import repository.MemoryMemberRepository;
-import repository.MemoryProductRepository;
 import repository.OrderRepository;
-import repository.ProductRepository;
 
 public class OrderService {
 	
 	/*
-	 * 필드
+	 * Field
 	 */
-	private OrderRepository orderRepository;
-	private MemberRepository memberRepository = MemoryMemberRepository.getMemberRepository();
-	private ProductRepository productRepository = MemoryProductRepository.getMemoryProductRepository();
+	private final OrderRepository orderRepository;
 	
 	
 	/*
-	 * 생성자
+	 * Constructor
 	 */
 	public OrderService(OrderRepository orderRepository) {
 		this.orderRepository = orderRepository;
@@ -30,42 +22,30 @@ public class OrderService {
 	
 	
 	/*
-	 * 메서드
+	 * Method
 	 */
-	// 주문
-	public void order(Long memberId, String productName, int count) {
-		
-		Member member = memberRepository.findById(memberId);
-		Product product = productRepository.findByName(productName);
-		
-		Order order = createOrder(member, product, product.getPrice(), count);
-		orderRepository.save(order);
-//		System.out.println("save cnt");
-		member.addOrder(order);
+	// 주문 생성
+	public void createOrder(Order order) {
+		orderRepository.insert(order);
 	}
 	
-	// 주문 내역 생성
-	public Order createOrder(Member member, Product product, int orderPrice, int count) {
-		Order order = new Order();
-		order.setOrderId(order.getOrderId()); 
-		order.setMember(member);
-		order.setProduct(product);
-		order.setOrderPrice(orderPrice);
-		order.setCount(count);
-		
-		productRepository.removeStock(count, product);
-		
-		return order;
+	// 주문 수정
+	public void updateOrder(Order order) {
+		orderRepository.update(order);
 	}
 	
-	// 주문 내역 확인
-	public Order findOrder(Long id) {
-		return orderRepository.findById(id);
+	// 주문 삭제
+	public void deleteOrder(int orderId) {
+		orderRepository.delete(orderId);
 	}
 	
-	// 전체 주문 내역 확인
+	// 주문 단건조회
+	public Order findOneOrder(int orderId) {
+		return orderRepository.selectOne(orderId);
+	}
+	
+	// 주문 전체조회
 	public List<Order> findAllOrders() {
-		return orderRepository.findAll();
+		return orderRepository.selectAll();
 	}
-
 }

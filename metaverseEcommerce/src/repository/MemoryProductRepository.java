@@ -1,71 +1,104 @@
 package repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import domain.Product;
-import exception.NotEnoughStockException;
 
 public class MemoryProductRepository implements ProductRepository {
 
 	/*
-	 * 필드
+	 * Field
 	 */
-	// 싱글톤 인스턴스 생성
-	private static MemoryProductRepository memoryProductRepository = new MemoryProductRepository();
-	// 상품 저장소
-	private static Map<String, Product> store = new HashMap<String, Product>(); 
+	// 싱글톤
+	private static ProductRepository productRepository = null;
+	private static Map<Integer, Product> store = new HashMap<Integer, Product>();
+	private static int sequence = 0;
 
 	
 	/*
-	 * 생성자
+	 * Constructor
 	 */
-	private MemoryProductRepository() {
+	// 싱글톤
+	private MemoryProductRepository() {}
 
-	}
-
-	
 	/*
-	 * 메서드
+	 * Method
 	 */
-	// 싱글톤 -> 메서드 활용해 private 인스턴스 생성
-	public static MemoryProductRepository getMemoryProductRepository() {
-		return memoryProductRepository;
-	}
-
-	// 상품 저장
-	@Override
-	public void save(Product product) {
-		store.put(product.getName(), product);
+	// 싱글톤 -> 메서드로 인스턴스 생성
+	public static ProductRepository getProductRepository() {
+		if (productRepository == null) {
+			productRepository = new MemoryProductRepository();
+		}
+		return productRepository;
 	}
 	
-	// 상품 삭제 -> 회원이 구매시 상품정보를 삭제하고 회원의 장바구니에 담음
 	@Override
-	public void removeStock(int quantity, Product product) {
-        int restStock = product.getStockQuantity() - quantity;
-        if (restStock < 0) {
-            throw new NotEnoughStockException("need more stock");
-        }
-        product.setStockQuantity(restStock);
-    }
-
-	// 상품 검색
-	@Override
-	public Product findByName(String name) {
-		return store.get(name);
+	public void insert(Product product) {
+		product.setProductId(++sequence);
+		store.put(product.getProductId(), product);
 	}
 
-	// 모든 상품 검색
 	@Override
-	public List<Product> findAll() {
-		List<Product> list = new LinkedList<Product>();
-		for (Map.Entry<String, Product> entry : store.entrySet()) {
+	public void update(Product product) {
+		if (store.containsKey(product.getProductId())) {
+			store.put(product.getProductId(), product);
+		}
+		else {
+			System.out.println("해당 상품이 존재하지 않습니다.");
+		}
+	}
+
+	@Override
+	public void delete(int proudctId) {
+		if (store.containsKey(proudctId)) {
+			store.remove(proudctId);
+		}
+		else {
+			System.out.println("해당 상품이 존재하지 않습니다.");
+		}
+	}
+
+	@Override
+	public Product selectOne(int proudctId) {
+		if (store.containsKey(proudctId)) {
+			return store.get(proudctId);
+		}
+		else {
+			System.out.println("해당 상품이 존재하지 않습니다.");
+			return null;
+		}
+	}
+
+	@Override
+	public Product selectOne(String name) {
+		Product product = null;
+		
+		for (Map.Entry<Integer, Product> entry : store.entrySet()) {
 			Product val = entry.getValue();
-			list.add(val);
+			
+			if (val.getName().equals(name)) {
+				product = val;
+			}
+		}
+		return product;
+	}
+
+	@Override
+	public List<Product> selectAll() {
+		List<Product> list = new ArrayList<Product>();
+		
+		Set<Integer> set = store.keySet();
+		for (Integer key : set) {
+			list.add(store.get(key));
 		}
 		return list;
 	}
+	
+
+	
 	
 	
 

@@ -1,8 +1,10 @@
 package test;
 
-public class MemberServiceTest {
+public class OrderTest {
 	
 	public static void main(String[] args) {
+		
+		
 		
 		
 	}
