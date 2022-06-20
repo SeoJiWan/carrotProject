@@ -3,7 +3,8 @@ package service;
 import java.util.List;
 
 import domain.Sale;
-import repository.SaleRepository;
+import domain.SaleInfo;
+import repository.inerface.SaleRepository;
 
 public class SaleService {
 	
@@ -45,7 +46,7 @@ public class SaleService {
 	}
 	
 	// 판매 전체조회
-	public List<Sale> findAllSales() {
+	public List<SaleInfo> findAllSales() {
 		return saleRepository.selectAll();
 	}
 }

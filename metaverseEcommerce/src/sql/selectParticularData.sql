@@ -21,3 +21,9 @@ select s.seller_id, count(*) as 판매빈도수
 from orders o 
 join sales s on (o.sale_id = s. sale_id)
 group by s.seller_id;
+
+-- saleInfo
+SELECT s.sale_id, s.seller_id, m.identification, s.sale_status, p.name, p.quantity, p.price, p.description
+FROM sales s
+JOIN products p ON (s.product_id = p.product_id)
+JOIN members m ON (s.seller_id = m.member_id);

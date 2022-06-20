@@ -1,4 +1,4 @@
-package repository;
+package repository.memory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import domain.Order;
+import domain.TopInfo;
+import repository.inerface.OrderRepository;
 
 public class MemoryOrderRepository implements OrderRepository {
 
@@ -78,6 +80,18 @@ public class MemoryOrderRepository implements OrderRepository {
 			list.add(store.get(key));
 		}
 		return list;
+	}
+
+	@Override
+	public TopInfo topBuyer() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TopInfo topSeller() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

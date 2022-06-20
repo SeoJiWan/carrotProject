@@ -3,7 +3,7 @@ package service;
 import java.util.List;
 
 import domain.Product;
-import repository.ProductRepository;
+import repository.inerface.ProductRepository;
 
 public class ProductService {
 

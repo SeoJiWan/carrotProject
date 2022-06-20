@@ -1,4 +1,4 @@
-package repository;
+package repository.memory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import domain.Member;
+import repository.inerface.MemberRepository;
 
 public class MemoryMemberRepository implements MemberRepository {
 
@@ -80,6 +81,13 @@ public class MemoryMemberRepository implements MemberRepository {
 			list.add(store.get(key));
 		}
 		return list;
+	}
+
+
+	@Override
+	public Member checkIdPwd(String identification, String password) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -2,7 +2,7 @@ package service;
 
 import java.util.List;
 import domain.Member;
-import repository.MemberRepository;
+import repository.inerface.MemberRepository;
 
 public class MemberService {
 	
@@ -48,22 +48,31 @@ public class MemberService {
 		return memberRepository.selectAll();
 	}
 	
-	// 로그인
+	// 로그인 - SQL 이용
 	public Member logIn(String identification, String password) {
-		Member logInMember = null;
-		
-		List<Member> list = findAllMembers();
-		
-		for (Member member : list) {
-			if (member.getIdentification().equals(identification) 
-					&& member.getPassword().equals(password)) {
-				logInMember = member;
-				System.out.println(identification + " 님, 로그인 하였습니다.");
-				return logInMember;
-			}
-		}
-		System.out.println("아이디 또는 비밀번호를 잘못 입력했습니다.");
+		return memberRepository.checkIdPwd(identification, password);
+	}
+
+//	// 로그인 - 자바 이용
+//	public Member logIn(String identification, String password) {
+//		Member logInMember = null;
+//		
+//		List<Member> list = findAllMembers();
+//		
+//		for (Member member : list) {
+//			if (member.getIdentification().equals(identification) 
+//					&& member.getPassword().equals(password)) {
+//				logInMember = member;
+//				System.out.println(identification + " 님, 로그인 하였습니다.");
+//				return logInMember;
+//			}
+//		}
+//		System.out.println("아이디 또는 비밀번호를 잘못 입력했습니다.");
+//		return null;
+//	}
+	
+	// 로그아웃
+	public Member logOut() {
 		return null;
-		
 	}
 }

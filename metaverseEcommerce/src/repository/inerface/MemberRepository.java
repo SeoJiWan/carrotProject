@@ -1,4 +1,4 @@
-package repository;
+package repository.inerface;
 
 import java.util.List;
 
@@ -17,4 +17,6 @@ public interface MemberRepository {
 //	Member selectOne(String identification);
 	
 	List<Member> selectAll();
+	
+	Member checkIdPwd(String identification, String password);
 }

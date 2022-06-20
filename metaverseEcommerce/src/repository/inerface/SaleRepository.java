@@ -1,8 +1,9 @@
-package repository;
+package repository.inerface;
 
 import java.util.List;
 
 import domain.Sale;
+import domain.SaleInfo;
 
 public interface SaleRepository {
 
@@ -14,5 +15,5 @@ public interface SaleRepository {
 	
 	Sale selectOne(int saleId);
 	
-	List<Sale> selectAll();
+	List<SaleInfo> selectAll();
 }

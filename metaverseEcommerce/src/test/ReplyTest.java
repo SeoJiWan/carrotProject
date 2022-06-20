@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import domain.Reply;
-import repository.MemoryReplyRepository;
+import repository.memory.MemoryReplyRepository;
 import service.ReplyService;
 
 public class ReplyTest {

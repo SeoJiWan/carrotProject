@@ -1,4 +1,4 @@
-package repository;
+package repository.memory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import domain.Sale;
+import repository.inerface.SaleRepository;
 
 public class MemorySaleRepository implements SaleRepository{
 

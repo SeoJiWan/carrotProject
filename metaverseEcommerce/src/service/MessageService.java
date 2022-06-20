@@ -3,7 +3,7 @@ package service;
 import java.util.List;
 
 import domain.Message;
-import repository.MessageRepository;
+import repository.inerface.MessageRepository;
 
 public class MessageService {
 

@@ -1,7 +1,8 @@
 package test;
 
 import domain.Member;
-import repository.MemoryMemberRepository;
+import repository.jdbc.DAO;
+import repository.memory.MemoryMemberRepository;
 import service.BoardService;
 import service.MemberService;
 import service.ProductService;
@@ -30,6 +31,7 @@ public class TotalTest {
 	
 	
 	public static void main(String[] args) {
+		
 		TotalTest t = new TotalTest();
 		
 		Member member = new Member();

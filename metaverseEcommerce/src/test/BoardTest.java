@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import domain.Board;
-import repository.MemoryBoardRepository;
+import repository.memory.MemoryBoardRepository;
 import service.BoardService;
 
 public class BoardTest {

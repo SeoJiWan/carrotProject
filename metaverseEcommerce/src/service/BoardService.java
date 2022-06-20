@@ -3,7 +3,7 @@ package service;
 import java.util.List;
 
 import domain.Board;
-import repository.BoardRepository;
+import repository.inerface.BoardRepository;
 
 public class BoardService {
 

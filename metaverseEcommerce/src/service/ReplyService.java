@@ -3,8 +3,8 @@ package service;
 import java.util.List;
 
 import domain.Reply;
-import repository.MemoryReplyRepository;
-import repository.ReplyRepository;
+import repository.inerface.ReplyRepository;
+import repository.memory.MemoryReplyRepository;
 
 public class ReplyService {
 	

@@ -1,4 +1,4 @@
-package repository;
+package repository.inerface;
 
 import java.util.List;
 

@@ -1,8 +1,9 @@
-package repository;
+package repository.inerface;
 
 import java.util.List;
 
 import domain.Order;
+import domain.TopInfo;
 
 public interface OrderRepository {
 
@@ -15,5 +16,9 @@ public interface OrderRepository {
 	Order selectOne(int orderId);
 	
 	List<Order> selectAll();
+	
+	TopInfo topBuyer();
+	
+	TopInfo topSeller();
 
 }

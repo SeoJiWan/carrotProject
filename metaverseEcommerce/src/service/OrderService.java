@@ -3,7 +3,8 @@ package service;
 import java.util.List;
 
 import domain.Order;
-import repository.OrderRepository;
+import domain.TopInfo;
+import repository.inerface.OrderRepository;
 
 public class OrderService {
 	
@@ -47,5 +48,15 @@ public class OrderService {
 	// 주문 전체조회
 	public List<Order> findAllOrders() {
 		return orderRepository.selectAll();
+	}
+
+	// 구매왕
+	public TopInfo findTopBuyer() {
+		return orderRepository.topBuyer();
+	}
+
+	// 구매왕
+	public TopInfo findTopSeller() {
+		return orderRepository.topSeller();
 	}
 }

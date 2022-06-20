@@ -1,4 +1,4 @@
-package repository;
+package repository.memory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import domain.Board;
+import repository.inerface.BoardRepository;
 
 public class MemoryBoardRepository implements BoardRepository {
 

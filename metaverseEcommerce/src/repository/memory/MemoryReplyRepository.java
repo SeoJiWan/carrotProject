@@ -1,10 +1,11 @@
-package repository;
+package repository.memory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import domain.Reply;
+import repository.inerface.ReplyRepository;
 
 public class MemoryReplyRepository implements ReplyRepository {
 
