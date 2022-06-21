@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,9 +19,11 @@ public class TestFrame implements ActionListener {
 // 변할 화면, 다른 메소드에서 작업을 해 화면내용을 바꾸기 때문에 멤버공간에 선언
 
 	public static void main(String[] args) {
+		// 전체 해상도
+		Dimension res = Toolkit.getDefaultToolkit().getScreenSize();
 		JFrame frame = new JFrame();
-		frame.setLocation(500, 300);
-		frame.setPreferredSize(new Dimension(1000, 600)); // 윈도우 화면 사이즈로 설정 가능
+		frame.setLocation(0, 0);
+		frame.setPreferredSize(new Dimension(res.width, res.height)); // 윈도우 화면 사이즈로 설정 가능
 		rightPanel.setBackground(Color.black);
 		
 		Container test = frame.getContentPane();
