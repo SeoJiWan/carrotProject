@@ -1,28 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="javax.print.DocFlavor.STRING"/>
-    <fullyQualifiedTypeName name="repository.MemoryHistoryRepository"/>
-    <fullyQualifiedTypeName name="service.HistroyService"/>
-    <fullyQualifiedTypeName name="repository.HistoryRepository"/>
-    <fullyQualifiedTypeName name="java.lang.invoke.CallSite"/>
-    <fullyQualifiedTypeName name="domain.History"/>
-    <fullyQualifiedTypeName name="java.util.Date"/>
-    <fullyQualifiedTypeName name="repository.MemberRepository"/>
-    <fullyQualifiedTypeName name="repository.MemoryMessageRepository"/>
-    <fullyQualifiedTypeName name="service.MessageService"/>
-    <fullyQualifiedTypeName name="repository.MessageRepository"/>
-    <fullyQualifiedTypeName name="service.BoardService"/>
-    <fullyQualifiedTypeName name="service.ProductService"/>
-    <fullyQualifiedTypeName name="test.TotalTest"/>
-    <fullyQualifiedTypeName name="service.MemberService"/>
-    <fullyQualifiedTypeName name="repository.MemoryMemberRepository"/>
-    <fullyQualifiedTypeName name="service.OrderService"/>
     <fullyQualifiedTypeName name="repository.MemoryOrderRepository"/>
     <fullyQualifiedTypeName name="java.util.Map"/>
     <fullyQualifiedTypeName name="java.lang.Integer"/>
     <fullyQualifiedTypeName name="java.util.HashMap"/>
-    <fullyQualifiedTypeName name="javax.swing.JLabel"/>
-    <fullyQualifiedTypeName name="java.awt.Color"/>
     <fullyQualifiedTypeName name="repository.inerface.MemberRepository"/>
     <fullyQualifiedTypeName name="java.sql.Connection"/>
     <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
@@ -47,9 +28,6 @@
     <fullyQualifiedTypeName name="repository.jdbc.DAO"/>
     <fullyQualifiedTypeName name="repository.inerface.BoardRepository"/>
     <fullyQualifiedTypeName name="domain.Board"/>
-    <fullyQualifiedTypeName name="java.awt.Dimension"/>
-    <fullyQualifiedTypeName name="java.awt.Toolkit"/>
-    <fullyQualifiedTypeName name="java.lang.String"/>
     <fullyQualifiedTypeName name="java.util.Arrays"/>
     <fullyQualifiedTypeName name="repository.inerface.ReplyRepository"/>
     <fullyQualifiedTypeName name="domain.Reply"/>
@@ -60,4 +38,26 @@
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="domain.Message"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.awt.Toolkit"/>
+    <fullyQualifiedTypeName name="view.LogIn"/>
+    <fullyQualifiedTypeName name="javax.swing.JButton"/>
+    <fullyQualifiedTypeName name="javax.swing.WindowConstants"/>
+    <fullyQualifiedTypeName name="java.awt.event.ActionEvent"/>
+    <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
+    <fullyQualifiedTypeName name="javax.swing.JTextField"/>
+    <fullyQualifiedTypeName name="javax.swing.JPasswordField"/>
+    <fullyQualifiedTypeName name="javax.swing.JFrame"/>
+    <fullyQualifiedTypeName name="javax.swing.JPanel"/>
+    <fullyQualifiedTypeName name="java.awt.Dimension"/>
+    <fullyQualifiedTypeName name="javax.swing.ImageIcon"/>
+    <fullyQualifiedTypeName name="java.awt.Graphics"/>
+    <fullyQualifiedTypeName name="java.awt.Image"/>
+    <fullyQualifiedTypeName name="java.awt.Color"/>
+    <fullyQualifiedTypeName name="view.LoginFrame.ImagePanel"/>
+    <fullyQualifiedTypeName name="javax.swing.JLabel"/>
+    <fullyQualifiedTypeName name="javax.imageio.plugins.tiff.TIFFDirectory"/>
+    <fullyQualifiedTypeName name="javax.swing.Icon"/>
+    <fullyQualifiedTypeName name="java.lang.String"/>
+    <fullyQualifiedTypeName name="javax.swing.JComponent"/>
+    <fullyQualifiedTypeName name="java.awt.Font"/>
 </qualifiedTypeNameHistroy>
