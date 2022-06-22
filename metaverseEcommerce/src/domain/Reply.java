@@ -1,6 +1,6 @@
 package domain;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Reply {
 	
@@ -9,7 +9,7 @@ public class Reply {
 	 */
 	private int replyId;
 	private int boardId;
-	private int memeberId;
+	private int memberId;
 	private String content;
 	private Date regDate;
 
@@ -29,11 +29,11 @@ public class Reply {
 	public void setBoardId(int boardId) {
 		this.boardId = boardId;
 	}
-	public int getMemeberId() {
-		return memeberId;
+	public int getMemberId() {
+		return memberId;
 	}
-	public void setMemeberId(int memeberId) {
-		this.memeberId = memeberId;
+	public void setMemberId(int memberId) {
+		this.memberId = memberId;
 	}
 	public String getContent() {
 		return content;
@@ -49,7 +49,7 @@ public class Reply {
 	}
 	@Override
 	public String toString() {
-		return "Reply [replyId=" + replyId + ", boardId=" + boardId + ", memeberId=" + memeberId + ", content="
+		return "Reply [replyId=" + replyId + ", boardId=" + boardId + ", memberId=" + memberId + ", content="
 				+ content + ", regDate=" + regDate + "]";
 	}
 	

@@ -1,5 +1,7 @@
 package test;
 
+
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +21,7 @@ public class BoardTest {
 		board.setMemberId(1);
 		board.setTitle("ㅎㅇ");
 		board.setContent(" 반갑습니다.");
-		board.setRegDate(new Date());
+		board.setRegDate((java.sql.Date) new Date());
 		
 		// 게시글 작성
 		boardService.writeBoard(board);
@@ -30,7 +32,7 @@ public class BoardTest {
 		board1.setMemberId(1);
 		board1.setTitle("ㅂㅂ");
 		board1.setContent("ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ");
-		board1.setRegDate(new Date());
+		board1.setRegDate((java.sql.Date) new Date());
 		
 		// 게시글 수정
 		boardService.modifyBoard(board1);
@@ -40,6 +42,11 @@ public class BoardTest {
 		
 		List<Board> showAllBoards = boardService.findAllBoards();
 		showAllBoards.forEach(System.out::println);
+		
+		String[] arr = {"d", "f"};
+		String string = Arrays.toString(arr);
+		
+		
 		
 	}
 
