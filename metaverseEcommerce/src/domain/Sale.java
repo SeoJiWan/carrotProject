@@ -38,6 +38,11 @@ public class Sale {
 	public void setSaleStatus(String saleStatus) {
 		this.saleStatus = saleStatus;
 	}
+	@Override
+	public String toString() {
+		return "Sale [saleId=" + saleId + ", sellerId=" + sellerId + ", productId=" + productId + ", saleStatus="
+				+ saleStatus + "]";
+	}
 
 	
 

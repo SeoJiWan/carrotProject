@@ -20,9 +20,9 @@ public class WelcomeFrame extends JFrame {
 	 */
 	protected JFrame frame;
 	// 이미지 SRC - 집
-//	private String mainImgSrc = "";
+	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\homeview.jpg";
 	// 이미지 SRC - 학교
-	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\homeview.jpg";
+//	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\homeview.jpg";
 	// 컴포넌트 크기
 	protected int frameSize[] = { 1440, 960 };
 	protected int mainImgSize[] = { 600, 600 };
@@ -51,18 +51,25 @@ public class WelcomeFrame extends JFrame {
 		// 메인 패널
 		ImagePanel bgPanel = new ImagePanel(new ImageIcon(mainImgSrc).getImage());
 		bgPanel.setLayout(null);
-		bgPanel.setBounds(100, 0, 1000, 1000);
+		bgPanel.setBounds(100, 0, 1000, 600);
 //		bgPanel.setBackground(Color.black);
 		
 		// 사이드바
 		JPanel sidebar = this.drawSidebar();
 		
 		
-//		// 웰컴메세지
-//		JLabel label = this.drawWelcomMessageLabel();
-//		frame.add(label);
+		// 웰컴메세지
+		String welcomeMessage = "Welcome to Carrot World, " + logInMember.getIdentification() + " !";
+		JLabel label = new JLabel(welcomeMessage);
+		label.setBounds(500, 700, 1000, 100);
+		label.setFont(new Font("Arial Black", Font.BOLD, 30));
+		
+		frame.add(label);
+		
+		
 
 		// 프레임에 메인패널 추가
+//		bgPanel.add(label);
 		frame.add(sidebar);
 		frame.getContentPane().add(bgPanel);
 		frame.setVisible(true);
@@ -78,7 +85,7 @@ public class WelcomeFrame extends JFrame {
 				
 		RoundedButton btn1 = this.drawButton("SHOP", 0, 0);
 		RoundedButton btn2 = this.drawButton("COMMUNITY", 0, sideButtonSize[1]);
-		RoundedButton btn3 = this.drawButton("PAGE", 0, sideButtonSize[1]*2);
+		RoundedButton btn3 = this.drawButton("MY PAGE", 0, sideButtonSize[1]*2);
 		RoundedButton btn4 = this.drawButton(".....", 0, sideButtonSize[1]*3);
 		
 		sidePanel.add(btn1);
@@ -120,9 +127,11 @@ public class WelcomeFrame extends JFrame {
 //		String welcomMessage = "Welcome to Carrot World!, " + logInMember.getIdentification();
 		String welcomMessage = "Welcome to Carrot World!, ";
 		
-		JLabel label = new JLabel(welcomMessage);
+		JLabel label = new JLabel();
+		label.setText(welcomMessage);
 		
-		label.setPreferredSize(new Dimension(200, 200));
+		label.setLocation(frameSize[0] / 2, 1000);
+		
 		
 		return label;
 	}
@@ -146,8 +155,8 @@ public class WelcomeFrame extends JFrame {
 	
 	
 	
-	public static void main(String[] args) {
-		new WelcomeFrame();
-	}
+//	public static void main(String[] args) {
+//		new WelcomeFrame();
+//	}
 
 }

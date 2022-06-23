@@ -125,15 +125,15 @@ public class JdbcSaleRepository extends DAO implements SaleRepository{
 		try {
 			connect();
 
-			String sql = "SELECT s.sale_id, s.seller_id, m.identification, s.sale_status, p.name, p.quantity, p.price, p.description "
-						+ "FROM sales "
+			String sql = "SELECT s.sale_id, s.seller_id, m.identification, s.sale_status, p.name, p.quantity, p.price, p.description, m.address "
+						+ "FROM sales s "
 						+ "JOIN products p ON (s.product_id = p.product_id) "
 						+ "JOIN members m ON (s.seller_id = m.member_id)";
 			ps = conn.prepareStatement(sql);
 
 			rs = ps.executeQuery();
 
-			if (rs.next()) {
+			while (rs.next()) {
 				SaleInfo saleInfo = new SaleInfo();
 				saleInfo.setSaleId(rs.getInt(1));
 				saleInfo.setSellerId(rs.getInt(2));
@@ -143,6 +143,7 @@ public class JdbcSaleRepository extends DAO implements SaleRepository{
 				saleInfo.setProductQuantity(rs.getInt(6));
 				saleInfo.setProductPrice(rs.getInt(7));
 				saleInfo.setProductDescription(rs.getString(8));
+				saleInfo.setAddress(rs.getString(9));
 				
 				list.add(saleInfo);
 			}

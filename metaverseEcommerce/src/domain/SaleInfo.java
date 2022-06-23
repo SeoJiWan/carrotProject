@@ -13,12 +13,12 @@ public class SaleInfo {
 	private int productQuantity;
 	private int productPrice;
 	private String productDescription;
+	private String address;
 	
 
 	/*
 	 * Method
 	 */
-	
 	public int getSaleId() {
 		return saleId;
 	}
@@ -67,6 +67,28 @@ public class SaleInfo {
 	public void setProductDescription(String productDescription) {
 		this.productDescription = productDescription;
 	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	@Override
+	public String toString() {
+		return "상품이름 : " + productName +
+				"\n\n상품가격 : " + productPrice + 
+				"\n\n상품수량 : " + productQuantity +  
+				"\n\n판매자 : " + identification + 
+				"\n\n판매상태 : " + saleStatus +
+				"\n\n상품설명 : " + productDescription;
+	}
+	
+//	@Override
+//	public String toString() {
+//		return "상품이름 : " + productName +
+//				", 상품가격 : " + productPrice;
+//	}
+//	
 
 
 }

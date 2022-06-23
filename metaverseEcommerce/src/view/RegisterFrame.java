@@ -29,12 +29,12 @@ public class RegisterFrame extends JFrame {
 	private JTextField address;
 	private JTextField phonNum;
 	// 이미지 SRC - 집
-//	private String mainImgSrc = "";
+	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\reg.PNG";
 	// 이미지 SRC - 학교
-	private String mainImgSrc = "";
+//	private String mainImgSrc = "";
 	// 이미지 크기
 	private int frameSize[] = { 1440, 960 };
-	private int mainImgSize[] = { 300, 500 };
+	private int mainImgSize[] = { 1200, 800 };
 	private int textSize[] = { 260, 40 };
 	private int registerButtonSize[] = { 220, 55 };
 	// memberService
@@ -59,6 +59,7 @@ public class RegisterFrame extends JFrame {
 		// 배경이미지 패널 구성
 		ImagePanel bgPanel = new ImagePanel(new ImageIcon(mainImgSrc).getImage());
 		bgPanel.setLayout(null);
+		bgPanel.setLocation(0, 100);
 
 		// ID, PWD 텍스트 입력창
 		this.drawId(bgPanel);
@@ -80,28 +81,28 @@ public class RegisterFrame extends JFrame {
 	// ID 텍스트 입력창
 	private void drawId(ImagePanel bgPanel) {
 		id = new JTextField();
-		id.setBounds(frameSize[0] / 2 - textSize[0] / 2, 280, textSize[0], textSize[1]);
+		id.setBounds(frameSize[0] / 2 - textSize[0] / 2, 320, textSize[0], textSize[1]);
 		bgPanel.add(id);
 	}
 
 	// PWD 텍스트 입력창
 	private void drawPwd(ImagePanel bgPanel) {
 		pwd = new JPasswordField();
-		pwd.setBounds(frameSize[0] / 2 - textSize[0] / 2, 380, textSize[0], textSize[1]);
+		pwd.setBounds(frameSize[0] / 2 - textSize[0] / 2, 400, textSize[0], textSize[1]);
 		bgPanel.add(pwd);
 	}
 
 	// ADDRESS 텍스트 입력창
 	private void drawAddress(ImagePanel bgPanel) {
 		address = new JTextField();
-		address.setBounds(frameSize[0] / 2 - textSize[0] / 2, 480, textSize[0], textSize[1]);
+		address.setBounds(frameSize[0] / 2 - textSize[0] / 2, 490, textSize[0], textSize[1]);
 		bgPanel.add(address);
 	}
 
 	// PHONE NUMBER 텍스트 입력창
 	private void drawPhoneNum(ImagePanel bgPanel) {
 		phonNum = new JTextField();
-		phonNum.setBounds(frameSize[0] / 2 - textSize[0] / 2, 580, textSize[0], textSize[1]);
+		phonNum.setBounds(frameSize[0] / 2 - textSize[0] / 2, 570, textSize[0], textSize[1]);
 		bgPanel.add(phonNum);
 	}
 
@@ -149,7 +150,7 @@ public class RegisterFrame extends JFrame {
 	// Check Duplication 버튼
 	public void drawCheckIdDuplButton(ImagePanel bgPanel) {
 		RoundedButton btn = new RoundedButton("Check Dupl");
-		btn.setLocation(frameSize[0] / 2 + textSize[0] / 2, 280);
+		btn.setLocation(frameSize[0] / 2 + textSize[0] / 2, 320);
 		btn.setSize(150, 40);
 		btn.setFont(new Font("Arial Black", Font.BOLD, 15));
 		btn.setForeground(Color.BLACK);
@@ -187,7 +188,7 @@ public class RegisterFrame extends JFrame {
 		}
 
 		public void paintComponent(Graphics g) {
-			g.drawImage(img, (frameSize[0] / 2) - (mainImgSize[0] / 2), (frameSize[1] / 2) - (mainImgSize[1] / 2 + 150),
+			g.drawImage(img, (frameSize[0] / 2) - (mainImgSize[0] / 2 + 20), (frameSize[1] / 2) - (mainImgSize[1] / 2 + 150),
 					mainImgSize[0], mainImgSize[1], null);
 		}
 	}

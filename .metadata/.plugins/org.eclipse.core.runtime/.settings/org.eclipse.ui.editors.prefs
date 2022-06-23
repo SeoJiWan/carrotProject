@@ -1,6 +1,9 @@
 AbstractTextEditor.Color.Background=28,31,34
 AbstractTextEditor.Color.Background.SystemDefault=false
+AbstractTextEditor.Color.FindScope=188,173,173
 AbstractTextEditor.Color.SelectionBackground.SystemDefault=false
 AbstractTextEditor.Color.SelectionForeground.SystemDefault=false
+currentIPColor=101,101,101
 deletionIndicationColor=210,82,82
 eclipse.preferences.version=1
+printMarginColor=101,101,101
