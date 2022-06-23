@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -33,6 +32,7 @@ public class TestFrame implements ActionListener {
 		
 		viewPanel.setLayout(new BorderLayout());
 		viewPanel.add(leftPanel, BorderLayout.WEST);
+		leftPanel.setBackground(Color.yellow);
 		
 		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS)); // 왼쪽(고정) 패널의 레이아웃 설정
 		ActionListener listener = new TestFrame(); // 한클래스에서 작업을 했기에 액션리스너를 본 클레스로

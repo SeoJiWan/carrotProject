@@ -41,10 +41,10 @@ public class JdbcMemberRepsitory extends DAO implements MemberRepository {
 			String sql = "INSERT INTO members "
 						+ "VALUES (members_seq.nextval, ?, ?, ?, ?)";
 			ps = conn.prepareStatement(sql);
-			ps.setString(2, member.getIdentification());
-			ps.setString(3, member.getPassword());
-			ps.setString(4, member.getPhoneNumber());
-			ps.setString(5, member.getAddress());
+			ps.setString(1, member.getIdentification());
+			ps.setString(2, member.getPassword());
+			ps.setString(3, member.getPhoneNumber());
+			ps.setString(4, member.getAddress());
 			
 			int result = ps.executeUpdate();
 			
@@ -162,6 +162,35 @@ public class JdbcMemberRepsitory extends DAO implements MemberRepository {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, identification);
 			ps.setString(2, password);
+			
+			rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				member = new Member();
+				member.setMemberId(rs.getInt(1));
+				member.setIdentification(rs.getString(2));
+				member.setPassword(rs.getString(3));
+				member.setPhoneNumber(rs.getString(4));
+				member.setAddress(rs.getString(5));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return member;
+	}
+	
+	// 아이디 중복체크
+	@Override
+	public Member checkIdDupl(String identification) {
+		Member member = null;
+		try {
+			connect();
+			
+			String sql = "SELECT * FROM members WHERE identification = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, identification);
 			
 			rs = ps.executeQuery();
 			

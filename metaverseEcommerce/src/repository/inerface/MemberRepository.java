@@ -19,4 +19,6 @@ public interface MemberRepository {
 	List<Member> selectAll();
 	
 	Member checkIdPwd(String identification, String password);
+	
+	Member checkIdDupl(String identification);
 }

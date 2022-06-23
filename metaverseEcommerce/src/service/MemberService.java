@@ -24,8 +24,9 @@ public class MemberService {
 	 * Method
 	 */
 	// 회원가입
-	public void joinMember(Member member) {
+	public int joinMember(Member member) {
 		memberRepository.insert(member);
+		return member.getMemberId();
 	}
 	
 	// 회원수정
@@ -53,26 +54,20 @@ public class MemberService {
 		return memberRepository.checkIdPwd(identification, password);
 	}
 
-//	// 로그인 - 자바 이용
-//	public Member logIn(String identification, String password) {
-//		Member logInMember = null;
-//		
-//		List<Member> list = findAllMembers();
-//		
-//		for (Member member : list) {
-//			if (member.getIdentification().equals(identification) 
-//					&& member.getPassword().equals(password)) {
-//				logInMember = member;
-//				System.out.println(identification + " 님, 로그인 하였습니다.");
-//				return logInMember;
-//			}
-//		}
-//		System.out.println("아이디 또는 비밀번호를 잘못 입력했습니다.");
-//		return null;
-//	}
-	
 	// 로그아웃
 	public Member logOut() {
 		return null;
+	}
+	
+	// 아이디 중복확인
+	public boolean checkIdDupl(String identification) {
+		Member member = memberRepository.checkIdDupl(identification);
+		
+		if (member != null) {
+			return true; // 중복
+		}
+		else {
+			return false; // 중복x
+		}
 	}
 }
