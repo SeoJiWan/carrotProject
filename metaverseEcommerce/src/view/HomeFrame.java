@@ -21,16 +21,16 @@ import service.OrderService;
 import service.ProductService;
 import service.SaleService;
 
-public class WelcomeFrame extends JFrame {
+public class HomeFrame extends JFrame {
 
 	/*
 	 * Field
 	 */
 	protected JFrame frame;
 	// 이미지 SRC - 집
-//	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\homeview.jpg";
+	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\homeview.jpg";
 	// 이미지 SRC - 학교
-	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\homeview.jpg";
+//	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\homeview.jpg";
 	// 컴포넌트 크기
 	protected int frameSize[] = { 1440, 960 };
 	protected int mainImgSize[] = { 600, 600 };
@@ -49,7 +49,7 @@ public class WelcomeFrame extends JFrame {
 	/*
 	 * Constructor
 	 */
-	public WelcomeFrame() {
+	public HomeFrame() {
 		initialize();
 	}
 
@@ -91,6 +91,7 @@ public class WelcomeFrame extends JFrame {
 
 	}
 
+	// 사이드바
 	protected JPanel drawSidebar() {
 		
 		JPanel sidePanel = new JPanel();
@@ -98,15 +99,13 @@ public class WelcomeFrame extends JFrame {
 		sidePanel.setBounds(0, 0, 150, 1440);
 		sidePanel.setBackground(Color.orange);
 				
-		RoundedButton btn1 = this.drawButton("SHOP", 0, 0);
-		RoundedButton btn2 = this.drawButton("COMMUNITY", 0, sideButtonSize[1]);
+		RoundedButton btn1 = this.drawButton("HOME", 0, 0);
+		RoundedButton btn2 = this.drawButton("SHOP", 0, sideButtonSize[1]);
 		RoundedButton btn3 = this.drawButton("MY PAGE", 0, sideButtonSize[1]*2);
-//		RoundedButton btn4 = this.drawButton(".....", 0, sideButtonSize[1]*3);
 		
 		sidePanel.add(btn1);
 		sidePanel.add(btn2);
 		sidePanel.add(btn3);
-//		sidePanel.add(btn4);
 		
 		return sidePanel;
 	}
@@ -126,8 +125,18 @@ public class WelcomeFrame extends JFrame {
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				if (category.equals("HOME")) {
+					new HomeFrame();
+					frame.dispose();
+				}
+				
 				if (category.equals("SHOP")) {
 					new ShopFrame();
+					frame.dispose();
+				}
+				
+				if (category.equals("MY PAGE")) {
+					new MyPage();
 					frame.dispose();
 				}
 

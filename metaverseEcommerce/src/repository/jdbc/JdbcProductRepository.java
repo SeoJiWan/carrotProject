@@ -61,19 +61,40 @@ public class JdbcProductRepository extends DAO implements ProductRepository {
 	}
 
 	@Override
-	public void update(Product product) {
-		// TODO Auto-generated method stub
-		
+	public void update(int productId, int productQuantity) {
+		try {
+			connect();
+			
+			String sql = "UPDATE products SET quantity = ? WHERE product_id = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, productQuantity);
+			ps.setInt(2, productId);
+			
+			
+			int result = ps.executeUpdate();
+			
+			if (result > 0) {
+				System.out.println(result + "행 수정에 성공했습니다.");
+			}
+			else {
+				System.out.println("수정에 실패했습니다.");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
 	}
 
 	@Override
-	public void delete(int proudctId) {
+	public void delete(int productId) {
 		try {
 			connect();
 			
 			String sql = "DELETE FROM products WHERE product_id = ?";
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1, proudctId);
+			ps.setInt(1, productId);
 			
 			int result = ps.executeUpdate();
 			
@@ -92,7 +113,7 @@ public class JdbcProductRepository extends DAO implements ProductRepository {
 	}
 
 	@Override
-	public Product selectOne(int proudctId) {
+	public Product selectOne(int productId) {
 		Product product = null;
 		
 		try {
@@ -100,7 +121,7 @@ public class JdbcProductRepository extends DAO implements ProductRepository {
 			
 			String sql = "SELECT * FROM products WHERE product_id = ?";
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1, proudctId);
+			ps.setInt(1, productId);
 			
 			rs = ps.executeQuery();
 			

@@ -27,9 +27,9 @@ public class LoginFrame extends JFrame{ // 탑레벨 컨테이너, 윈도우 창
 	private JTextField id;
 	private JPasswordField pwd;
 	// 이미지 SRC - 집
-//	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\carrot.png";
+	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\carrot.png";
 	// 이미지 SRC - 학교
-	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\carrot.PNG";
+//	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\carrot.PNG";
 	// 이미지 크기
 	private int frameSize[] = { 1440, 960 };
 	private int mainImgSize[] = { 300, 500 };
@@ -105,13 +105,13 @@ public class LoginFrame extends JFrame{ // 탑레벨 컨테이너, 윈도우 창
 		// LOGIN 버튼 클릭시 동작
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				WelcomeFrame.logInMember = memberService.logIn(id.getText(), Arrays.toString(pwd.getPassword()));
-				if (WelcomeFrame.logInMember == null) {
+				HomeFrame.logInMember = memberService.logIn(id.getText(), Arrays.toString(pwd.getPassword()));
+				if (HomeFrame.logInMember == null) {
 					System.out.println("윈도우 - 로그인 실패");
 				}
 				else {
 					System.out.println("윈도우 - 로그인성공");
-					new WelcomeFrame();
+					new HomeFrame();
 					frame.dispose();
 				}
 				

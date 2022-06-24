@@ -20,7 +20,7 @@ import domain.Product;
 import domain.Sale;
 import domain.SaleInfo;
 
-public class ShopFrame extends WelcomeFrame {
+public class ShopFrame extends HomeFrame {
 
 	/*
 	 * Field
@@ -29,8 +29,8 @@ public class ShopFrame extends WelcomeFrame {
 	private static int quantity;
 	private JTextField textCreateTotalPrice;
 	private int totalPrice;
-	private static int saleBtn_X = 0;
-	private static int saleBtn_Y = 0;
+	private int saleBtn_X = 0;
+	private int saleBtn_Y = 0;
 
 	/*
 	 * Constructor
@@ -51,31 +51,10 @@ public class ShopFrame extends WelcomeFrame {
 		frame.setLayout(null); // layout : null --> setBounds 를 이용해 위치 직접 지정
 
 		// 사이드 메뉴바
-		JPanel sidebar = this.drawSidebar();
+		JPanel sidebar = super.drawSidebar();
 
 		// 쇼케이스
 		JPanel showcasePanel = this.drawShowcasePanel();
-
-//		JLabel label = new JLabel("이건 한글이 왜 되냐...");
-//		label.setBounds(0, 32, 600, 100);
-//		;
-//		showcasePanel.add(label);
-
-//		List<SaleInfo> saleList = this.getSaleList();
-////		int y = 0;
-////		for (SaleInfo saleInfo : saleList) {
-////			JLabel drawSaleLabel = this.drawSaleLabel(saleInfo.toString(), y);
-////			showcasePanel.add(drawSaleLabel);
-////			y += 32;
-////		}
-//
-//		for (int i = 0; i < 5; i++) {
-//			for (SaleInfo saleInfo : saleList) {
-//				RoundedButton drawSaleButton = this.drawSaleButton(saleInfo.getProductName(), saleInfo.toString());
-//				showcasePanel.add(drawSaleButton);
-//			}
-//			
-//		}
 
 		// 상품등록 버튼
 		RoundedButton postButton = postSaleButton();
@@ -92,14 +71,6 @@ public class ShopFrame extends WelcomeFrame {
 	 * panel 레이아웃 null 로 변경하여 이중포문으로 상품버튼 배치 다시
 	 */
 	private JPanel drawShowcasePanel() {
-//		// 쇼케이스 담을 패널 - layout null
-//		JPanel panel = new JPanel();
-//		panel.setBounds(200, 70, 600, 750);
-//		panel.setLayout(null);
-//		panel.setBackground(Color.green);
-//
-//		return panel;
-
 		// 쇼케이스 담을 패널 - 그리드 레이아웃 - 버튼형식 -> null 로 변경
 		JPanel panel = new JPanel();
 		panel.setBounds(200, 70, 600, 750);
@@ -107,21 +78,14 @@ public class ShopFrame extends WelcomeFrame {
 //		panel.setBackground(Color.green);
 
 		List<SaleInfo> saleList = this.getSaleList();
-
-
-		// 그리드 레이아웃인 패널에 상품 버튼 추가
+		// 패널에 상품 버튼 추가
 		for (SaleInfo saleInfo : saleList) {
 			RoundedButton drawSaleButton = this.drawSaleButton(saleInfo.getProductName(), saleInfo, saleList.size());
 			panel.add(drawSaleButton);
 
 		}
 		
-//		
-//		for (int y = 0; y < (numOfBtn / 5); y += 120) {
-//			for (int x = 0; x < 5; x += 120) {
-//				saleBtn.setLocation(x, y);
-//			}
-//		}
+
 
 
 		return panel;
@@ -233,7 +197,7 @@ public class ShopFrame extends WelcomeFrame {
 							public void mouseClicked(MouseEvent e) {
 
 								Message message = new Message();
-								message.setSenderId(WelcomeFrame.logInMember.getMemberId());
+								message.setSenderId(HomeFrame.logInMember.getMemberId());
 								message.setReceiverId(saleInfo.getSellerId());
 								message.setContent(textCreateMessage.getText());
 
@@ -331,7 +295,7 @@ public class ShopFrame extends WelcomeFrame {
 							public void mouseClicked(MouseEvent e) {
 
 								Order order = new Order();
-								order.setBuyerId(WelcomeFrame.logInMember.getMemberId());
+								order.setBuyerId(HomeFrame.logInMember.getMemberId());
 								order.setSaleId(saleInfo.getSaleId());
 								order.setOrderQuantity(quantity);
 								order.setOrderPrice(totalPrice);
@@ -473,7 +437,7 @@ public class ShopFrame extends WelcomeFrame {
 						int productId = productService.findOneProductById(textCreateName.getText()).getProductId();
 						// 판매 등록
 						Sale sale = new Sale();
-						sale.setSellerId(WelcomeFrame.logInMember.getMemberId());
+						sale.setSellerId(HomeFrame.logInMember.getMemberId());
 						sale.setProductId(productId);
 						sale.setSaleStatus("판매중");
 
