@@ -29,9 +29,9 @@ public class RegisterFrame extends JFrame {
 	private JTextField address;
 	private JTextField phonNum;
 	// 이미지 SRC - 집
-	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\reg.PNG";
+//	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\reg.PNG";
 	// 이미지 SRC - 학교
-//	private String mainImgSrc = "";
+	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\reg.PNG";
 	// 이미지 크기
 	private int frameSize[] = { 1440, 960 };
 	private int mainImgSize[] = { 1200, 800 };
@@ -118,6 +118,9 @@ public class RegisterFrame extends JFrame {
 		btn.setBorderPainted(false);
 		btn.setFocusPainted(false);
 
+		/*
+		 * 예외처리 필요 -> 입력값 4개중 하나라도 null 값이 있으면 회원가입 x
+		 */
 		// REGISTER 버튼 클릭시 동작
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

@@ -24,7 +24,7 @@ public class JdbcMessageRepository extends DAO implements MessageRepository {
 	/*
 	 * Method
 	 */
-	public MessageRepository getMessageRepository() {
+	public static MessageRepository getMessageRepository() {
 		if (messageRepository == null) {
 			messageRepository = new JdbcMessageRepository();
 		}
@@ -36,12 +36,11 @@ public class JdbcMessageRepository extends DAO implements MessageRepository {
 		try {
 			connect();
 
-			String sql = "INSERT INTO messages " + "VALUES (messages_seq.nextval, ?, ?, ?, ?)";
+			String sql = "INSERT INTO messages VALUES (messages_seq.nextval, ?, ?, ?, sysdate)";
 			ps = conn.prepareStatement(sql);
-			ps.setInt(2, message.getSenderId());
-			ps.setInt(3, message.getReceiverId());
-			ps.setString(4, message.getContent());
-			ps.setDate(5, message.getSendDate());
+			ps.setInt(1, message.getSenderId());
+			ps.setInt(2, message.getReceiverId());
+			ps.setString(3, message.getContent());
 
 			int result = ps.executeUpdate();
 

@@ -46,4 +46,10 @@ public class Order {
 	public void setOrderQuantity(int orderQuantity) {
 		this.orderQuantity = orderQuantity;
 	}
+	@Override
+	public String toString() {
+		return "Order [orderId=" + orderId + ", buyerId=" + buyerId + ", saleId=" + saleId + ", orderPrice="
+				+ orderPrice + ", orderQuantity=" + orderQuantity + "]";
+	}
+	
 }

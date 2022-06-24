@@ -41,9 +41,9 @@ public class JdbcSaleRepository extends DAO implements SaleRepository{
 
 			String sql = "INSERT INTO sales VALUES (sales_seq.nextval ,?, ?, ?)";
 			ps = conn.prepareStatement(sql);
-			ps.setInt(2, sale.getSellerId());
-			ps.setInt(3, sale.getProductId());
-			ps.setString(4, sale.getSaleStatus());
+			ps.setInt(1, sale.getSellerId());
+			ps.setInt(2, sale.getProductId());
+			ps.setString(3, sale.getSaleStatus());
 
 			int result = ps.executeUpdate();
 

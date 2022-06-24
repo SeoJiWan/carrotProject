@@ -47,6 +47,12 @@ public class Message {
 	public void setSendDate(Date sendDate) {
 		this.sendDate = sendDate;
 	}
+	@Override
+	public String toString() {
+		return "Message [messageId=" + messageId + ", senderId=" + senderId + ", receiverId=" + receiverId
+				+ ", content=" + content + ", sendDate=" + sendDate + "]";
+	}
+	
 
 	
 

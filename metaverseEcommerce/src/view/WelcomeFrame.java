@@ -12,6 +12,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import domain.Member;
+import repository.jdbc.JdbcMessageRepository;
+import repository.jdbc.JdbcOrderRepository;
+import repository.jdbc.JdbcProductRepository;
+import repository.jdbc.JdbcSaleRepository;
+import service.MessageService;
+import service.OrderService;
+import service.ProductService;
+import service.SaleService;
 
 public class WelcomeFrame extends JFrame {
 
@@ -20,9 +28,9 @@ public class WelcomeFrame extends JFrame {
 	 */
 	protected JFrame frame;
 	// 이미지 SRC - 집
-	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\homeview.jpg";
+//	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\homeview.jpg";
 	// 이미지 SRC - 학교
-//	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\homeview.jpg";
+	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\homeview.jpg";
 	// 컴포넌트 크기
 	protected int frameSize[] = { 1440, 960 };
 	protected int mainImgSize[] = { 600, 600 };
@@ -30,6 +38,13 @@ public class WelcomeFrame extends JFrame {
 
 	protected static final long serialVersionUID = 1L;
 	protected static Member logInMember;
+	// 서비스 로직
+	protected static SaleService saleService = new SaleService(JdbcSaleRepository.getSaleRepository());
+	protected static ProductService productService = new ProductService(JdbcProductRepository.getProductRepository());
+	protected static OrderService orderService = new OrderService(JdbcOrderRepository.getOrderRepository());
+	protected static MessageService messageService = new MessageService(JdbcMessageRepository.getMessageRepository());
+	
+
 
 	/*
 	 * Constructor
@@ -86,12 +101,12 @@ public class WelcomeFrame extends JFrame {
 		RoundedButton btn1 = this.drawButton("SHOP", 0, 0);
 		RoundedButton btn2 = this.drawButton("COMMUNITY", 0, sideButtonSize[1]);
 		RoundedButton btn3 = this.drawButton("MY PAGE", 0, sideButtonSize[1]*2);
-		RoundedButton btn4 = this.drawButton(".....", 0, sideButtonSize[1]*3);
+//		RoundedButton btn4 = this.drawButton(".....", 0, sideButtonSize[1]*3);
 		
 		sidePanel.add(btn1);
 		sidePanel.add(btn2);
 		sidePanel.add(btn3);
-		sidePanel.add(btn4);
+//		sidePanel.add(btn4);
 		
 		return sidePanel;
 	}
