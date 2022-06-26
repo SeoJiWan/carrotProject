@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="java.util.Arrays"/>
     <fullyQualifiedTypeName name="domain.Member"/>
     <fullyQualifiedTypeName name="java.awt.Desktop.Action"/>
     <fullyQualifiedTypeName name="javax.swing.Icon"/>
@@ -11,7 +10,6 @@
     <fullyQualifiedTypeName name="java.awt.Rectangle"/>
     <fullyQualifiedTypeName name="view.LoginFrame"/>
     <fullyQualifiedTypeName name="view.HomeFrame.ImagePanel"/>
-    <fullyQualifiedTypeName name="view.HomeFrame"/>
     <fullyQualifiedTypeName name="view.WelcomeFrame.ImagePanel"/>
     <fullyQualifiedTypeName name="view.aaa"/>
     <fullyQualifiedTypeName name="java.awt.Container"/>
@@ -32,7 +30,6 @@
     <fullyQualifiedTypeName name="java.awt.GridLayout"/>
     <fullyQualifiedTypeName name="java.awt.Label"/>
     <fullyQualifiedTypeName name="java.lang.String"/>
-    <fullyQualifiedTypeName name="javax.swing.JPanel"/>
     <fullyQualifiedTypeName name="javax.swing.JTextArea"/>
     <fullyQualifiedTypeName name="service.ProductService"/>
     <fullyQualifiedTypeName name="domain.Product"/>
@@ -51,7 +48,6 @@
     <fullyQualifiedTypeName name="repository.jdbc.JdbcMessageRepository"/>
     <fullyQualifiedTypeName name="view.WelcomeFrame"/>
     <fullyQualifiedTypeName name="javax.swing.JButton"/>
-    <fullyQualifiedTypeName name="java.awt.Color"/>
     <fullyQualifiedTypeName name="view.RoundedButton"/>
     <fullyQualifiedTypeName name="view.MyPage"/>
     <fullyQualifiedTypeName name="javax.swing.JFrame"/>
@@ -60,4 +56,8 @@
     <fullyQualifiedTypeName name="domain.SaleInfo"/>
     <fullyQualifiedTypeName name="repository.inerface.ProductRepository"/>
     <fullyQualifiedTypeName name="repository.jdbc.JdbcProductRepository"/>
+    <fullyQualifiedTypeName name="view.HomeFrame"/>
+    <fullyQualifiedTypeName name="javax.swing.JPanel"/>
+    <fullyQualifiedTypeName name="java.awt.Color"/>
+    <fullyQualifiedTypeName name="domain.MessageInfo"/>
 </qualifiedTypeNameHistroy>

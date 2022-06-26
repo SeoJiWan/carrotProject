@@ -2,19 +2,20 @@ package domain;
 
 import java.sql.Date;
 
-public class Message {
+public class MessageInfo {
 	
 	/*
 	 * Field
 	 */
 	private int messageId;
 	private int senderId;
+	private String Senderidentification;
 	private int receiverId;
 	private String content;
 	private Date sendDate;
 	private int productId;
-	
-	
+	private String productName;
+
 
 	/*
 	 * Method
@@ -30,6 +31,12 @@ public class Message {
 	}
 	public void setSenderId(int senderId) {
 		this.senderId = senderId;
+	}
+	public String getSenderidentification() {
+		return Senderidentification;
+	}
+	public void setSenderidentification(String senderidentification) {
+		Senderidentification = senderidentification;
 	}
 	public int getReceiverId() {
 		return receiverId;
@@ -55,12 +62,12 @@ public class Message {
 	public void setProductId(int productId) {
 		this.productId = productId;
 	}
-	@Override
-	public String toString() {
-		return "Message [messageId=" + messageId + ", senderId=" + senderId + ", receiverId=" + receiverId
-				+ ", content=" + content + ", sendDate=" + sendDate + "]";
+	public String getProductName() {
+		return productName;
 	}
-	
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
 
 	
 

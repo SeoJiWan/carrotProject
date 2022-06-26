@@ -2,11 +2,13 @@ package view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class MyPage extends HomeFrame {
@@ -57,6 +59,23 @@ public class MyPage extends HomeFrame {
 		msgBtn.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				JFrame jf1 = new JFrame();
+				jf1.setLayout(null);
+				jf1.setBounds(200, 150, 500, 700);
+				jf1.setVisible(true);
+				
+				JLabel label1 = new JLabel("' wana1997 ' message box.");
+//				JLabel label1 = new JLabel("' " + HomeFrame.logInMember.getIdentification() + " ' message box.");
+				label1.setBounds(20, 10, 500, 50);
+				label1.setFont(new Font("Arial", Font.BOLD, 18));
+				jf1.add(label1);
+				
+				JPanel panel1 = new JPanel();
+				panel1.setLayout(null);
+				panel1.setBounds(20, 70, 445, 570);
+				panel1.setBackground(Color.white);
+				jf1.add(panel1);
+				
+				
 				
 			}
 		});

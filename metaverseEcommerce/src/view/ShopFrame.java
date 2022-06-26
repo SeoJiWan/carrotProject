@@ -200,6 +200,7 @@ public class ShopFrame extends HomeFrame {
 								message.setSenderId(HomeFrame.logInMember.getMemberId());
 								message.setReceiverId(saleInfo.getSellerId());
 								message.setContent(textCreateMessage.getText());
+								message.setProductId(saleInfo.getProduct_id());
 
 								System.out.println(message.toString());
 

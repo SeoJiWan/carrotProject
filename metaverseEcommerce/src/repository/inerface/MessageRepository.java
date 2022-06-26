@@ -3,6 +3,7 @@ package repository.inerface;
 import java.util.List;
 
 import domain.Message;
+import domain.MessageInfo;
 
 public interface MessageRepository {
 
@@ -14,5 +15,5 @@ public interface MessageRepository {
 	
 	Message selectOne(int messageId);
 	
-	List<Message> selectAll();
+	List<MessageInfo> selectAllByReceiver(int receiver_id);
 }

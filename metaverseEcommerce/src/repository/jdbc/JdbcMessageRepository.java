@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import domain.Message;
+import domain.MessageInfo;
 import repository.inerface.MessageRepository;
 
 public class JdbcMessageRepository extends DAO implements MessageRepository {
@@ -36,11 +37,12 @@ public class JdbcMessageRepository extends DAO implements MessageRepository {
 		try {
 			connect();
 
-			String sql = "INSERT INTO messages VALUES (messages_seq.nextval, ?, ?, ?, sysdate)";
+			String sql = "INSERT INTO messages VALUES (messages_seq.nextval, ?, ?, ?, sysdate, ?)";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, message.getSenderId());
 			ps.setInt(2, message.getReceiverId());
 			ps.setString(3, message.getContent());
+			ps.setInt(4, message.getProductId());
 
 			int result = ps.executeUpdate();
 
@@ -108,6 +110,7 @@ public class JdbcMessageRepository extends DAO implements MessageRepository {
 				message.setReceiverId(rs.getInt(3));
 				message.setContent(rs.getString(4));
 				message.setSendDate(rs.getDate(5));
+				message.setProductId(rs.getInt(6));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -118,27 +121,31 @@ public class JdbcMessageRepository extends DAO implements MessageRepository {
 	}
 
 	@Override
-	public List<Message> selectAll() {
-		List<Message> list = new ArrayList<Message>();
+	public List<MessageInfo> selectAllByReceiver(int receiver_id) {
+		List<MessageInfo> list = new ArrayList<MessageInfo>();
 
 		try {
 			connect();
 
-			String sql = "SELECT * FROM messages";
+			String sql = "SELECT m.identification, t.content, p.name, t.send_date "
+						+ "FROM messages t "
+						+ "JOIN members m ON (m.member_id = t.sender_id) "
+						+ "JOIN products p ON (p.product_id = t.product_id)"
+						+ "WHERE t.receiver_id = ?";
 			ps = conn.prepareStatement(sql);
+			ps.setInt(1, receiver_id);
 
 			rs = ps.executeQuery();
 
 			if (rs.next()) {
-				Message message = new Message();
+				MessageInfo messageInfo = new MessageInfo();
 				
-				message.setMessageId(rs.getInt(1));
-				message.setSenderId(rs.getInt(2));
-				message.setReceiverId(rs.getInt(3));
-				message.setContent(rs.getString(4));
-				message.setSendDate(rs.getDate(5));
+				messageInfo.setSenderidentification(rs.getString(1));
+				messageInfo.setContent(rs.getString(2));
+				messageInfo.setProductName(rs.getString(3));
+				messageInfo.setSendDate(rs.getDate(4));
 				
-				list.add(message);
+				list.add(messageInfo);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -3,6 +3,7 @@ package service;
 import java.util.List;
 
 import domain.Message;
+import domain.MessageInfo;
 import repository.inerface.MessageRepository;
 
 public class MessageService {
@@ -45,7 +46,7 @@ public class MessageService {
 	}
 	
 	// 메세지 전체조회
-	public List<Message> findAllMessage() {
-		return messageRepository.selectAll();
+	public List<MessageInfo> findAllMessage(int receiver_id) {
+		return messageRepository.selectAllByReceiver(receiver_id);
 	}
 }

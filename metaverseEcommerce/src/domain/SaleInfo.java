@@ -14,8 +14,10 @@ public class SaleInfo {
 	private int productPrice;
 	private String productDescription;
 	private String address;
+	private int product_id;
 	
 
+	
 	/*
 	 * Method
 	 */
@@ -72,6 +74,12 @@ public class SaleInfo {
 	}
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	public int getProduct_id() {
+		return product_id;
+	}
+	public void setProduct_id(int product_id) {
+		this.product_id = product_id;
 	}
 	@Override
 	public String toString() {

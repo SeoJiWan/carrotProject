@@ -28,8 +28,8 @@ public class ProductService {
 	}
 
 	// 상품 수정
-	public void modifyProduct(Product product) {
-		productRepository.update(product);
+	public void modifyProduct(int productId, int productQuantity) {
+		productRepository.update(productId, productQuantity);
 	}
 
 	// 상품 삭제
