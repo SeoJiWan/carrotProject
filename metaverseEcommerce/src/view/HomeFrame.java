@@ -28,9 +28,9 @@ public class HomeFrame extends JFrame {
 	 */
 	protected JFrame frame;
 	// 이미지 SRC - 집
-//	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\homeview.jpg";
+	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\homeview.jpg";
 	// 이미지 SRC - 학교
-	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\homeview.jpg";
+//	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\homeview.jpg";
 	// 컴포넌트 크기
 	protected int frameSize[] = { 1440, 960 };
 	protected int mainImgSize[] = { 600, 600 };
@@ -146,19 +146,19 @@ public class HomeFrame extends JFrame {
 		return btn;
 	}
 	
-	// 수정 필요
-	protected JLabel drawWelcomMessageLabel() {
-//		String welcomMessage = "Welcome to Carrot World!, " + logInMember.getIdentification();
-		String welcomMessage = "Welcome to Carrot World!, ";
-		
-		JLabel label = new JLabel();
-		label.setText(welcomMessage);
-		
-		label.setLocation(frameSize[0] / 2, 1000);
-		
-		
-		return label;
-	}
+//	// 수정 필요
+//	protected JLabel drawWelcomMessageLabel() {
+////		String welcomMessage = "Welcome to Carrot World!, " + logInMember.getIdentification();
+//		String welcomMessage = "Welcome to Carrot World!, ";
+//		
+//		JLabel label = new JLabel();
+//		label.setText(welcomMessage);
+//		
+//		label.setLocation(frameSize[0] / 2, 1000);
+//		
+//		
+//		return label;
+//	}
 	
 		
 	

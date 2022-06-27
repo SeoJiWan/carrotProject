@@ -32,6 +32,7 @@ public class ShopFrame extends HomeFrame {
 	private int saleBtn_X = 0;
 	private int saleBtn_Y = 0;
 
+	
 	/*
 	 * Constructor
 	 */
@@ -39,19 +40,25 @@ public class ShopFrame extends HomeFrame {
 
 	}
 
+	
 	/*
 	 * Method
 	 */
 	@Override
 	protected void initialize() {
 		// 프레임 구성
-		frame = new JFrame("Welcome Form");
+		frame = new JFrame("SHOP Form");
 		frame.setBackground(Color.white);
 		frame.setSize(new Dimension(frameSize[0], frameSize[1]));
 		frame.setLayout(null); // layout : null --> setBounds 를 이용해 위치 직접 지정
 
 		// 사이드 메뉴바
 		JPanel sidebar = super.drawSidebar();
+		
+		JLabel label = new JLabel("# SHOWCASE #");
+		label.setBounds(360, -10, 300, 200);
+		label.setFont(new Font("Arial", Font.BOLD, 23));
+		
 
 		// 쇼케이스
 		JPanel showcasePanel = this.drawShowcasePanel();
@@ -62,20 +69,20 @@ public class ShopFrame extends HomeFrame {
 		// 프레임에 패널 추가
 		frame.add(postButton);
 		frame.add(sidebar);
+		frame.add(label);
 		frame.add(showcasePanel);
 		frame.setVisible(true);
 
 	}
 
-	/*
-	 * panel 레이아웃 null 로 변경하여 이중포문으로 상품버튼 배치 다시
-	 */
+	
 	private JPanel drawShowcasePanel() {
 		// 쇼케이스 담을 패널 - 그리드 레이아웃 - 버튼형식 -> null 로 변경
 		JPanel panel = new JPanel();
-		panel.setBounds(200, 70, 600, 750);
+		panel.setBounds(200, 120, 600, 750);
 		panel.setLayout(null);
 //		panel.setBackground(Color.green);
+		
 
 		List<SaleInfo> saleList = this.getSaleList();
 		// 패널에 상품 버튼 추가
@@ -84,9 +91,6 @@ public class ShopFrame extends HomeFrame {
 			panel.add(drawSaleButton);
 
 		}
-		
-
-
 
 		return panel;
 	}
@@ -284,7 +288,7 @@ public class ShopFrame extends HomeFrame {
 						});
 
 						/*
-						 * 예외처리 필요 -> orderQuantity 는 0 이 되면 안됨.
+						 * 예외처리 필요 -> orderQuantity 는 0 이 되면 안됨., orderQuantity 가 현 재고보다 많으면 안됨.
 						 */
 						// 구매 버튼
 						RoundedButton buyBtn = new RoundedButton("BUY");
@@ -299,11 +303,19 @@ public class ShopFrame extends HomeFrame {
 								Order order = new Order();
 								order.setBuyerId(HomeFrame.logInMember.getMemberId());
 								order.setSaleId(saleInfo.getSaleId());
-								order.setOrderQuantity(quantity);
+								
+								// orderQuantity == 0 예외처리
+								if (quantity != 0) {
+									order.setOrderQuantity(quantity);
+								}
+								else {
+									// 예외처리 팝업
+									return;
+								}
 								order.setOrderPrice(totalPrice);
 
 								orderService.createOrder(order);
-								System.out.println(order.toString());
+//								System.out.println(order.toString());
 
 								// 주문 완료 후 구매, 주문 창 다 닫기
 								jf2.dispose();
@@ -455,127 +467,6 @@ public class ShopFrame extends HomeFrame {
 		return saleRegBtn;
 	}
 
-//	// 상품등록 폼
-//	private JPanel drawProductForm() {
-//		JPanel panel = new JPanel();
-//		panel.setBounds(0, 0, 500, 700);
-////		panel.setBackground(Color.blue);
-//		panel.setLayout(null);
-//
-//		JLabel lblNewLabe2 = new JLabel("# Register your product #");
-//		lblNewLabe2.setBounds(120, 20, 300, 35);
-//		lblNewLabe2.setFont(new Font("휴먼둥근헤드라인", Font.BOLD, 20));
-//		panel.add(lblNewLabe2);
-//
-//		int yGap = 49;
-//		int labelStartY = 310;
-//		int textStartY = 337;
-//		int lableStartX = 30;
-//		int textStartX = 180;
-//		// 상품 이름 입력
-//		JLabel lblNewLabel2_1 = new JLabel("NAME");
-//		lblNewLabel2_1.setBounds(lableStartX, labelStartY, 100, 80);
-//		lblNewLabel2_1.setFont(new Font("굴림", Font.BOLD, 18));
-//		panel.add(lblNewLabel2_1);
-//
-//		JTextField textCreateName = new JTextField();
-//		textCreateName.setBounds(textStartX, textStartY, 231, 25);
-//		panel.add(textCreateName);
-//		textCreateName.setColumns(10);
-//
-//		// 상품 가격 입력
-//		JLabel lblNewLabel2_2 = new JLabel("PRICE");
-//		lblNewLabel2_2.setBounds(lableStartX, labelStartY + yGap, 100, 80);
-//		lblNewLabel2_2.setFont(new Font("굴림", Font.BOLD, 18));
-//		panel.add(lblNewLabel2_2);
-//
-//		JTextField textCreatePrice = new JTextField();
-//		textCreatePrice.setBounds(textStartX, textStartY + yGap, 231, 25);
-//		panel.add(textCreatePrice);
-//		textCreatePrice.setColumns(10);
-//
-//		// 상품 수량 입력
-//		JLabel lblNewLabel2_3 = new JLabel("QUANTITY");
-//		lblNewLabel2_3.setBounds(lableStartX, labelStartY + 2 * yGap, 100, 80);
-//		lblNewLabel2_3.setFont(new Font("굴림", Font.BOLD, 18));
-//		panel.add(lblNewLabel2_3);
-//
-//		JTextField textCreateQuantity = new JTextField();
-//		textCreateQuantity.setBounds(textStartX, textStartY + 2 * yGap, 231, 25);
-//		panel.add(textCreateQuantity);
-//		textCreateQuantity.setColumns(10);
-//
-//		// 상품 설명 입력
-//		JLabel lblNewLabel2_4 = new JLabel("DISCRIPTION");
-//		lblNewLabel2_4.setBounds(lableStartX, labelStartY + 3 * yGap, 120, 80);
-//		lblNewLabel2_4.setFont(new Font("굴림", Font.BOLD, 18));
-//		panel.add(lblNewLabel2_4);
-//
-//		JTextArea textCreateDiscription = new JTextArea();
-//		textCreateDiscription.setBounds(textStartX, textStartY + 3 * yGap, 231, 100);
-//		panel.add(textCreateDiscription);
-//		textCreateDiscription.setColumns(10);
-//
-//		
-//		// 등록버튼
-//		RoundedButton btn = new RoundedButton("POST");
-//		btn.setBounds(390, 600, 60, 40);
-//		btn.setBackground(Color.pink);
-//		panel.add(btn);
-//
-//		// 등록 버튼 클릭시 DB에 상품저장
-//		btn.addMouseListener(new MouseAdapter() {
-//			public void mouseClicked(MouseEvent e) {
-//				// 상품 등록
-//				Product product = new Product();
-//				product.setName(textCreateName.getText());
-//				product.setPrice(Integer.parseInt(textCreatePrice.getText()));
-//				product.setQuantity(Integer.parseInt(textCreateQuantity.getText()));
-//				product.setDescription(textCreateDiscription.getText());
-//				
-//				productService.saveProduct(product);
-//				
-//				
-//				int productId = productService.findOneProductById(textCreateName.getText()).getProductId();
-//				// 판매 등록
-//				Sale sale = new Sale();
-//				sale.setSellerId(WelcomeFrame.logInMember.getMemberId());
-//				sale.setProductId(productId);
-//				sale.setSaleStatus("판매중");
-//				
-//				saleService.createSale(sale);
-//				
-//			}
-//		});
-//
-//		return panel;
-//	}
-
-//	private JLabel drawSaleLabel(String info, int y) { //
-//		JLabel label = new JLabel(info);
-//		label.setBounds(0, y, 600, 100);
-//		label.setFont(new Font("Arial", Font.BOLD, 12));
-//
-//		label.addMouseListener(new MouseAdapter() {
-//			public void mouseClicked(MouseEvent e) {
-//				JFrame jf = new JFrame("Details");
-//				jf.setLayout(null);
-//				jf.setBackground(Color.BLACK);
-//				jf.setBounds(850, 90, 500, 700);
-//				jf.setVisible(true);
-//
-//				TextArea textArea = new TextArea();
-//				textArea.setBounds(0, 350, 500, 350);
-//
-//				textArea.setEditable(false);
-//				textArea.setText(info);
-//
-//				jf.add(textArea);
-//			}
-//		});
-//
-//		return label;
-//	}
 
 	public static void main(String[] args) {
 		new ShopFrame();

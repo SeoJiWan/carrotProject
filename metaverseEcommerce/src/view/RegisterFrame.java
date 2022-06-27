@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -29,9 +30,9 @@ public class RegisterFrame extends JFrame {
 	private JTextField address;
 	private JTextField phonNum;
 	// 이미지 SRC - 집
-//	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\reg.PNG";
+	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\reg.PNG";
 	// 이미지 SRC - 학교
-	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\reg.PNG";
+//	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\reg.PNG";
 	// 이미지 크기
 	private int frameSize[] = { 1440, 960 };
 	private int mainImgSize[] = { 1200, 800 };
@@ -39,6 +40,7 @@ public class RegisterFrame extends JFrame {
 	private int registerButtonSize[] = { 220, 55 };
 	// memberService
 	private MemberService memberService;
+	
 
 	/*
 	 * Constructor
@@ -48,6 +50,7 @@ public class RegisterFrame extends JFrame {
 		memberService = new MemberService(JdbcMemberRepsitory.getMemberRepository());
 	}
 
+	
 	/*
 	 * Method
 	 */
@@ -68,12 +71,14 @@ public class RegisterFrame extends JFrame {
 		this.drawPhoneNum(bgPanel);
 
 		// REGISTER 버튼 이미지
-		this.drawRegisterButton(bgPanel);
+		RoundedButton registerButton = this.drawRegisterButton();
 
-		// SIGN UP 버튼
-		this.drawCheckIdDuplButton(bgPanel);
+		// 중복체크 버튼
+		RoundedButton checkIdDuplButton = this.drawCheckIdDuplButton();
 
 		// 프레임에 메인패널 추가
+		frame.add(checkIdDuplButton);
+		frame.add(registerButton);
 		frame.getContentPane().add(bgPanel);
 		frame.setVisible(true);
 	}
@@ -107,7 +112,7 @@ public class RegisterFrame extends JFrame {
 	}
 
 	// REGISTER 버튼 이미지로
-	private void drawRegisterButton(ImagePanel bgPanel) {
+	private RoundedButton drawRegisterButton() {
 		RoundedButton btn = new RoundedButton("REGISTER");
 		btn.setLocation(frameSize[0] / 2 - registerButtonSize[0] / 2, 650);
 		btn.setSize(registerButtonSize[0], registerButtonSize[1]);
@@ -135,23 +140,29 @@ public class RegisterFrame extends JFrame {
 				int memberId = memberService.joinMember(member);
 				
 				if (memberId != -1) {
-					System.out.println("윈도우 - 회원가입성공");
+//					System.out.println("윈도우 - 회원가입성공");
+					JOptionPane.showMessageDialog(frame, "Registration Successfully.", "Congratulations!", JOptionPane.INFORMATION_MESSAGE);
 					new LoginFrame();
 					frame.dispose();
 					
 				}
 				else {
-					System.out.println("윈도우 - 회원가입실패");
+//					System.out.println("윈도우 - 회원가입실패");
+					if (id.getText().length() != 0 && pwd.getPassword().length != 0 
+							&& phonNum.getText().length() != 0 && address.getText().length() != 0) {
+						JOptionPane.showMessageDialog(frame, "Please fill your Info.", "Registration Failed.", JOptionPane.INFORMATION_MESSAGE);
+					}
+					return;
 				}
 				
 			}
 		});
 
-		bgPanel.add(btn);
+		return btn;
 	}
 
 	// Check Duplication 버튼
-	public void drawCheckIdDuplButton(ImagePanel bgPanel) {
+	public RoundedButton drawCheckIdDuplButton() {
 		RoundedButton btn = new RoundedButton("Check Dupl");
 		btn.setLocation(frameSize[0] / 2 + textSize[0] / 2, 320);
 		btn.setSize(150, 40);
@@ -176,7 +187,7 @@ public class RegisterFrame extends JFrame {
 			}
 		});
 
-		bgPanel.add(btn);
+		return btn;
 	}
 
 	

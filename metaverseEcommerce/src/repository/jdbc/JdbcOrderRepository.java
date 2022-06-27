@@ -17,6 +17,7 @@ public class JdbcOrderRepository extends DAO implements OrderRepository {
 	// 싱글톤
 	private static OrderRepository orderRepository = null;
 
+	
 	/*
 	 * Constructor
 	 */
@@ -24,6 +25,7 @@ public class JdbcOrderRepository extends DAO implements OrderRepository {
 	private JdbcOrderRepository() {
 	}
 
+	
 	/*
 	 * Method
 	 */
@@ -163,7 +165,8 @@ public class JdbcOrderRepository extends DAO implements OrderRepository {
 						+ "JOIN sales s ON (o.sale_id = s.sale_id) "
 						+ "JOIN products p ON (s.product_id = p.product_id) "
 						+ "JOIN members m ON (s.seller_id = m.member_id) " 
-						+ "WHERE o.buyer_id = ?";
+						+ "WHERE o.buyer_id = ? "
+						+ "ORDER BY o.order_id DESC";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, buyerId);
 
@@ -202,7 +205,8 @@ public class JdbcOrderRepository extends DAO implements OrderRepository {
 						+ "JOIN sales s ON (o.sale_id = s.sale_id) " 
 						+ "JOIN products p ON (s.product_id = p.product_id) "
 						+ "JOIN members m ON (o.buyer_id = m.member_id) " 
-						+ "WHERE s.seller_id = ?";
+						+ "WHERE s.seller_id = ? "
+						+ "ORDER BY s.sale_id DESC";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, sellerId);
 

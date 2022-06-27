@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -44,19 +46,19 @@ public class MyPage extends HomeFrame {
 		// 사이드 메뉴바
 		JPanel sidebar = super.drawSidebar();
 
-//		// 메세지창 팝업 버튼
-//		RoundedButton mgPopButton = this.drawMsgPopButton();
+		// 메세지창 팝업 버튼
+		RoundedButton mgPopButton = this.drawMsgPopButton();
 //
-//		// 내 거래내역 조회 버튼
-//		RoundedButton trdPopButton = this.drawMyTradeButton();
+		// 내 거래내역 조회 버튼
+		RoundedButton trdPopButton = this.drawMyTradeButton();
 
 		// 구매왕, 판매왕 그래프 조회 버튼
 		RoundedButton graphPopBtn = this.drawGraphButton();
 
 		// 프레임에 패널 추가
 		frame.add(graphPopBtn);
-//		frame.add(trdPopButton);
-//		frame.add(mgPopButton);
+		frame.add(trdPopButton);
+		frame.add(mgPopButton);
 		frame.add(sidebar);
 		frame.setVisible(true);
 	}
@@ -583,7 +585,7 @@ public class MyPage extends HomeFrame {
 		// 구매왕, 판매왕 조회 버튼
 		RoundedButton topBtn = new RoundedButton("TOP USER");
 		topBtn.setFont(new Font("Arial", Font.BOLD, 16));
-		topBtn.setBounds(480, 50, 100, 60);
+		topBtn.setBounds(460, 50, 100, 60);
 		topBtn.setBackground(Color.green);
 
 		// 구매, 판매 빈도수 조회 버튼 클릭시 구매, 판매 그래프 창 팝업
@@ -637,14 +639,46 @@ public class MyPage extends HomeFrame {
 						JPanel panel1 = new JPanel();
 						panel1.setLayout(null);
 						panel1.setBounds(20, 60, 843, 430);
-						panel1.setBackground(Color.white);
+						panel1.setBackground(Color.black);
 						jf2.add(panel1);
+						
+						JPanel panel2 = new JPanel();
+						panel2.setLayout(null);
+						panel2.setBounds(0, 0, 843, 370);
+						panel2.setBackground(Color.white);
+						panel1.add(panel2);
 						
 						// 구매왕 데이터 받아서 그래프 그리기
 						List<TopInfo> topBuyer = orderService.findTopBuyer();
 						topBuyer.forEach(System.out::println);
 						
+						int gapX = 843 / topBuyer.size();
+						int posX = 843 / (topBuyer.size() * 2);
 						
+						for (TopInfo topInfo : topBuyer) {
+							// x좌표 - 유저이름
+//							System.out.println("posX = " + posX);
+							JLabel label = new JLabel(topInfo.getIdentification());
+							label.setBounds(posX, 370, 150, 50);
+							label.setFont(new Font("Arial", Font.BOLD, 13));
+							label.setForeground(Color.white);
+							panel1.add(label);
+							
+							// 막대 그래프 그리기
+							JButton btn = new JButton();
+							btn.setBounds(posX, 370 - (topInfo.getSaleOrBuyCnt() * 15), 20, topInfo.getSaleOrBuyCnt() * 15);
+							btn.setBackground(Color.MAGENTA);
+							panel2.add(btn);
+							
+							// 구매 빈도수
+							JLabel label2 = new JLabel(Integer.toString(topInfo.getSaleOrBuyCnt()) + "times");
+							label2.setBounds(posX-15, 370 - (topInfo.getSaleOrBuyCnt() * 15) - 40, 150, 50);
+							label2.setFont(new Font("Arial", Font.BOLD, 15));
+							label2.setForeground(Color.black);
+							panel2.add(label2);
+							
+							posX += gapX;
+						}
 						
 						// 뒤로가기 버튼
 						RoundedButton backBtn = new RoundedButton("BACK");
@@ -686,19 +720,49 @@ public class MyPage extends HomeFrame {
 						jf2.add(label1);
 						
 						//// DB에서 받은 판매내역을 라벨에 추가
-						// sale list 담을 패널 생성
 						JPanel panel1 = new JPanel();
 						panel1.setLayout(null);
 						panel1.setBounds(20, 60, 843, 430);
-						panel1.setBackground(Color.white);
+						panel1.setBackground(Color.black);
 						jf2.add(panel1);
+						
+						JPanel panel2 = new JPanel();
+						panel2.setLayout(null);
+						panel2.setBounds(0, 0, 843, 370);
+						panel2.setBackground(Color.white);
+						panel1.add(panel2);
 						
 						// 판매왕 데이터 받아서 그래프 그리기
 						List<TopInfo> topSeller = orderService.findTopSeller();
-						topSeller.forEach(System.out::println);
+//						topSeller.forEach(System.out::println);
 						
+						int gapX = 843 / topSeller.size();
+						int posX = 843 / (topSeller.size() * 2);
 						
-						
+						for (TopInfo topInfo : topSeller) {
+							// x좌표 - 유저이름
+//							System.out.println("posX = " + posX);
+							JLabel label = new JLabel(topInfo.getIdentification());
+							label.setBounds(posX, 370, 150, 50);
+							label.setFont(new Font("Arial", Font.BOLD, 13));
+							label.setForeground(Color.white);
+							panel1.add(label);
+							
+							// 막대 그래프 그리기
+							JButton btn = new JButton();
+							btn.setBounds(posX, 370 - (topInfo.getSaleOrBuyCnt() * 15), 20, topInfo.getSaleOrBuyCnt() * 15);
+							btn.setBackground(Color.blue);
+							panel2.add(btn);
+							
+							// 판매 빈도수
+							JLabel label2 = new JLabel(Integer.toString(topInfo.getSaleOrBuyCnt()) + "times");
+							label2.setBounds(posX-15, 370 - (topInfo.getSaleOrBuyCnt() * 15) - 40, 150, 50);
+							label2.setFont(new Font("Arial", Font.BOLD, 15));
+							label2.setForeground(Color.black);
+							panel2.add(label2);
+							
+							posX += gapX;
+						}
 						
 						// 뒤로가기 버튼
 						RoundedButton backBtn = new RoundedButton("BACK");
@@ -721,8 +785,8 @@ public class MyPage extends HomeFrame {
 		return topBtn;
 	}
 
-	public static void main(String[] args) {
-		new MyPage();
-	}
+//	public static void main(String[] args) {
+//		new MyPage();
+//	}
 
 }

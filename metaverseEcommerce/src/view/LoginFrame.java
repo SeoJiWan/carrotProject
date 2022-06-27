@@ -10,6 +10,7 @@ import java.util.Arrays;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -27,9 +28,9 @@ public class LoginFrame extends JFrame{ // 탑레벨 컨테이너, 윈도우 창
 	private JTextField id;
 	private JPasswordField pwd;
 	// 이미지 SRC - 집
-//	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\carrot.png";
+	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\carrot.png";
 	// 이미지 SRC - 학교
-	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\carrot.PNG";
+//	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\carrot.PNG";
 	// 이미지 크기
 	private int frameSize[] = { 1440, 960 };
 	private int mainImgSize[] = { 300, 500 };
@@ -66,12 +67,14 @@ public class LoginFrame extends JFrame{ // 탑레벨 컨테이너, 윈도우 창
 		this.drawPwd(bgPanel);
 
 		// LOGIN 버튼 
-		this.drawImageButton(bgPanel);
+		RoundedButton logInButton = this.drawLogInButton();
 
 		// SIGN UP 버튼
-		this.drawSignupButton(bgPanel);
+		JButton signupButton = this.drawSignupButton();
 
 		// 프레임에 메인패널 추가
+		frame.add(signupButton);
+		frame.add(logInButton);
 		frame.getContentPane().add(bgPanel);
 		frame.setVisible(true);
 	}
@@ -91,26 +94,27 @@ public class LoginFrame extends JFrame{ // 탑레벨 컨테이너, 윈도우 창
 	}
 
 	// LOGIN 버튼 이미지로
-	private void drawImageButton(ImagePanel bgPanel) {
+	private RoundedButton drawLogInButton() {
 		RoundedButton btn = new RoundedButton("LOG IN");
 		btn.setLocation(frameSize[0] / 2 - loginImgsize[0] / 2, 650);
 		btn.setSize(loginImgsize[0], loginImgsize[1]);
 		btn.setFont(new Font("Arial Black", Font.BOLD, 20));
 		btn.setForeground(Color.BLACK);
 		btn.setBackground(Color.orange);
-		// 버튼 이미지 테두리 없애기
-		btn.setBorderPainted(false);
-		btn.setFocusPainted(false);
 
 		// LOGIN 버튼 클릭시 동작
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				HomeFrame.logInMember = memberService.logIn(id.getText(), Arrays.toString(pwd.getPassword()));
 				if (HomeFrame.logInMember == null) {
-					System.out.println("윈도우 - 로그인 실패");
+					JOptionPane.showMessageDialog(frame, "Please check ID and PWD.", "Login Failed.", JOptionPane.INFORMATION_MESSAGE);
+					// 입력 창 초기화
+					id.setText("");
+					pwd.setText("");
 				}
 				else {
-					System.out.println("윈도우 - 로그인성공");
+					JOptionPane.showMessageDialog(frame, "Login Successfully.", "Congratulations!", JOptionPane.INFORMATION_MESSAGE);
+					
 					new HomeFrame();
 					frame.dispose();
 				}
@@ -118,11 +122,11 @@ public class LoginFrame extends JFrame{ // 탑레벨 컨테이너, 윈도우 창
 			}
 		});
 
-		bgPanel.add(btn);
+		return btn;
 	}
 
 	// SIGN UP 버튼
-	public void drawSignupButton(ImagePanel bgPanel) {
+	public JButton drawSignupButton() {
 		JButton btn = new JButton("Sign Up");
 		btn.setBounds(730, 720, 150, 50);
 		btn.setFont(new Font("Arial Black", Font.BOLD, 22));
@@ -139,7 +143,7 @@ public class LoginFrame extends JFrame{ // 탑레벨 컨테이너, 윈도우 창
 			}
 		});
 
-		bgPanel.add(btn);
+		return btn;
 	}
 
 	public static void main(String[] args) {
