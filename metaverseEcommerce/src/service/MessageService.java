@@ -46,7 +46,7 @@ public class MessageService {
 	}
 	
 	// 메세지 전체조회
-	public List<MessageInfo> findAllMessage(int receiver_id) {
+	public List<MessageInfo> findAllMessageByReceiver(int receiver_id) {
 		return messageRepository.selectAllByReceiver(receiver_id);
 	}
 }

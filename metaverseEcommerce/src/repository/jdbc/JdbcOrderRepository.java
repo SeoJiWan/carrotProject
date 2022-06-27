@@ -3,6 +3,8 @@ package repository.jdbc;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import domain.MyTrade;
 import domain.Order;
 import domain.TopInfo;
 import repository.inerface.OrderRepository;
@@ -130,7 +132,7 @@ public class JdbcOrderRepository extends DAO implements OrderRepository {
 
 			rs = ps.executeQuery();
 
-			if (rs.next()) {
+			while (rs.next()) {
 				Order order = new Order();
 				order.setOrderId(rs.getInt(1));
 				order.setBuyerId(rs.getInt(2));
@@ -148,6 +150,84 @@ public class JdbcOrderRepository extends DAO implements OrderRepository {
 		return list;
 	}
 
+	// 내 구매내역
+	@Override
+	public List<MyTrade> selectMyOrders(int buyerId) {
+		List<MyTrade> list = new ArrayList<MyTrade>();
+
+		try {
+			connect();
+
+			String sql = "SELECT o.order_id, s.seller_id, m.identification, p.name, o.order_quantity, o.order_price "
+						+ "FROM orders o " 
+						+ "JOIN sales s ON (o.sale_id = s.sale_id) "
+						+ "JOIN products p ON (s.product_id = p.product_id) "
+						+ "JOIN members m ON (s.seller_id = m.member_id) " 
+						+ "WHERE o.buyer_id = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, buyerId);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				MyTrade myTrade = new MyTrade();
+
+				myTrade.setOrderId(rs.getInt(1));
+				myTrade.setSellerId(rs.getInt(2));
+				myTrade.setIdentification(rs.getString(3));
+				myTrade.setProductName(rs.getString(4));
+				myTrade.setOrderQuatity(rs.getInt(5));
+				myTrade.setOrderPrice(rs.getInt(6));
+
+				list.add(myTrade);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return list;
+	}
+
+	// 내 판매내역
+	@Override
+	public List<MyTrade> selectMySales(int sellerId) {
+		List<MyTrade> list = new ArrayList<MyTrade>();
+
+		try {
+			connect();
+
+			String sql = "SELECT s.sale_id, o.buyer_id, m.identification, p.name, o.order_quantity, o.order_price "
+						+ "FROM orders o "
+						+ "JOIN sales s ON (o.sale_id = s.sale_id) " 
+						+ "JOIN products p ON (s.product_id = p.product_id) "
+						+ "JOIN members m ON (o.buyer_id = m.member_id) " 
+						+ "WHERE s.seller_id = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, sellerId);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				MyTrade myTrade = new MyTrade();
+
+				myTrade.setSaleId(rs.getInt(1));
+				myTrade.setBuyerId(rs.getInt(2));
+				myTrade.setIdentification(rs.getString(3));
+				myTrade.setProductName(rs.getString(4));
+				myTrade.setOrderQuatity(rs.getInt(5));
+				myTrade.setOrderPrice(rs.getInt(6));
+
+				list.add(myTrade);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return list;
+	}
+
 	// 구매왕
 	@Override
 	public TopInfo topBuyer() {
@@ -155,10 +235,9 @@ public class JdbcOrderRepository extends DAO implements OrderRepository {
 		try {
 			connect();
 
-			String sql = "select m.identification, o.구매빈도수 "
-						+ "from members "
-						+ "join (select buyer_id, count(*) as 구매빈도수 from orders group by buyer_id) o "
-						+ "on (m.member_id = o.buyer_id)";
+			String sql = "select m.identification, o.구매빈도수 " + "from members "
+					+ "join (select buyer_id, count(*) as 구매빈도수 from orders group by buyer_id) o "
+					+ "on (m.member_id = o.buyer_id)";
 			ps = conn.prepareStatement(sql);
 
 			rs = ps.executeQuery();
@@ -183,11 +262,10 @@ public class JdbcOrderRepository extends DAO implements OrderRepository {
 		try {
 			connect();
 
-			String sql = "select m.identification, k.판매빈도수"
-						+ "from members "
-						+ "join (select s.seller_id, count(*) as 판매빈도수 from orders o "
-						+ "join sales s on (o.sale_id = s. sale_id) "
-						+ "group by s.seller_id) k on (k.seller_id = m.member_id)";
+			String sql = "select m.identification, k.판매빈도수" + "from members "
+					+ "join (select s.seller_id, count(*) as 판매빈도수 from orders o "
+					+ "join sales s on (o.sale_id = s. sale_id) "
+					+ "group by s.seller_id) k on (k.seller_id = m.member_id)";
 			ps = conn.prepareStatement(sql);
 
 			rs = ps.executeQuery();

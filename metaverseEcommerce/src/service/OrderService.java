@@ -2,6 +2,7 @@ package service;
 
 import java.util.List;
 
+import domain.MyTrade;
 import domain.Order;
 import domain.Product;
 import domain.Sale;
@@ -65,6 +66,16 @@ public class OrderService {
 	// 주문 전체조회
 	public List<Order> findAllOrders() {
 		return orderRepository.selectAll();
+	}
+	
+	// 내 구매내역 조회
+	public List<MyTrade> findMyOrders(int buyerId) {
+		return orderRepository.selectMyOrders(buyerId);
+	}
+	
+	// 내 판매내역 조회
+	public List<MyTrade> findMySales(int sellerId) {
+		return orderRepository.selectMySales(sellerId);
 	}
 
 	// 구매왕

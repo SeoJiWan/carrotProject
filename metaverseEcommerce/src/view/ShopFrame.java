@@ -168,6 +168,7 @@ public class ShopFrame extends HomeFrame {
 
 						JTextArea textCreateMessage = new JTextArea();
 						textCreateMessage.setBounds(10, 70, 460, 225);
+						textCreateMessage.setLineWrap(true); // 자동 줄바꿈
 						jf3.add(textCreateMessage);
 
 						// 뒤로가기 버튼
@@ -398,6 +399,7 @@ public class ShopFrame extends HomeFrame {
 
 				JTextArea textCreateDiscription = new JTextArea();
 				textCreateDiscription.setBounds(textStartX, textStartY + 3 * yGap, 231, 100);
+				textCreateDiscription.setLineWrap(true); // 자동 줄바꿈
 				panel.add(textCreateDiscription);
 				textCreateDiscription.setColumns(10);
 

@@ -134,5 +134,18 @@ from user_constraints;
 
 
 
+----------------------------------------------------------------
+-- tlb 수정
+-- messages tbl 에 외래키 칼럼추가 
+alter table messages add product_id number(10);
+
+alter table sales add constraint sale_pid_uq unique (product_id);
+
+alter table messages add constraint ms_pid_fk foreign key (product_id)
+references sales(product_id);
+
+
+
+
 
 

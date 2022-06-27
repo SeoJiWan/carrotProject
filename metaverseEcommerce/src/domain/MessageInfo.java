@@ -68,6 +68,14 @@ public class MessageInfo {
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
+	@Override
+	public String toString() {
+		return "MessageInfo [Senderidentification="+ Senderidentification 
+				+ ", content=" + content 
+				+ ", sendDate=" + sendDate 
+				+ ", productName=" + productName + "]";
+	}
+	
 
 	
 

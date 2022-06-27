@@ -5,11 +5,15 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-import javax.swing.JButton;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+
+import domain.Message;
+import domain.MessageInfo;
+import domain.MyTrade;
 
 public class MyPage extends HomeFrame {
 
@@ -39,11 +43,19 @@ public class MyPage extends HomeFrame {
 		// 사이드 메뉴바
 		JPanel sidebar = super.drawSidebar();
 
-		// 메세지창 팝업 버튼
-		RoundedButton mgPopButton = this.drawMsgPopButton();
+//		// 메세지창 팝업 버튼
+//		RoundedButton mgPopButton = this.drawMsgPopButton();
+//
+//		// 내 거래내역 조회 버튼
+//		RoundedButton trdPopButton = this.drawMyTradeButton();
+		
+		// 구매왕, 판매왕 그래프 조회 버튼
+		RoundedButton graphPopBtn = this.drawGraphButton();
 
 		// 프레임에 패널 추가
-		frame.add(mgPopButton);
+		frame.add(graphPopBtn);
+//		frame.add(trdPopButton);
+//		frame.add(mgPopButton);
 		frame.add(sidebar);
 		frame.setVisible(true);
 	}
@@ -53,30 +65,234 @@ public class MyPage extends HomeFrame {
 		// 메세지 버튼
 		RoundedButton msgBtn = new RoundedButton("MSG");
 		msgBtn.setBounds(200, 50, 100, 60);
+		msgBtn.setFont(new Font("Arial", Font.BOLD, 16));
 		msgBtn.setBackground(Color.green);
 
 		// 메세지 버튼 클릭시 메세지상세창 팝업
 		msgBtn.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				JFrame jf1 = new JFrame();
+				JFrame jf1 = new JFrame("MESSAGE BOX");
 				jf1.setLayout(null);
 				jf1.setBounds(200, 150, 500, 700);
 				jf1.setVisible(true);
-				
-				JLabel label1 = new JLabel("' wana1997 ' message box.");
-//				JLabel label1 = new JLabel("' " + HomeFrame.logInMember.getIdentification() + " ' message box.");
+
+//				JLabel label1 = new JLabel("' wana1997 '  message box.");
+				JLabel label1 = new JLabel("' " + HomeFrame.logInMember.getIdentification() + " '  message box.");
 				label1.setBounds(20, 10, 500, 50);
 				label1.setFont(new Font("Arial", Font.BOLD, 18));
 				jf1.add(label1);
-				
+
 				JPanel panel1 = new JPanel();
 				panel1.setLayout(null);
 				panel1.setBounds(20, 70, 445, 570);
 				panel1.setBackground(Color.white);
 				jf1.add(panel1);
-				
-				
-				
+
+				// 메시지 DB에서 받기
+				List<MessageInfo> messages = messageService
+						.findAllMessageByReceiver(HomeFrame.logInMember.getMemberId());
+//				List<MessageInfo> messages = messageService.findAllMessageByReceiver(17);
+//				System.out.println("messages.size() = " + messages.size());
+//				messages.forEach(System.out::println);
+
+				//// DB에서 받은 메세지를 라벨에 추가
+				// 메세지 카테고리
+				JLabel label2 = new JLabel("SENDER");
+				label2.setBounds(0, 0, 70, 20);
+				label2.setOpaque(true);
+				label2.setBackground(Color.yellow);
+				panel1.add(label2);
+
+				JLabel label3 = new JLabel("CONTENT");
+				label3.setBounds(70, 0, 185, 20);
+				label3.setOpaque(true);
+				label3.setBackground(Color.yellow);
+				panel1.add(label3);
+
+				JLabel label4 = new JLabel("PRODUCT");
+				label4.setBounds(255, 0, 100, 20);
+				label4.setOpaque(true);
+				label4.setBackground(Color.yellow);
+				panel1.add(label4);
+
+				JLabel label5 = new JLabel("SEND DATE");
+				label5.setBounds(355, 0, 100, 20);
+				label5.setOpaque(true);
+				label5.setBackground(Color.yellow);
+				panel1.add(label5);
+
+				// 카테고리별로 메세지 패널에 뿌리기
+				int posY = 5;
+				for (MessageInfo msi : messages) {
+					JLabel label6 = new JLabel(msi.getSenderidentification());
+					label6.setBounds(0, 20 + posY, 70, 20);
+					label6.setOpaque(true);
+					label6.setBackground(Color.white);
+					panel1.add(label6);
+
+					JLabel label7 = new JLabel(msi.getContent());
+					label7.setBounds(70, 20 + posY, 175, 20);
+					label7.setOpaque(true);
+					label7.setBackground(Color.white);
+					panel1.add(label7);
+
+					// 내용 클릭시 메세지 디테일창 팝업
+					label7.addMouseListener(new MouseAdapter() {
+						public void mouseClicked(MouseEvent e) {
+							JFrame jf2 = new JFrame("MESSAGE DETAILS");
+							jf2.setLayout(null);
+							jf2.setBounds(700, 150, 500, 500);
+							jf2.setVisible(true);
+
+							JLabel label1 = new JLabel("SENDER  :  " + msi.getSenderidentification());
+							label1.setBounds(20, 30, 150, 20);
+							label1.setOpaque(true);
+//							label1.setBackground(Color.red);
+							jf2.add(label1);
+
+							JLabel label2 = new JLabel("PRODUCT  :  " + msi.getProductName());
+							label2.setBounds(20, 50, 150, 20);
+							label2.setOpaque(true);
+//							label2.setBackground(Color.yellow);
+							jf2.add(label2);
+
+							JLabel label3 = new JLabel("SEND DATE  :  " + (msi.getSendDate()).toString());
+							label3.setBounds(20, 70, 150, 20);
+							label3.setOpaque(true);
+//							label3.setBackground(Color.pink);
+							jf2.add(label3);
+
+							JLabel label4 = new JLabel("CONTENT  :  ");
+							label4.setBounds(20, 90, 150, 20);
+							label4.setOpaque(true);
+//							label4.setBackground(Color.green);
+							jf2.add(label4);
+
+							// 메세지내용 출력할 text area 생성
+							JTextArea textArea1 = new JTextArea();
+							textArea1.setBounds(20, 120, 440, 320);
+							textArea1.setEditable(false); // 읽기 전용
+							textArea1.setText(msi.getContent());
+							textArea1.setFont(new Font("굴림", Font.BOLD, 16));
+							textArea1.setLineWrap(true); // 자동 줄바꿈
+							jf2.add(textArea1);
+
+							// 뒤로가기 버튼
+							RoundedButton backBtn = new RoundedButton("BACK");
+							backBtn.setBounds(300, 30, 60, 40);
+							backBtn.setBackground(Color.pink);
+							jf2.add(backBtn);
+
+							// 뒤로가기 클릭
+							backBtn.addMouseListener(new MouseAdapter() {
+								public void mouseClicked(MouseEvent e) {
+									jf2.dispose();
+								}
+							});
+
+							// 답장 버튼
+							RoundedButton replyBtn = new RoundedButton("REPLY");
+							replyBtn.setBounds(400, 30, 60, 40);
+							replyBtn.setBackground(Color.pink);
+							jf2.add(replyBtn);
+
+							/*
+							 * 예외처리 필요 -> null값 등록 x
+							 */
+							// 답장 버튼 클릭시 DB에 message 저장
+							replyBtn.addMouseListener(new MouseAdapter() {
+								public void mouseClicked(MouseEvent e) {
+									JFrame jf3 = new JFrame("MESSAGE");
+									jf3.setLayout(null);
+//									jf.setBackground(Color.BLACK);
+									jf3.setBounds(700, 300, 500, 350);
+									jf3.setVisible(true);
+
+									String title = "Send a message to ' " + msi.getSenderidentification() + " '";
+									JLabel label = new JLabel(title);
+									label.setBounds(10, 10, 400, 50);
+									label.setFont(new Font("굴림", Font.BOLD, 16));
+									jf3.add(label);
+
+									JTextArea textCreateMessage = new JTextArea();
+									textCreateMessage.setBounds(10, 70, 460, 225);
+									textCreateMessage.setLineWrap(true); // 자동 줄바꿈
+									jf3.add(textCreateMessage);
+
+									// 뒤로가기 버튼
+									RoundedButton backBtn = new RoundedButton("BACK");
+									backBtn.setBounds(300, 30, 60, 40);
+									backBtn.setBackground(Color.pink);
+									jf2.add(backBtn);
+
+									// 뒤로가기 클릭
+									backBtn.addMouseListener(new MouseAdapter() {
+										public void mouseClicked(MouseEvent e) {
+											jf3.dispose();
+										}
+									});
+
+									// 보내기 버튼
+									RoundedButton sendBtn = new RoundedButton("SEND");
+									sendBtn.setBounds(400, 30, 60, 40);
+									sendBtn.setBackground(Color.pink);
+									jf3.add(sendBtn);
+
+									/*
+									 * 예외처리 필요 -> null값 등록 x
+									 */
+									// 답장 버튼 클릭시 DB에 message 저장
+									sendBtn.addMouseListener(new MouseAdapter() {
+										public void mouseClicked(MouseEvent e) {
+
+											Message message = new Message();
+											message.setSenderId(HomeFrame.logInMember.getMemberId());
+											message.setReceiverId(msi.getSenderId());
+											message.setContent(textCreateMessage.getText());
+											message.setProductId(msi.getProductId());
+
+											System.out.println(message.toString());
+
+											messageService.writeMessage(message);
+											System.out.println("윈도우 - 메세지 전송 선공");
+
+											jf3.dispose();
+										}
+									});
+
+								}
+							});
+						}
+					});
+
+					JLabel label8 = new JLabel(msi.getProductName());
+					label8.setBounds(255, 20 + posY, 100, 20);
+					label8.setOpaque(true);
+					label8.setBackground(Color.white);
+					panel1.add(label8);
+
+					JLabel label9 = new JLabel((msi.getSendDate()).toString());
+					label9.setBounds(355, 20 + posY, 100, 20);
+					label9.setOpaque(true);
+					label9.setBackground(Color.white);
+					panel1.add(label9);
+
+					posY += 23;
+				}
+
+				// 뒤로가기 버튼
+				RoundedButton backBtn = new RoundedButton("BACK");
+				backBtn.setBounds(400, 15, 60, 40);
+				backBtn.setBackground(Color.pink);
+				jf1.add(backBtn);
+
+				// 뒤로가기 클릭
+				backBtn.addMouseListener(new MouseAdapter() {
+					public void mouseClicked(MouseEvent e) {
+						jf1.dispose();
+					}
+				});
+
 			}
 		});
 
@@ -84,8 +300,300 @@ public class MyPage extends HomeFrame {
 	}
 
 	
+	// 내 거래내역 조회 버튼
+	private RoundedButton drawMyTradeButton() {
+		// 거래내역 조회 버튼
+		RoundedButton trdBtn = new RoundedButton("MY TRADE");
+		trdBtn.setFont(new Font("Arial", Font.BOLD, 16));
+		trdBtn.setBounds(330, 50, 100, 60);
+		trdBtn.setBackground(Color.green);
+
+		// 거래내역 조회 버튼 클릭시 거래내역 창 팝업
+		trdBtn.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+
+				JFrame jf1 = new JFrame("MY TRADE");
+				jf1.setLayout(null);
+				jf1.setBounds(200, 150, 1000, 700);
+//				jf1.getContentPane().setBackground(Color.white);
+				jf1.setVisible(true);
+
+				// 뒤로가기 버튼
+				RoundedButton backBtn = new RoundedButton("BACK");
+				backBtn.setBounds(870, 30, 60, 40);
+				backBtn.setBackground(Color.pink);
+				jf1.add(backBtn);
+
+				// 뒤로가기 클릭
+				backBtn.addMouseListener(new MouseAdapter() {
+					public void mouseClicked(MouseEvent e) {
+						jf1.dispose();
+					}
+				});
+
+				// 주문내역
+				RoundedButton orderBtn = new RoundedButton("ORDER LIST");
+				orderBtn.setFont(new Font("굴림", Font.BOLD, 12));
+				orderBtn.setBounds(50, 30, 90, 40);
+				orderBtn.setBackground(Color.WHITE);
+				jf1.add(orderBtn);
+
+				// 주문내역 클릭시 주문내역 출력
+				orderBtn.addMouseListener(new MouseAdapter() {
+					public void mouseClicked(MouseEvent e) {
+
+						// order list 담을 프레임
+						JFrame jf2 = new JFrame("ORDER LIST");
+						jf2.setLayout(null);
+						jf2.setBounds(250, 260, 900, 550);
+//						jf1.getContentPane().setBackground(Color.white);
+						jf2.setVisible(true);
+
+//						JLabel label1 = new JLabel("' wana1997 '  order list.");
+						JLabel label1 = new JLabel(
+								"' " + HomeFrame.logInMember.getIdentification() + " '  order list.");
+						label1.setBounds(20, 10, 500, 50);
+						label1.setFont(new Font("Arial", Font.BOLD, 18));
+						jf2.add(label1);
+
+						// 뒤로가기 버튼
+						RoundedButton backBtn = new RoundedButton("BACK");
+						backBtn.setBounds(800, 10, 60, 40);
+						backBtn.setBackground(Color.pink);
+						jf2.add(backBtn);
+
+						// 뒤로가기 클릭
+						backBtn.addMouseListener(new MouseAdapter() {
+							public void mouseClicked(MouseEvent e) {
+								jf2.dispose();
+							}
+						});
+
+						//// DB에서 받은 구매내역을 라벨에 추가
+						// order list 담을 패널 생성
+						JPanel panel1 = new JPanel();
+						panel1.setLayout(null);
+						panel1.setBounds(20, 60, 843, 430);
+						panel1.setBackground(Color.white);
+						jf2.add(panel1);
+
+						// order list 카테고리
+						JLabel label2 = new JLabel("ORDER.NO");
+						label2.setBounds(0, 0, 180, 20);
+						label2.setOpaque(true);
+						label2.setBackground(Color.yellow);
+						panel1.add(label2);
+
+						JLabel label3 = new JLabel("SELLER");
+						label3.setBounds(180, 0, 180, 20);
+						label3.setOpaque(true);
+						label3.setBackground(Color.yellow);
+						panel1.add(label3);
+
+						JLabel label4 = new JLabel("PRODUCT");
+						label4.setBounds(360, 0, 180, 20);
+						label4.setOpaque(true);
+						label4.setBackground(Color.yellow);
+						panel1.add(label4);
+
+						JLabel label5 = new JLabel("ORDER QUANTITY");
+						label5.setBounds(540, 0, 180, 20);
+						label5.setOpaque(true);
+						label5.setBackground(Color.yellow);
+						panel1.add(label5);
+
+						JLabel label6 = new JLabel("TOTAL PRICE");
+						label6.setBounds(720, 0, 180, 20);
+						label6.setOpaque(true);
+						label6.setBackground(Color.yellow);
+						panel1.add(label6);
+
+						// DB에서 구매내역 조회
+						List<MyTrade> myOrders = orderService.findMyOrders(HomeFrame.logInMember.getMemberId());
+//						List<MyTrade> myOrders = orderService.findMyOrders(17);
+						myOrders.forEach(System.out::println);
+
+						// 카테고리별로 구매내역 패널에 뿌리기
+						int posY = 5;
+						for (MyTrade myOrder : myOrders) {
+							JLabel label7 = new JLabel(Integer.toString(myOrder.getOrderId()));
+							label7.setBounds(0, 20 + posY, 180, 20);
+							label7.setOpaque(true);
+							label7.setBackground(Color.white);
+							panel1.add(label7);
+
+							JLabel label8 = new JLabel(myOrder.getIdentification());
+							label8.setBounds(180, 20 + posY, 180, 20);
+							label8.setOpaque(true);
+							label8.setBackground(Color.white);
+							panel1.add(label8);
+
+							JLabel label9 = new JLabel(myOrder.getProductName());
+							label9.setBounds(360, 20 + posY, 180, 20);
+							label9.setOpaque(true);
+							label9.setBackground(Color.white);
+							panel1.add(label9);
+
+							JLabel label10 = new JLabel(Integer.toString(myOrder.getOrderQuatity()));
+							label10.setBounds(540, 20 + posY, 180, 20);
+							label10.setOpaque(true);
+							label10.setBackground(Color.white);
+							panel1.add(label10);
+
+							JLabel label11 = new JLabel(Integer.toString(myOrder.getOrderPrice()));
+							label11.setBounds(720, 20 + posY, 180, 20);
+							label11.setOpaque(true);
+							label11.setBackground(Color.white);
+							panel1.add(label11);
+
+							posY += 23;
+						}
+
+					}
+				});
+
+				// 판매내역 버튼 생성
+				RoundedButton saleBtn = new RoundedButton("SALE LIST");
+				saleBtn.setFont(new Font("굴림", Font.BOLD, 12));
+				saleBtn.setBounds(142, 30, 90, 40);
+				saleBtn.setBackground(Color.WHITE);
+				jf1.add(saleBtn);
+
+				// 판매내역 버튼 클릭
+				saleBtn.addMouseListener(new MouseAdapter() {
+					public void mouseClicked(MouseEvent e) {
+
+						// sale list 담을 프레임
+						JFrame jf2 = new JFrame("SALE LIST");
+						jf2.setLayout(null);
+						jf2.setBounds(250, 260, 900, 550);
+//						jf1.getContentPane().setBackground(Color.white);
+						jf2.setVisible(true);
+
+//						JLabel label1 = new JLabel("' wana1997 '  sale list.");
+						JLabel label1 = new JLabel("' " + HomeFrame.logInMember.getIdentification() + " '  sale list.");
+						label1.setBounds(20, 10, 500, 50);
+						label1.setFont(new Font("Arial", Font.BOLD, 18));
+						jf2.add(label1);
+
+						// 뒤로가기 버튼
+						RoundedButton backBtn = new RoundedButton("BACK");
+						backBtn.setBounds(800, 10, 60, 40);
+						backBtn.setBackground(Color.pink);
+						jf2.add(backBtn);
+
+						// 뒤로가기 클릭
+						backBtn.addMouseListener(new MouseAdapter() {
+							public void mouseClicked(MouseEvent e) {
+								jf2.dispose();
+							}
+						});
+
+						//// DB에서 받은 판매내역을 라벨에 추가
+						// sale list 담을 패널 생성
+						JPanel panel1 = new JPanel();
+						panel1.setLayout(null);
+						panel1.setBounds(20, 60, 843, 430);
+						panel1.setBackground(Color.white);
+						jf2.add(panel1);
+
+						// sale list 카테고리
+						JLabel label2 = new JLabel("SALE.NO");
+						label2.setBounds(0, 0, 180, 20);
+						label2.setOpaque(true);
+						label2.setBackground(Color.yellow);
+						panel1.add(label2);
+
+						JLabel label3 = new JLabel("BUYER");
+						label3.setBounds(180, 0, 180, 20);
+						label3.setOpaque(true);
+						label3.setBackground(Color.yellow);
+						panel1.add(label3);
+
+						JLabel label4 = new JLabel("PRODUCT");
+						label4.setBounds(360, 0, 180, 20);
+						label4.setOpaque(true);
+						label4.setBackground(Color.yellow);
+						panel1.add(label4);
+
+						JLabel label5 = new JLabel("ORDER QUANTITY");
+						label5.setBounds(540, 0, 180, 20);
+						label5.setOpaque(true);
+						label5.setBackground(Color.yellow);
+						panel1.add(label5);
+
+						JLabel label6 = new JLabel("TOTAL PRICE");
+						label6.setBounds(720, 0, 180, 20);
+						label6.setOpaque(true);
+						label6.setBackground(Color.yellow);
+						panel1.add(label6);
+
+						// DB에서 구매내역 조회
+						List<MyTrade> mySales = orderService.findMySales(HomeFrame.logInMember.getMemberId());
+//						List<MyTrade> mySales = orderService.findMySales(17);
+						mySales.forEach(System.out::println);
+
+						// 카테고리별로 판매내역 패널에 뿌리기
+						int posY = 5;
+						for (MyTrade mySale : mySales) {
+							JLabel label7 = new JLabel(Integer.toString(mySale.getSaleId()));
+							label7.setBounds(0, 20 + posY, 180, 20);
+							label7.setOpaque(true);
+							label7.setBackground(Color.white);
+							panel1.add(label7);
+
+							JLabel label8 = new JLabel(mySale.getIdentification());
+							label8.setBounds(180, 20 + posY, 180, 20);
+							label8.setOpaque(true);
+							label8.setBackground(Color.white);
+							panel1.add(label8);
+
+							JLabel label9 = new JLabel(mySale.getProductName());
+							label9.setBounds(360, 20 + posY, 180, 20);
+							label9.setOpaque(true);
+							label9.setBackground(Color.white);
+							panel1.add(label9);
+
+							JLabel label10 = new JLabel(Integer.toString(mySale.getOrderQuatity()));
+							label10.setBounds(540, 20 + posY, 180, 20);
+							label10.setOpaque(true);
+							label10.setBackground(Color.white);
+							panel1.add(label10);
+
+							JLabel label11 = new JLabel(Integer.toString(mySale.getOrderPrice()));
+							label11.setBounds(720, 20 + posY, 180, 20);
+							label11.setOpaque(true);
+							label11.setBackground(Color.white);
+							panel1.add(label11);
+
+							posY += 23;
+						}
+					}
+				});
+
+			}
+		});
+		return trdBtn;
+	}
+
 	
-	
+	// 구매, 판매 빈도수 조회 버튼 - 그래프
+	private RoundedButton drawGraphButton() {
+		// 구매왕, 판매왕 조회 버튼
+		RoundedButton topBtn = new RoundedButton("TOP USER");
+		topBtn.setFont(new Font("Arial", Font.BOLD, 16));
+		topBtn.setBounds(480, 50, 100, 60);
+		topBtn.setBackground(Color.green);
+
+		// 구매왕, 판매왕 조회 버튼 클릭시 구매, 판매 그래프 창 팝업
+		topBtn.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
+		
+		return topBtn;
+	}
+
 	public static void main(String[] args) {
 		new MyPage();
 	}
