@@ -79,12 +79,12 @@ public class OrderService {
 	}
 
 	// 구매왕
-	public TopInfo findTopBuyer() {
+	public List<TopInfo> findTopBuyer() {
 		return orderRepository.topBuyer();
 	}
 
 	// 구매왕
-	public TopInfo findTopSeller() {
+	public List<TopInfo> findTopSeller() {
 		return orderRepository.topSeller();
 	}
 }

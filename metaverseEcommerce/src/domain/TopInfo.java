@@ -24,10 +24,8 @@ public class TopInfo {
 	public void setSaleOrBuyCnt(int saleOrBuyCnt) {
 		this.saleOrBuyCnt = saleOrBuyCnt;
 	}
-
-	
-	
-	
-	
-
+	@Override
+	public String toString() {
+		return "TopInfo [identification=" + identification + ", saleOrBuyCnt=" + saleOrBuyCnt + "]";
+	}
 }

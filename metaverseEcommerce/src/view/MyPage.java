@@ -14,6 +14,7 @@ import javax.swing.JTextArea;
 import domain.Message;
 import domain.MessageInfo;
 import domain.MyTrade;
+import domain.TopInfo;
 
 public class MyPage extends HomeFrame {
 
@@ -48,7 +49,7 @@ public class MyPage extends HomeFrame {
 //
 //		// 내 거래내역 조회 버튼
 //		RoundedButton trdPopButton = this.drawMyTradeButton();
-		
+
 		// 구매왕, 판매왕 그래프 조회 버튼
 		RoundedButton graphPopBtn = this.drawGraphButton();
 
@@ -331,14 +332,14 @@ public class MyPage extends HomeFrame {
 					}
 				});
 
-				// 주문내역
+				// 구매내역
 				RoundedButton orderBtn = new RoundedButton("ORDER LIST");
 				orderBtn.setFont(new Font("굴림", Font.BOLD, 12));
 				orderBtn.setBounds(50, 30, 90, 40);
 				orderBtn.setBackground(Color.WHITE);
 				jf1.add(orderBtn);
 
-				// 주문내역 클릭시 주문내역 출력
+				// 구매내역 클릭시 주문내역 출력
 				orderBtn.addMouseListener(new MouseAdapter() {
 					public void mouseClicked(MouseEvent e) {
 
@@ -528,7 +529,7 @@ public class MyPage extends HomeFrame {
 						label6.setBackground(Color.yellow);
 						panel1.add(label6);
 
-						// DB에서 구매내역 조회
+						// DB에서 판매내역 조회
 						List<MyTrade> mySales = orderService.findMySales(HomeFrame.logInMember.getMemberId());
 //						List<MyTrade> mySales = orderService.findMySales(17);
 						mySales.forEach(System.out::println);
@@ -585,12 +586,138 @@ public class MyPage extends HomeFrame {
 		topBtn.setBounds(480, 50, 100, 60);
 		topBtn.setBackground(Color.green);
 
-		// 구매왕, 판매왕 조회 버튼 클릭시 구매, 판매 그래프 창 팝업
+		// 구매, 판매 빈도수 조회 버튼 클릭시 구매, 판매 그래프 창 팝업
 		topBtn.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+
+				JFrame jf1 = new JFrame("TOP USER");
+				jf1.setLayout(null);
+				jf1.setBounds(200, 150, 1000, 700);
+//				jf1.getContentPane().setBackground(Color.white);
+				jf1.setVisible(true);
+
+				// 뒤로가기 버튼
+				RoundedButton backBtn = new RoundedButton("BACK");
+				backBtn.setBounds(870, 30, 60, 40);
+				backBtn.setBackground(Color.pink);
+				jf1.add(backBtn);
+
+				// 뒤로가기 클릭
+				backBtn.addMouseListener(new MouseAdapter() {
+					public void mouseClicked(MouseEvent e) {
+						jf1.dispose();
+					}
+				});
+
+				// 멤버별 구매실적 조회 버튼 생성
+				RoundedButton orderBtn = new RoundedButton("ORDER FREQ");
+				orderBtn.setFont(new Font("굴림", Font.BOLD, 12));
+				orderBtn.setBounds(50, 30, 90, 40);
+				orderBtn.setBackground(Color.WHITE);
+				jf1.add(orderBtn);
+
+				// 멤버별 구매실적 조회 버튼 클릭시 그래프 출력
+				orderBtn.addMouseListener(new MouseAdapter() {
+					public void mouseClicked(MouseEvent e) {
+						
+						// 구매실적 그래프 뿌릴 프레임
+						JFrame jf2 = new JFrame("ORDER FREQ GRAPH");
+						jf2.setLayout(null);
+						jf2.setBounds(250, 260, 900, 550);
+//						jf1.getContentPane().setBackground(Color.white);
+						jf2.setVisible(true);
+						 
+						JLabel label1 = new JLabel("ORDER FREQUENCY GRAPH");
+						label1.setBounds(20, 10, 500, 50);
+						label1.setFont(new Font("Arial", Font.BOLD, 18));
+						jf2.add(label1);
+						
+						//// DB에서 받은 판매내역을 라벨에 추가
+						// sale list 담을 패널 생성
+						JPanel panel1 = new JPanel();
+						panel1.setLayout(null);
+						panel1.setBounds(20, 60, 843, 430);
+						panel1.setBackground(Color.white);
+						jf2.add(panel1);
+						
+						// 구매왕 데이터 받아서 그래프 그리기
+						List<TopInfo> topBuyer = orderService.findTopBuyer();
+						topBuyer.forEach(System.out::println);
+						
+						
+						
+						// 뒤로가기 버튼
+						RoundedButton backBtn = new RoundedButton("BACK");
+						backBtn.setBounds(800, 10, 60, 40);
+						backBtn.setBackground(Color.pink);
+						jf2.add(backBtn);
+
+						// 뒤로가기 클릭
+						backBtn.addMouseListener(new MouseAdapter() {
+							public void mouseClicked(MouseEvent e) {
+								jf2.dispose();
+							}
+						});
+
+					}
+				});
+				
+				// 멤버별 판매실적 조회 버튼 생성
+				RoundedButton saleBtn = new RoundedButton("SALE FREQ");
+				saleBtn.setFont(new Font("굴림", Font.BOLD, 12));
+				saleBtn.setBounds(142, 30, 90, 40);
+				saleBtn.setBackground(Color.WHITE);
+				jf1.add(saleBtn);
+
+				// 멤버별 판매실적 조회 버튼 클릭시 그래프 출력
+				saleBtn.addMouseListener(new MouseAdapter() {
+					public void mouseClicked(MouseEvent e) {
+						
+						// 판매실적 그래프 뿌릴 프레임
+						JFrame jf2 = new JFrame("SALE FREQ GRAPH");
+						jf2.setLayout(null);
+						jf2.setBounds(250, 260, 900, 550);
+//						jf1.getContentPane().setBackground(Color.white);
+						jf2.setVisible(true);
+						
+						JLabel label1 = new JLabel("SALE FREQUENCY GRAPH");
+						label1.setBounds(20, 10, 500, 50);
+						label1.setFont(new Font("Arial", Font.BOLD, 18));
+						jf2.add(label1);
+						
+						//// DB에서 받은 판매내역을 라벨에 추가
+						// sale list 담을 패널 생성
+						JPanel panel1 = new JPanel();
+						panel1.setLayout(null);
+						panel1.setBounds(20, 60, 843, 430);
+						panel1.setBackground(Color.white);
+						jf2.add(panel1);
+						
+						// 판매왕 데이터 받아서 그래프 그리기
+						List<TopInfo> topSeller = orderService.findTopSeller();
+						topSeller.forEach(System.out::println);
+						
+						
+						
+						
+						// 뒤로가기 버튼
+						RoundedButton backBtn = new RoundedButton("BACK");
+						backBtn.setBounds(800, 10, 60, 40);
+						backBtn.setBackground(Color.pink);
+						jf2.add(backBtn);
+
+						// 뒤로가기 클릭
+						backBtn.addMouseListener(new MouseAdapter() {
+							public void mouseClicked(MouseEvent e) {
+								jf2.dispose();
+							}
+						});
+					}
+				});
+
 			}
 		});
-		
+
 		return topBtn;
 	}
 

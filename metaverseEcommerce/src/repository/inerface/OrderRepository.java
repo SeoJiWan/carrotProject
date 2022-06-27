@@ -22,8 +22,8 @@ public interface OrderRepository {
 	
 	List<MyTrade> selectMySales(int sellerId);
 	
-	TopInfo topBuyer();
+	List<TopInfo> topBuyer();
 	
-	TopInfo topSeller();
+	List<TopInfo> topSeller();
 
 }

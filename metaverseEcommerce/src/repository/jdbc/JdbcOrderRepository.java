@@ -230,21 +230,25 @@ public class JdbcOrderRepository extends DAO implements OrderRepository {
 
 	// 구매왕
 	@Override
-	public TopInfo topBuyer() {
-		TopInfo topInfo = null;
+	public List<TopInfo> topBuyer() {
+		List<TopInfo> list = new ArrayList<TopInfo>();
 		try {
 			connect();
 
-			String sql = "select m.identification, o.구매빈도수 " + "from members "
-					+ "join (select buyer_id, count(*) as 구매빈도수 from orders group by buyer_id) o "
-					+ "on (m.member_id = o.buyer_id)";
+			String sql = "SELECT m.identification, o.구매빈도수 " 
+						+ "FROM members m "
+						+ "JOIN (SELECT buyer_id, count(*) AS 구매빈도수 FROM orders GROUP BY buyer_id) o "
+						+ "ON (m.member_id = o.buyer_id)";
 			ps = conn.prepareStatement(sql);
 
 			rs = ps.executeQuery();
-			if (rs.next()) {
-				topInfo = new TopInfo();
+			while (rs.next()) {
+				TopInfo topInfo = new TopInfo();
+				
 				topInfo.setIdentification(rs.getString(1));
 				topInfo.setSaleOrBuyCnt(rs.getInt(2));
+				
+				list.add(topInfo);
 			}
 
 		} catch (SQLException e) {
@@ -252,27 +256,32 @@ public class JdbcOrderRepository extends DAO implements OrderRepository {
 		} finally {
 			disconnect();
 		}
-		return topInfo;
+		return list;
 	}
 
 	// 판매왕
 	@Override
-	public TopInfo topSeller() {
-		TopInfo topInfo = null;
+	public List<TopInfo> topSeller() {
+		List<TopInfo> list = new ArrayList<TopInfo>();
+		
 		try {
 			connect();
 
-			String sql = "select m.identification, k.판매빈도수" + "from members "
-					+ "join (select s.seller_id, count(*) as 판매빈도수 from orders o "
-					+ "join sales s on (o.sale_id = s. sale_id) "
-					+ "group by s.seller_id) k on (k.seller_id = m.member_id)";
+			String sql = "SELECT m.identification, k.판매빈도수 " 
+						+ "FROM members m "
+						+ "JOIN (SELECT s.seller_id, count(*) AS 판매빈도수 FROM orders o "
+						+ "JOIN sales s ON (o.sale_id = s.sale_id) "
+						+ "GROUP BY s.seller_id) k ON (k.seller_id = m.member_id)";
 			ps = conn.prepareStatement(sql);
 
 			rs = ps.executeQuery();
-			if (rs.next()) {
-				topInfo = new TopInfo();
+			while (rs.next()) {
+				TopInfo topInfo = new TopInfo();
+				
 				topInfo.setIdentification(rs.getString(1));
 				topInfo.setSaleOrBuyCnt(rs.getInt(2));
+				
+				list.add(topInfo);
 			}
 
 		} catch (SQLException e) {
@@ -280,7 +289,7 @@ public class JdbcOrderRepository extends DAO implements OrderRepository {
 		} finally {
 			disconnect();
 		}
-		return topInfo;
+		return list;
 	}
 
 }
