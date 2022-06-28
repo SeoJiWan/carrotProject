@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -39,9 +38,9 @@ public class RegisterFrame extends JFrame {
 	private JComboBox<String> box;
 	int isIdDupl = 1; // 1: 중복, 0: 중복X
 	// 이미지 SRC - 집
-//	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\reg.PNG";
+	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\reg.PNG";
 	// 이미지 SRC - 학교
-	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\reg.PNG";
+//	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\reg.PNG";
 	// 이미지 크기
 	private int frameSize[] = { 1440, 960 };
 	private int mainImgSize[] = { 1200, 800 };
@@ -65,6 +64,7 @@ public class RegisterFrame extends JFrame {
 		frame = new JFrame("Register Form");
 		frame.setBackground(Color.white);
 		frame.setSize(frameSize[0], frameSize[1]);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // window 창 닫을 시 프로그램 종료
 
 		// 배경이미지 패널 구성
 		ImagePanel bgPanel = new ImagePanel(new ImageIcon(mainImgSrc).getImage());
@@ -82,6 +82,20 @@ public class RegisterFrame extends JFrame {
 
 		// 중복체크 버튼
 		RoundedButton checkIdDuplButton = this.drawCheckIdDuplButton();
+		
+		// 뒤로가기 버튼
+		RoundedButton backBtn = new RoundedButton("BACK");
+		backBtn.setBounds(16, 20, 70, 40);
+		backBtn.setBackground(Color.pink);
+		frame.add(backBtn);
+
+		// 뒤로가기 버튼 클릭시 ALL SEARCH 창 끄기
+		backBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new LoginFrame();
+				frame.dispose();
+			}
+		});
 
 		// 프레임에 메인패널 추가
 		frame.add(checkIdDuplButton);

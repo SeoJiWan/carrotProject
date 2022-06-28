@@ -19,6 +19,7 @@ public class JdbcSuseongMapRepository extends DAO{
 	 */
 	private JdbcSuseongMapRepository() {}
 
+	
 	/*
 	 * Method
 	 */
@@ -35,7 +36,7 @@ public class JdbcSuseongMapRepository extends DAO{
 		try {
 			connect();
 			
-			String sql = "SELECT * FROM suseong_map";
+			String sql = "SELECT * FROM suseong_map ORDER BY emd_cd";
 			ps = conn.prepareStatement(sql);
 			
 			rs = ps.executeQuery();
@@ -56,5 +57,59 @@ public class JdbcSuseongMapRepository extends DAO{
 		}
 		return list;
 	}
+	
+	public SuseongMap selectOneByName(String emdNn) {
+		SuseongMap sMap = null;
+		
+		try {
+			connect();
+			
+			String sql = "SELECT * FROM suseong_map WHERE emd_nn = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, emdNn);
+			
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				sMap = new SuseongMap();
+				
+				sMap.setEmdCd(rs.getInt(1));
+				sMap.setEmdNn(rs.getString(2));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return sMap;
+	} 
+	
+	public SuseongMap selectOneByCode(int code) {
+		SuseongMap sMap = null;
+		
+		try {
+			connect();
+			
+			String sql = "SELECT * FROM suseong_map WHERE emd_cd = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, code);
+			
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				sMap = new SuseongMap();
+				
+				sMap.setEmdCd(rs.getInt(1));
+				sMap.setEmdNn(rs.getString(2));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return sMap;
+	} 
 
 }

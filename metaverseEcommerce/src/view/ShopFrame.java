@@ -32,6 +32,7 @@ public class ShopFrame extends HomeFrame {
 	private int totalPrice;
 	private int saleBtn_X = 15;
 	private int saleBtn_Y = 70;
+	private JFrame searchFrame;
 
 	/*
 	 * Constructor
@@ -50,6 +51,7 @@ public class ShopFrame extends HomeFrame {
 		frame.setBackground(Color.white);
 		frame.setSize(new Dimension(frameSize[0], frameSize[1]));
 		frame.setLayout(null); // layout : null --> setBounds 를 이용해 위치 직접 지정
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // window 창 닫을 시 프로그램 종료
 
 		// 사이드 메뉴바
 		JPanel sidebar = super.drawSidebar();
@@ -91,16 +93,16 @@ public class ShopFrame extends HomeFrame {
 		allSearchBtn.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 
-				JFrame jf = new JFrame("ALL SEARCH");
-				jf.setLayout(null);
-				jf.setBounds(200, 120, 665, 800);
-				jf.setVisible(true);
+				searchFrame = new JFrame("ALL SEARCH");
+				searchFrame.setLayout(null);
+				searchFrame.setBounds(200, 120, 665, 800);
+				searchFrame.setVisible(true);
 
 				JLabel label = new JLabel("# SHOWCASE #");
 				label.setBounds(230, -65, 300, 200);
 				label.setFont(new Font("Arial", Font.BOLD, 23));
 				label.setForeground(Color.orange);
-				jf.add(label);
+				searchFrame.add(label);
 
 				// 전체 검색
 				List<SaleInfo> saleList = saleService.findAllSales(HomeFrame.logInMember.getMemberId());
@@ -110,7 +112,7 @@ public class ShopFrame extends HomeFrame {
 				for (SaleInfo saleInfo : saleList) {
 					RoundedButton drawSaleButton = drawProductButton(saleInfo.getProductName(), saleInfo,
 							saleList.size());
-					jf.add(drawSaleButton);
+					searchFrame.add(drawSaleButton);
 				}
 
 				// 상품 버튼 추가 후 초기값으로 리셋
@@ -119,19 +121,18 @@ public class ShopFrame extends HomeFrame {
 
 				// 상품 등록 버튼
 				RoundedButton postButton = postSaleButton();
-				jf.add(postButton);
+				searchFrame.add(postButton);
 
-				// 뒤로가기
 				// 뒤로가기 버튼
 				RoundedButton backBtn = new RoundedButton("BACK");
 				backBtn.setBounds(16, 20, 70, 40);
 				backBtn.setBackground(Color.pink);
-				jf.add(backBtn);
+				searchFrame.add(backBtn);
 
-				// 뒤로가기 버튼 클릭시 Details 창 끄기
+				// 뒤로가기 버튼 클릭시 ALL SEARCH 창 끄기
 				backBtn.addMouseListener(new MouseAdapter() {
 					public void mouseClicked(MouseEvent e) {
-						jf.dispose();
+						searchFrame.dispose();
 					}
 				});
 			}
@@ -155,16 +156,16 @@ public class ShopFrame extends HomeFrame {
 				String keyword = null;
 				keyword = JOptionPane.showInputDialog(frame, "Input keyword !");
 
-				JFrame jf = new JFrame("KEYWORD SEARCH");
-				jf.setLayout(null);
-				jf.setBounds(200, 120, 665, 800);
-				jf.setVisible(true);
+				searchFrame = new JFrame("KEYWORD SEARCH");
+				searchFrame.setLayout(null);
+				searchFrame.setBounds(200, 120, 665, 800);
+				searchFrame.setVisible(true);
 
 				JLabel label = new JLabel("# SHOWCASE #");
 				label.setBounds(230, -65, 300, 200);
 				label.setFont(new Font("Arial", Font.BOLD, 23));
 				label.setForeground(Color.orange);
-				jf.add(label);
+				searchFrame.add(label);
 
 				// 키워드로 검색
 				List<SaleInfo> saleList = saleService.findAllSalesByKeyword(HomeFrame.logInMember.getMemberId(), keyword);
@@ -174,7 +175,7 @@ public class ShopFrame extends HomeFrame {
 				for (SaleInfo saleInfo : saleList) {
 					RoundedButton drawSaleButton = drawProductButton(saleInfo.getProductName(), saleInfo,
 							saleList.size());
-					jf.add(drawSaleButton);
+					searchFrame.add(drawSaleButton);
 				}
 
 				// 상품 버튼 추가 후 초기값으로 리셋
@@ -183,18 +184,18 @@ public class ShopFrame extends HomeFrame {
 
 				// 상품 등록 버튼
 				RoundedButton postButton = postSaleButton();
-				jf.add(postButton);
+				searchFrame.add(postButton);
 
 				// 뒤로가기 버튼
 				RoundedButton backBtn = new RoundedButton("BACK");
 				backBtn.setBounds(16, 20, 70, 40);
 				backBtn.setBackground(Color.pink);
-				jf.add(backBtn);
+				searchFrame.add(backBtn);
 
-				// 뒤로가기 버튼 클릭시 Details 창 끄기
+				// 뒤로가기 버튼 클릭시 KEYWORD SEARCH 창 끄기
 				backBtn.addMouseListener(new MouseAdapter() {
 					public void mouseClicked(MouseEvent e) {
-						jf.dispose();
+						searchFrame.dispose();
 					}
 				});
 
@@ -215,26 +216,33 @@ public class ShopFrame extends HomeFrame {
 		neighborSearchBtn.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 
-				JFrame jf = new JFrame("NEIGHBOR SEARCH");
-				jf.setLayout(null);
-				jf.setBounds(200, 120, 665, 800);
-				jf.setVisible(true);
+				searchFrame = new JFrame("NEIGHBOR SEARCH");
+				searchFrame.setLayout(null);
+				searchFrame.setBounds(200, 120, 665, 800);
+				searchFrame.setVisible(true);
 
 				JLabel label = new JLabel("# SHOWCASE #");
 				label.setBounds(230, -65, 300, 200);
 				label.setFont(new Font("Arial", Font.BOLD, 23));
 				label.setForeground(Color.orange);
-				jf.add(label);
+				searchFrame.add(label);
 
-				// 전체 검색
-//					saleList = saleService.findAllSales(HomeFrame.logInMember.getMemberId());
-				List<SaleInfo> saleList = saleService.findAllSales(18);
+				//// 주변지역 검색
+				// 현재 로그인된 
+				int loginMemberEmdCd = mapService.findOneByName(HomeFrame.logInMember.getAddress()).getEmdCd();
+				// 주변지역 코드 및 동명 출력
+				System.out.println("loginMemberEmdCd = " + loginMemberEmdCd + "(" + HomeFrame.logInMember.getAddress() + ")");
+				System.out.println("neighborEmdCd = " 
+								+ (loginMemberEmdCd-1) + "(" + mapService.findOneByCode(loginMemberEmdCd-1).getEmdNn() + "), "
+								+ (loginMemberEmdCd+1) + "(" + mapService.findOneByCode(loginMemberEmdCd+1).getEmdNn() + ") ");
+				
+				List<SaleInfo> saleList = saleService.findAllSalesByNeighbor(HomeFrame.logInMember.getMemberId(), loginMemberEmdCd-1, loginMemberEmdCd+1);
 
 				// 패널에 상품 버튼 추가
 				for (SaleInfo saleInfo : saleList) {
 					RoundedButton drawSaleButton = drawProductButton(saleInfo.getProductName(), saleInfo,
 							saleList.size());
-					jf.add(drawSaleButton);
+					searchFrame.add(drawSaleButton);
 				}
 
 				// 상품 버튼 추가 후 초기값으로 리셋
@@ -243,19 +251,19 @@ public class ShopFrame extends HomeFrame {
 
 				// 상품 등록 버튼
 				RoundedButton postButton = postSaleButton();
-				jf.add(postButton);
+				searchFrame.add(postButton);
 
 				// 뒤로가기
 				// 뒤로가기 버튼
 				RoundedButton backBtn = new RoundedButton("BACK");
 				backBtn.setBounds(16, 20, 70, 40);
 				backBtn.setBackground(Color.pink);
-				jf.add(backBtn);
+				searchFrame.add(backBtn);
 
-				// 뒤로가기 버튼 클릭시 Details 창 끄기
+				// 뒤로가기 버튼 클릭시 NEIGHBOR SEARCH 창 끄기
 				backBtn.addMouseListener(new MouseAdapter() {
 					public void mouseClicked(MouseEvent e) {
-						jf.dispose();
+						searchFrame.dispose();
 					}
 				});
 			}
@@ -301,7 +309,7 @@ public class ShopFrame extends HomeFrame {
 
 				// 판매상품의 디테일정보 출력할 text area 생성
 				TextArea textArea = new TextArea();
-				textArea.setBounds(0, 350, 500, 250);
+				textArea.setBounds(0, 300, 500, 300);
 				textArea.setEditable(false); // 읽기 전용
 				textArea.setText(saleInfo.toString()); // 판매상품 정보 쓰기
 				jf.add(textArea);
@@ -383,11 +391,14 @@ public class ShopFrame extends HomeFrame {
 									JOptionPane.showMessageDialog(frame, "Sending message successful !",
 											"Congratulations !", JOptionPane.INFORMATION_MESSAGE);
 									jf3.dispose();
+									jf.dispose();
+									searchFrame.dispose();
 								} else {
 									JOptionPane.showMessageDialog(frame, "Please fill in the message.",
 											"Sending message failed !", JOptionPane.INFORMATION_MESSAGE);
 								}
-
+								
+								
 							}
 						});
 
@@ -497,6 +508,7 @@ public class ShopFrame extends HomeFrame {
 									// 주문 완료 후 구매, 주문 창 다 닫기
 									jf2.dispose();
 									jf.dispose();
+									searchFrame.dispose();
 
 								}
 							}
@@ -636,6 +648,7 @@ public class ShopFrame extends HomeFrame {
 							saleService.createSale(sale);
 
 							jf.dispose();
+							searchFrame.dispose();
 						} else {
 							JOptionPane.showMessageDialog(frame, "Please fill product Info.",
 									"Product resistration failed !", JOptionPane.INFORMATION_MESSAGE);
@@ -651,8 +664,8 @@ public class ShopFrame extends HomeFrame {
 
 	
 	
-	public static void main(String[] args) {
-		new ShopFrame();
-	}
+//	public static void main(String[] args) {
+//		new ShopFrame();
+//	}
 
 }

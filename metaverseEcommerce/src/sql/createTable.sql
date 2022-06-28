@@ -144,6 +144,9 @@ alter table sales add constraint sale_pid_uq unique (product_id);
 alter table messages add constraint ms_pid_fk foreign key (product_id)
 references sales(product_id);
 
+-- productQuantity >= 0 으로 변경
+alter table products drop constraint PRO_QU_CH;
+alter table products add constraint pro_qu_ch check (quantity >= 0);
 
 
 

@@ -12,14 +12,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import domain.Member;
+import repository.jdbc.JdbcMemberRepsitory;
 import repository.jdbc.JdbcMessageRepository;
 import repository.jdbc.JdbcOrderRepository;
 import repository.jdbc.JdbcProductRepository;
 import repository.jdbc.JdbcSaleRepository;
+import repository.jdbc.JdbcSuseongMapRepository;
+import service.MemberService;
 import service.MessageService;
 import service.OrderService;
 import service.ProductService;
 import service.SaleService;
+import service.SuseongMapService;
 
 public class HomeFrame extends JFrame {
 
@@ -28,9 +32,9 @@ public class HomeFrame extends JFrame {
 	 */
 	protected JFrame frame;
 	// 이미지 SRC - 집
-//	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\homeview.jpg";
+	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\homeview.jpg";
 	// 이미지 SRC - 학교
-	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\homeview.jpg";
+//	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\homeview.jpg";
 	// 컴포넌트 크기
 	protected int frameSize[] = { 1440, 960 };
 	protected int mainImgSize[] = { 600, 600 };
@@ -39,10 +43,12 @@ public class HomeFrame extends JFrame {
 	protected static final long serialVersionUID = 1L;
 	protected static Member logInMember;
 	// 서비스 로직
+	protected static MemberService memberService = new MemberService(JdbcMemberRepsitory.getMemberRepository());
 	protected static SaleService saleService = new SaleService(JdbcSaleRepository.getSaleRepository());
 	protected static ProductService productService = new ProductService(JdbcProductRepository.getProductRepository());
 	protected static OrderService orderService = new OrderService(JdbcOrderRepository.getOrderRepository());
 	protected static MessageService messageService = new MessageService(JdbcMessageRepository.getMessageRepository());
+	protected static SuseongMapService mapService = new SuseongMapService(JdbcSuseongMapRepository.getMapRepository());
 	
 
 
@@ -62,6 +68,7 @@ public class HomeFrame extends JFrame {
 		frame.setBackground(Color.white);
 		frame.setSize(new Dimension(frameSize[0], frameSize[1]));
 		frame.setLayout(null); // layout : null --> setBounds 를 이용해 위치 직접 지정
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // window 창 닫을 시 프로그램 종료
 		
 		// 메인 패널
 		ImagePanel bgPanel = new ImagePanel(new ImageIcon(mainImgSrc).getImage());
@@ -102,10 +109,12 @@ public class HomeFrame extends JFrame {
 		RoundedButton btn1 = this.drawButton("HOME", 0, 0);
 		RoundedButton btn2 = this.drawButton("SHOP", 0, sideButtonSize[1]);
 		RoundedButton btn3 = this.drawButton("MY PAGE", 0, sideButtonSize[1]*2);
+		RoundedButton btn4 = this.drawButton("LOGOUT", 0, 860);
 		
 		sidePanel.add(btn1);
 		sidePanel.add(btn2);
 		sidePanel.add(btn3);
+		sidePanel.add(btn4);
 		
 		return sidePanel;
 	}
@@ -137,6 +146,12 @@ public class HomeFrame extends JFrame {
 				
 				if (category.equals("MY PAGE")) {
 					new MyPage();
+					frame.dispose();
+				}
+				
+				if (category.equals("LOGOUT")) {
+					logInMember = null;
+					new LoginFrame();
 					frame.dispose();
 				}
 

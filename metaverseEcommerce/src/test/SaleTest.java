@@ -15,7 +15,7 @@ public class SaleTest {
 		Sale findOneSale = saleService.findOneSale(1);
 		System.out.println(findOneSale);
 		
-		List<SaleInfo> findAllSales = saleService.findAllSales();
+		List<SaleInfo> findAllSales = saleService.findAllSales(1);
 		findAllSales.forEach(System.out::println);
 		System.out.println(findAllSales.size());
 		

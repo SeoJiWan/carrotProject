@@ -24,6 +24,11 @@ public class SuseongMap {
 	public void setEmdNn(String emdNn) {
 		this.emdNn = emdNn;
 	}
+	@Override
+	public String toString() {
+		return "SuseongMap [emdCd=" + emdCd + ", emdNn=" + emdNn + "]";
+	}
+	
 
 	
 }

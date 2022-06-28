@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="service.SaleService"/>
-    <fullyQualifiedTypeName name="java.awt.TextArea"/>
-    <fullyQualifiedTypeName name="javax.swing.JScrollPane"/>
     <fullyQualifiedTypeName name="java.awt.event.MouseAdapter"/>
     <fullyQualifiedTypeName name="oracle.net.aso.l"/>
     <fullyQualifiedTypeName name="java.awt.event.MouseEvent"/>
@@ -31,7 +28,6 @@
     <fullyQualifiedTypeName name="repository.jdbc.JdbcProductRepository"/>
     <fullyQualifiedTypeName name="domain.MessageInfo"/>
     <fullyQualifiedTypeName name="view.RoundedButton"/>
-    <fullyQualifiedTypeName name="java.lang.System"/>
     <fullyQualifiedTypeName name="service.OrderService"/>
     <fullyQualifiedTypeName name="repository.jdbc.JdbcOrderRepository"/>
     <fullyQualifiedTypeName name="java.nio.charset.MalformedInputException"/>
@@ -43,21 +39,25 @@
     <fullyQualifiedTypeName name="view.class01"/>
     <fullyQualifiedTypeName name="javax.swing.JPanel"/>
     <fullyQualifiedTypeName name="java.awt.Font"/>
-    <fullyQualifiedTypeName name="javax.swing.JButton"/>
     <fullyQualifiedTypeName name="view.NotificationWindow"/>
     <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
-    <fullyQualifiedTypeName name="view.HomeFrame"/>
-    <fullyQualifiedTypeName name="javax.swing.JFrame"/>
     <fullyQualifiedTypeName name="java.awt.Color"/>
     <fullyQualifiedTypeName name="javax.swing.JLabel"/>
     <fullyQualifiedTypeName name="java.lang.reflect.InvocationTargetException"/>
     <fullyQualifiedTypeName name="java.sql.SQLException"/>
     <fullyQualifiedTypeName name="repository.jdbc.DAO"/>
-    <fullyQualifiedTypeName name="service.SuseongMapService"/>
-    <fullyQualifiedTypeName name="repository.jdbc.JdbcSuseongMapRepository"/>
     <fullyQualifiedTypeName name="javax.swing.JComboBox"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="java.lang.String"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="service.SuseongMapService"/>
+    <fullyQualifiedTypeName name="repository.jdbc.JdbcSuseongMapRepository"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
+    <fullyQualifiedTypeName name="service.MemberService"/>
+    <fullyQualifiedTypeName name="repository.jdbc.JdbcMemberRepsitory"/>
     <fullyQualifiedTypeName name="domain.SuseongMap"/>
+    <fullyQualifiedTypeName name="javax.swing.JFrame"/>
+    <fullyQualifiedTypeName name="view.HomeFrame"/>
+    <fullyQualifiedTypeName name="javax.swing.JButton"/>
+    <fullyQualifiedTypeName name="view.LoginFrame"/>
 </qualifiedTypeNameHistroy>

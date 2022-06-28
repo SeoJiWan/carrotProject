@@ -43,6 +43,7 @@ public class MyPage extends HomeFrame {
 		frame.setBackground(Color.white);
 		frame.setSize(new Dimension(frameSize[0], frameSize[1]));
 		frame.setLayout(null); // layout : null --> setBounds 를 이용해 위치 직접 지정
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // window 창 닫을 시 프로그램 종료
 
 		// 사이드 메뉴바
 		JPanel sidebar = super.drawSidebar();
@@ -280,6 +281,9 @@ public class MyPage extends HomeFrame {
 //												System.out.println("윈도우 - 메세지 전송 선공");
 												JOptionPane.showMessageDialog(frame, "Sending message successful !", "Congratulations !", JOptionPane.INFORMATION_MESSAGE);
 												jf3.dispose();
+												jf2.dispose();
+												jf1.dispose();
+												
 											}
 											else {
 												JOptionPane.showMessageDialog(frame, "Please fill in the message.", "Sending message failed !", JOptionPane.INFORMATION_MESSAGE);
@@ -438,7 +442,7 @@ public class MyPage extends HomeFrame {
 						// DB에서 구매내역 조회
 						List<MyTrade> myOrders = orderService.findMyOrders(HomeFrame.logInMember.getMemberId());
 //						List<MyTrade> myOrders = orderService.findMyOrders(17);
-						myOrders.forEach(System.out::println);
+//						myOrders.forEach(System.out::println);
 
 						// 카테고리별로 구매내역 패널에 뿌리기
 						int posY = 5;
@@ -558,7 +562,7 @@ public class MyPage extends HomeFrame {
 						// DB에서 판매내역 조회
 						List<MyTrade> mySales = orderService.findMySales(HomeFrame.logInMember.getMemberId());
 //						List<MyTrade> mySales = orderService.findMySales(17);
-						mySales.forEach(System.out::println);
+//						mySales.forEach(System.out::println);
 
 						// 카테고리별로 판매내역 패널에 뿌리기
 						int posY = 5;
@@ -674,7 +678,7 @@ public class MyPage extends HomeFrame {
 						
 						// 구매왕 데이터 받아서 그래프 그리기
 						List<TopInfo> topBuyer = orderService.findTopBuyer();
-						topBuyer.forEach(System.out::println);
+//						topBuyer.forEach(System.out::println);
 						
 						int gapX = 843 / topBuyer.size();
 						int posX = 843 / (topBuyer.size() * 2);

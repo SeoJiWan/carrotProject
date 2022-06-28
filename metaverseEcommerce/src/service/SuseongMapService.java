@@ -26,5 +26,13 @@ public class SuseongMapService {
 	public List<SuseongMap> findAllRegion() {
 		return jdbcSuseongMapRepository.selectAll();
 	}
+	
+	public SuseongMap findOneByName(String emdNn) {
+		return jdbcSuseongMapRepository.selectOneByName(emdNn);
+	}
+	
+	public SuseongMap findOneByCode(int emdCd) {
+		return jdbcSuseongMapRepository.selectOneByCode(emdCd);
+	}
 
 }

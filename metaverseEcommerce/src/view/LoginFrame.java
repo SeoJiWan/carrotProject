@@ -28,9 +28,9 @@ public class LoginFrame extends JFrame{ // 탑레벨 컨테이너, 윈도우 창
 	private JTextField id;
 	private JPasswordField pwd;
 	// 이미지 SRC - 집
-//	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\carrot.png";
+	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\carrot.png";
 	// 이미지 SRC - 학교
-	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\carrot.PNG";
+//	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\carrot.PNG";
 	// 이미지 크기
 	private int frameSize[] = { 1440, 960 };
 	private int mainImgSize[] = { 300, 500 };
@@ -55,12 +55,15 @@ public class LoginFrame extends JFrame{ // 탑레벨 컨테이너, 윈도우 창
 	 */
 	private void initialize() {
 		frame = new JFrame("Login Form");
-
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // window 창 닫을 시 프로그램 종료
+		
 		// 배경이미지 패널 구성
 		ImagePanel bgPanel = new ImagePanel(new ImageIcon(mainImgSrc).getImage());
 		bgPanel.setLayout(null);
 		frame.setBackground(Color.white);
 		frame.setSize(frameSize[0], frameSize[1]);
+		
+		
 
 		// ID, PWD 텍스트 입력창
 		this.drawId(bgPanel);
@@ -106,6 +109,7 @@ public class LoginFrame extends JFrame{ // 탑레벨 컨테이너, 윈도우 창
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				HomeFrame.logInMember = memberService.logIn(id.getText(), Arrays.toString(pwd.getPassword()));
+//				System.out.println("현재 로그인 멤버 : " + HomeFrame.logInMember);
 				if (HomeFrame.logInMember == null) {
 					JOptionPane.showMessageDialog(frame, "Please check ID and PWD.", "Login Failed.", JOptionPane.INFORMATION_MESSAGE);
 					// 입력 창 초기화

@@ -206,21 +206,24 @@ public class JdbcSaleRepository extends DAO implements SaleRepository{
 	}
 	
 	@Override
-	public List<SaleInfo> selectAllByNeighbor(int address) {
+	public List<SaleInfo> selectAllByNeighbor(int loginMemberId, int prevEmdCd, int nextEmdCd) {
 		List<SaleInfo> list = new ArrayList<SaleInfo>();
 
 		try {
 			connect();
 
-			String sql = "SELECT s.sale_id, s.seller_id, m.identification, s.sale_status, p.name, p.quantity, p.price, p.description, m.address, s.product_id, m.address, o.emd_cd "
+			String sql = "SELECT s.sale_id, s.seller_id, m.identification, s.sale_status, p.name, p.quantity, p.price, p.description, m.address, s.product_id, o.emd_cd "
 						+ "FROM sales s "
 						+ "JOIN products p ON (s.product_id = p.product_id) "
 						+ "JOIN members m ON (s.seller_id = m.member_id) "
-						+ "JOIN suseong_map o ON (m.address = o.emd_nn "
+						+ "JOIN suseong_map o ON (m.address = o.emd_nn) "
 						+ "WHERE p.quantity > 0 AND s.seller_id <> ? "
+						+ "AND o.emd_cd BETWEEN ? AND ?"
 						+ "ORDER BY s.product_id desc";
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1, address);
+			ps.setInt(1, loginMemberId);
+			ps.setInt(2, prevEmdCd);
+			ps.setInt(3, nextEmdCd);
 
 			rs = ps.executeQuery();
 
@@ -236,6 +239,7 @@ public class JdbcSaleRepository extends DAO implements SaleRepository{
 				saleInfo.setProductDescription(rs.getString(8));
 				saleInfo.setAddress(rs.getString(9));
 				saleInfo.setProduct_id(rs.getInt(10));
+				saleInfo.setEmdCd(rs.getInt(11));
 				
 				
 				list.add(saleInfo);

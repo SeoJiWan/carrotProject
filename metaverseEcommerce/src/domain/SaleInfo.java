@@ -15,6 +15,7 @@ public class SaleInfo {
 	private String productDescription;
 	private String address;
 	private int product_id;
+	private int emdCd;
 	
 
 	
@@ -81,6 +82,12 @@ public class SaleInfo {
 	public void setProduct_id(int product_id) {
 		this.product_id = product_id;
 	}
+	public int getEmdCd() {
+		return emdCd;
+	}
+	public void setEmdCd(int emdCd) {
+		this.emdCd = emdCd;
+	}
 	@Override
 	public String toString() {
 		return "상품이름\t:\t" + productName +
@@ -88,6 +95,7 @@ public class SaleInfo {
 				"\n\n상품수량\t:\t" + productQuantity +  
 				"\n\n판매자\t:\t" + identification + 
 				"\n\n판매상태\t:\t" + saleStatus +
+				"\n\n판매지역\t:\t" + address +
 				"\n\n상품설명\t:\t" + productDescription;
 	}
 	

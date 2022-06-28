@@ -19,5 +19,5 @@ public interface SaleRepository {
 	
 	List<SaleInfo> selectAllByKeyword(int loginMemberId, String keyword);
 	
-	List<SaleInfo> selectAllByNeighbor(int address);
+	List<SaleInfo> selectAllByNeighbor(int address, int prevEmdCd, int nextEmdCd);
 }
