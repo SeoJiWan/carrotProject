@@ -15,5 +15,5 @@ public interface SaleRepository {
 	
 	Sale selectOne(int saleId);
 	
-	List<SaleInfo> selectAll();
+	List<SaleInfo> selectAll(int loginMemberId);
 }

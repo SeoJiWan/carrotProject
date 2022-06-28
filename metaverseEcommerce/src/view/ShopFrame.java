@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -64,7 +65,8 @@ public class ShopFrame extends HomeFrame {
 		JPanel showcasePanel = this.drawShowcasePanel();
 
 		// 상품등록 버튼
-		RoundedButton postButton = postSaleButton();
+		RoundedButton postButton = this.postSaleButton();
+		
 
 		// 프레임에 패널 추가
 		frame.add(postButton);
@@ -83,8 +85,31 @@ public class ShopFrame extends HomeFrame {
 		panel.setLayout(null);
 //		panel.setBackground(Color.green);
 		
-
-		List<SaleInfo> saleList = this.getSaleList();
+		// 상품 전체 검색
+		RoundedButton allSearchBtn = new RoundedButton("ALL");
+		allSearchBtn.setBounds(400, 25, 70, 40);
+		allSearchBtn.setBackground(Color.pink);
+		frame.add(allSearchBtn);
+		
+		// 상품 키워드로 검색
+		RoundedButton keywordSearchBtn = new RoundedButton("KEYWORD");
+		keywordSearchBtn.setBounds(480, 25, 70, 40);
+		keywordSearchBtn.setBackground(Color.pink);
+		frame.add(keywordSearchBtn);
+		
+		// 상품 주변지역으로 검색
+		RoundedButton neighborSearchBtn = new RoundedButton("NEIGHBOR");
+		neighborSearchBtn.setBounds(560, 25, 70, 40);
+		neighborSearchBtn.setBackground(Color.pink);
+		frame.add(neighborSearchBtn);
+		
+		/*
+		 * 전체, 키워드, 주변지역 검색 처리
+		 */
+		// 전체 검색
+//		List<SaleInfo> saleList = saleService.findAllSales(HomeFrame.logInMember.getMemberId());
+		List<SaleInfo> saleList = saleService.findAllSales(18);
+		
 		// 패널에 상품 버튼 추가
 		for (SaleInfo saleInfo : saleList) {
 			RoundedButton drawSaleButton = this.drawSaleButton(saleInfo.getProductName(), saleInfo, saleList.size());
@@ -194,9 +219,6 @@ public class ShopFrame extends HomeFrame {
 						sendBtn.setBackground(Color.pink);
 						jf3.add(sendBtn);
 
-						/*
-						 * 예외처리 필요 -> 빈 메세지 전송 불가
-						 */
 						// 보내기 버튼 클릭시 message DB 저장
 						sendBtn.addMouseListener(new MouseAdapter() {
 							public void mouseClicked(MouseEvent e) {
@@ -207,12 +229,18 @@ public class ShopFrame extends HomeFrame {
 								message.setContent(textCreateMessage.getText());
 								message.setProductId(saleInfo.getProduct_id());
 
-								System.out.println(message.toString());
+//								System.out.println(message.toString());
 
-								messageService.writeMessage(message);
-								System.out.println("윈도우 - 메세지 전송 선공");
-
-								jf3.dispose();
+								// 빈 메세지 예외처리
+								if (textCreateMessage.getText().length() != 0) {
+									messageService.writeMessage(message);
+//									System.out.println("윈도우 - 메세지 전송 선공");
+									JOptionPane.showMessageDialog(frame, "Sending message successful !", "Congratulations !", JOptionPane.INFORMATION_MESSAGE);
+									jf3.dispose();
+								}
+								else {
+									JOptionPane.showMessageDialog(frame, "Please fill in the message.", "Sending message failed !", JOptionPane.INFORMATION_MESSAGE);
+								}
 
 							}
 						});
@@ -220,6 +248,7 @@ public class ShopFrame extends HomeFrame {
 					}
 				});
 
+				
 				// 주문버튼
 				RoundedButton orderBtn = new RoundedButton("ORDER");
 				orderBtn.setBounds(400, 610, 60, 40);
@@ -287,9 +316,7 @@ public class ShopFrame extends HomeFrame {
 							}
 						});
 
-						/*
-						 * 예외처리 필요 -> orderQuantity 는 0 이 되면 안됨., orderQuantity 가 현 재고보다 많으면 안됨.
-						 */
+						
 						// 구매 버튼
 						RoundedButton buyBtn = new RoundedButton("BUY");
 						buyBtn.setBounds(400, 213, 60, 40);
@@ -300,31 +327,35 @@ public class ShopFrame extends HomeFrame {
 						buyBtn.addMouseListener(new MouseAdapter() {
 							public void mouseClicked(MouseEvent e) {
 
-								Order order = new Order();
-								order.setBuyerId(HomeFrame.logInMember.getMemberId());
-								order.setSaleId(saleInfo.getSaleId());
-								
-								// orderQuantity == 0 예외처리
-								if (quantity != 0) {
-									order.setOrderQuantity(quantity);
-								}
-								else {
+								// 주문수량 0개 or 미기입 예외처리
+								if (quantity == 0 || textCreateQuantity.getText().length() == 0) {
 									// 예외처리 팝업
+									JOptionPane.showMessageDialog(frame, "Zero and empty must not exist.", "Order failed !", JOptionPane.INFORMATION_MESSAGE);
 									return;
 								}
-								order.setOrderPrice(totalPrice);
-
-								orderService.createOrder(order);
-//								System.out.println(order.toString());
-
-								// 주문 완료 후 구매, 주문 창 다 닫기
-								jf2.dispose();
-								jf.dispose();
+								// (주문수량 > 상품재고) 인 경우 예외처리
+								else if (quantity > saleInfo.getProductQuantity()) {
+									JOptionPane.showMessageDialog(frame, "The product is out of stock.", "Order failed !", JOptionPane.INFORMATION_MESSAGE);
+								}
+								else {
+									Order order = new Order();
+									order.setBuyerId(HomeFrame.logInMember.getMemberId());
+									order.setSaleId(saleInfo.getSaleId());
+									order.setOrderQuantity(quantity);
+									order.setOrderPrice(totalPrice);
+									
+									JOptionPane.showMessageDialog(frame, "Order successfully.", "Congratulation !", JOptionPane.INFORMATION_MESSAGE);
+									orderService.createOrder(order);
+//									System.out.println(order.toString());
+									
+									// 주문 완료 후 구매, 주문 창 다 닫기
+									jf2.dispose();
+									jf.dispose();
+								
+								}
 							}
 						});
-
 					}
-
 				});
 			}
 		});
@@ -332,14 +363,10 @@ public class ShopFrame extends HomeFrame {
 		return saleBtn;
 	}
 
-	// 판매상품 리스트 가져오기
-	private List<SaleInfo> getSaleList() {
-		return saleService.findAllSales();
-	}
 
 	// 판매등록 버튼
 	private RoundedButton postSaleButton() {
-		RoundedButton saleRegBtn = new RoundedButton("SALE REG");
+		RoundedButton saleRegBtn = new RoundedButton("REGISTER");
 		saleRegBtn.setBounds(200, 25, 70, 40);
 		saleRegBtn.setBackground(Color.pink);
 
@@ -434,31 +461,38 @@ public class ShopFrame extends HomeFrame {
 				postBtn.setBackground(Color.pink);
 				jf.add(postBtn);
 
-				/*
-				 * 예외처리 필요 -> null값 등록 x
-				 */
 				// 등록 버튼 클릭시 DB에 product, sale 저장
 				postBtn.addMouseListener(new MouseAdapter() {
 					public void mouseClicked(MouseEvent e) {
-						// 상품 등록
-						Product product = new Product();
-						product.setName(textCreateName.getText());
-						product.setPrice(Integer.parseInt(textCreatePrice.getText()));
-						product.setQuantity(Integer.parseInt(textCreateQuantity.getText()));
-						product.setDescription(textCreateDiscription.getText());
+						
+						// 상품정보 미기입 예외처리
+						if (textCreateName.getText().length() != 0 && textCreatePrice.getText().length() != 0 &&
+								textCreateQuantity.getText().length() != 0 && textCreateDiscription.getText().length() != 0) {
+							// 상품 등록
+							Product product = new Product();
+							product.setName(textCreateName.getText());
+							product.setPrice(Integer.parseInt(textCreatePrice.getText()));
+							product.setQuantity(Integer.parseInt(textCreateQuantity.getText()));
+							product.setDescription(textCreateDiscription.getText());
+							
+							JOptionPane.showMessageDialog(frame, "Product resistration successfully", "Congratulations !", JOptionPane.INFORMATION_MESSAGE);
+							productService.saveProduct(product);
+							
+							int productId = productService.findOneProductById(textCreateName.getText()).getProductId();
+							// 판매 등록
+							Sale sale = new Sale();
+							sale.setSellerId(HomeFrame.logInMember.getMemberId());
+							sale.setProductId(productId);
+							sale.setSaleStatus("판매중");
 
-						productService.saveProduct(product);
+							saleService.createSale(sale);
 
-						int productId = productService.findOneProductById(textCreateName.getText()).getProductId();
-						// 판매 등록
-						Sale sale = new Sale();
-						sale.setSellerId(HomeFrame.logInMember.getMemberId());
-						sale.setProductId(productId);
-						sale.setSaleStatus("판매중");
-
-						saleService.createSale(sale);
-
-						jf.dispose();
+							jf.dispose();
+						}
+						else {
+							JOptionPane.showMessageDialog(frame, "Please fill product Info.", "Product resistration failed !", JOptionPane.INFORMATION_MESSAGE);
+							return;
+						}
 					}
 				});
 				jf.add(panel);

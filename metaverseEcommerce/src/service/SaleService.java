@@ -46,7 +46,7 @@ public class SaleService {
 	}
 	
 	// 판매 전체조회
-	public List<SaleInfo> findAllSales() {
-		return saleRepository.selectAll();
+	public List<SaleInfo> findAllSales(int loginMemberId) {
+		return saleRepository.selectAll(loginMemberId);
 	}
 }

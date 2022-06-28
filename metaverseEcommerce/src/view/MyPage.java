@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -254,12 +255,21 @@ public class MyPage extends HomeFrame {
 											message.setContent(textCreateMessage.getText());
 											message.setProductId(msi.getProductId());
 
-											System.out.println(message.toString());
-
-											messageService.writeMessage(message);
-											System.out.println("윈도우 - 메세지 전송 선공");
-
-											jf3.dispose();
+//											System.out.println(message.toString());
+//											messageService.writeMessage(message);
+//											System.out.println("윈도우 - 메세지 전송 선공");
+//											jf3.dispose();
+											
+											// 빈 메세지 예외처리
+											if (textCreateMessage.getText().length() != 0) {
+												messageService.writeMessage(message);
+//												System.out.println("윈도우 - 메세지 전송 선공");
+												JOptionPane.showMessageDialog(frame, "Sending message successful !", "Congratulations !", JOptionPane.INFORMATION_MESSAGE);
+												jf3.dispose();
+											}
+											else {
+												JOptionPane.showMessageDialog(frame, "Please fill in the message.", "Sending message failed !", JOptionPane.INFORMATION_MESSAGE);
+											}
 										}
 									});
 

@@ -30,9 +30,9 @@ public class RegisterFrame extends JFrame {
 	private JTextField address;
 	private JTextField phonNum;
 	// 이미지 SRC - 집
-	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\reg.PNG";
+//	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\reg.PNG";
 	// 이미지 SRC - 학교
-//	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\reg.PNG";
+	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\reg.PNG";
 	// 이미지 크기
 	private int frameSize[] = { 1440, 960 };
 	private int mainImgSize[] = { 1200, 800 };
@@ -137,23 +137,29 @@ public class RegisterFrame extends JFrame {
 				member.setPhoneNumber(phonNum.getText());
 				member.setAddress(address.getText());
 				
-				int memberId = memberService.joinMember(member);
+				System.out.println(id.getText().length());
+				System.out.println(pwd.getPassword().length);
+				System.out.println(phonNum.getText().length());
+				System.out.println(address.getText().length());
 				
-				if (memberId != -1) {
-//					System.out.println("윈도우 - 회원가입성공");
-					JOptionPane.showMessageDialog(frame, "Registration Successfully.", "Congratulations!", JOptionPane.INFORMATION_MESSAGE);
-					new LoginFrame();
-					frame.dispose();
-					
+				// 회원가입 유저정보 미기입 예외처리
+				if (id.getText().length() != 0 && pwd.getPassword().length != 0 
+						&& phonNum.getText().length() != 0 && address.getText().length() != 0) {
+					int memberId = memberService.joinMember(member);
+					if (memberId != -1) {
+//						System.out.println("윈도우 - 회원가입성공");
+						// 알림 팝업창
+						JOptionPane.showMessageDialog(frame, "Registration Successfully.", "Congratulations !", JOptionPane.INFORMATION_MESSAGE);
+						new LoginFrame();
+						frame.dispose();
+					}
 				}
 				else {
-//					System.out.println("윈도우 - 회원가입실패");
-					if (id.getText().length() != 0 && pwd.getPassword().length != 0 
-							&& phonNum.getText().length() != 0 && address.getText().length() != 0) {
+						// 알림 팝업창
 						JOptionPane.showMessageDialog(frame, "Please fill your Info.", "Registration Failed.", JOptionPane.INFORMATION_MESSAGE);
+						return;
+						
 					}
-					return;
-				}
 				
 			}
 		});
@@ -177,11 +183,16 @@ public class RegisterFrame extends JFrame {
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String getId = id.getText();
+				// 중복확인 예외처리
 				boolean isIdDupl = memberService.checkIdDupl(getId);
 				if (isIdDupl) {
-					System.out.println("윈도우 - 이미 존재하는 아이디입니다.");
+//					System.out.println("윈도우 - 이미 존재하는 아이디입니다.");
+					JOptionPane.showMessageDialog(frame, "This ID already exists.", "Duplicate check failed !", JOptionPane.INFORMATION_MESSAGE);
+					id.setText("");
+					
 				} else {
-					System.out.println("윈도우 - 사용가능한 아이디입니다.");
+//					System.out.println("윈도우 - 사용가능한 아이디입니다.");
+					JOptionPane.showMessageDialog(frame, "This ID is available.", "Congratulations !", JOptionPane.INFORMATION_MESSAGE);
 				}
 
 			}

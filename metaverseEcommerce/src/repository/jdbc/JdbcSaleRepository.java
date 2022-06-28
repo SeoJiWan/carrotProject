@@ -119,7 +119,7 @@ public class JdbcSaleRepository extends DAO implements SaleRepository{
 	}
 
 	@Override
-	public List<SaleInfo> selectAll() {
+	public List<SaleInfo> selectAll(int loginMemberId) {
 		List<SaleInfo> list = new ArrayList<SaleInfo>();
 
 		try {
@@ -129,8 +129,10 @@ public class JdbcSaleRepository extends DAO implements SaleRepository{
 						+ "FROM sales s "
 						+ "JOIN products p ON (s.product_id = p.product_id) "
 						+ "JOIN members m ON (s.seller_id = m.member_id) "
+						+ "WHERE p.quantity > 0 AND s.seller_id <> ? "
 						+ "ORDER BY s.product_id desc";
 			ps = conn.prepareStatement(sql);
+			ps.setInt(1, loginMemberId);
 
 			rs = ps.executeQuery();
 

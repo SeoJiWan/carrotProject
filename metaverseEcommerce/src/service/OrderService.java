@@ -45,12 +45,8 @@ public class OrderService {
 		// 주문 후 수량 계산 로직 - 엔티티에 비즈니스 로직으로 있음.
 		product.removeQuantity(order.getOrderQuantity(), product);
 		// 주문 후 수량으로 product tbl 업데이트
-		if (product.getQuantity() == 0) {
-			productRepository.delete(product.getProductId());
-		}
-		else {
-			productRepository.update(product.getProductId(), product.getQuantity());
-		}
+		productRepository.update(product.getProductId(), product.getQuantity());
+		
 		
 	}
 	
