@@ -147,5 +147,66 @@ references sales(product_id);
 
 
 
+----------------------------------------------------
+-- 수성구 지도 테이블 생성
+create table suseong_map (emd_cd number(10) unique,
+                          emd_nn varchar2(50));
+
+insert into suseong_map
+values (27260124 ,'이천동');
+insert into suseong_map
+values (27260113 ,'범물동');
+insert into suseong_map
+values (27260112 ,'지산동');
+insert into suseong_map
+values (27260105 ,'수성동3가');
+insert into suseong_map
+values (27260104 ,'수성동2가');
+insert into suseong_map
+values (27260115 ,'매호동');
+insert into suseong_map
+values (27260116 ,'성동');
+insert into suseong_map
+values (27260101 ,'범어동');
+insert into suseong_map
+values (27260109 ,'상동');
+insert into suseong_map
+values (27260111 ,'두산동');
+insert into suseong_map
+values (27260107 ,'황금동');
+insert into suseong_map
+values (27260110 ,'파동');
+insert into suseong_map
+values (27260103 ,'수성동1가');
+insert into suseong_map
+values (27260108 ,'중동');
+insert into suseong_map
+values (27260106 ,'수성동4가');
+insert into suseong_map
+values (27260119 ,'욱수동');
+insert into suseong_map
+values (27260117 ,'사월동');
+insert into suseong_map
+values (27260120 ,'노변동');
+insert into suseong_map
+values (27260126 ,'가천동');
+insert into suseong_map
+values (27260125 ,'고모동');
+insert into suseong_map
+values (27260122 ,'삼덕동');
+insert into suseong_map
+values (27260102 ,'만촌동');
+insert into suseong_map
+values (27260118 ,'신매동');
+insert into suseong_map
+values (27260127 ,'대흥동');
+insert into suseong_map
+values (27260114 ,'시지동');
+
+commit;
+
+
+
+
 
 

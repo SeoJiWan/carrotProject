@@ -53,3 +53,33 @@ join products p on (s.product_id = p.product_id)
 join members m on (o.buyer_id = m.member_id)
 WHERE s.seller_id = ?; -- 로그인 아이디
 
+
+
+---------- 상품검색 -----------
+-- 상품 검색
+SELECT s.sale_id, s.seller_id, m.identification, s.sale_status, p.name, p.quantity, p.price, p.description, m.address, s.product_id
+FROM sales s
+JOIN products p ON (s.product_id = p.product_id)
+JOIN members m ON (s.seller_id = m.member_id)
+WHERE p.quantity > 0 AND s.seller_id <> ?
+ORDER BY s.product_id desc;
+
+-- 키워드로 상품 검색
+SELECT s.sale_id, s.seller_id, m.identification, s.sale_status, p.name, p.quantity, p.price, p.description, m.address, s.product_id
+FROM sales s 
+JOIN products p ON (s.product_id = p.product_id) 
+JOIN members m ON (s.seller_id = m.member_id) 
+WHERE p.quantity > 0 
+AND s.seller_id <> ? 
+AND p.name like '%'||?||'%'
+ORDER BY s.product_id desc;
+
+-- 주변지역의 상품만 검색
+SELECT s.sale_id, s.seller_id, m.identification, s.sale_status, p.name, p.quantity, p.price, p.description, m.address, s.product_id, m.address, o.emd_cd
+FROM sales s
+JOIN products p ON (s.product_id = p.product_id)
+JOIN members m ON (s.seller_id = m.member_id)
+JOIN suseong_map o ON (m.address = o.emd_nn)
+WHERE p.quantity > 0 AND s.seller_id <> 18
+ORDER BY s.product_id desc;
+

@@ -49,4 +49,11 @@ public class SaleService {
 	public List<SaleInfo> findAllSales(int loginMemberId) {
 		return saleRepository.selectAll(loginMemberId);
 	}
+	
+	// 판매 키워드조회
+	public List<SaleInfo> findAllSalesByKeyword(int loginMemberId, String keyword) {
+		return saleRepository.selectAllByKeyword(loginMemberId, keyword);
+	}
+	
+	
 }

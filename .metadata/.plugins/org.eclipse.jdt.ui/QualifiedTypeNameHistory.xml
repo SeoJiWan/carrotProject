@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="view.aaa"/>
-    <fullyQualifiedTypeName name="java.awt.Container"/>
-    <fullyQualifiedTypeName name="java.awt.Dimension"/>
-    <fullyQualifiedTypeName name="view.ShopFrame"/>
-    <fullyQualifiedTypeName name="javax.xml.crypto.dsig.keyinfo.RetrievalMethod"/>
-    <fullyQualifiedTypeName name="java.awt.BorderLayout"/>
-    <fullyQualifiedTypeName name="javax.swing.JScrollBar"/>
     <fullyQualifiedTypeName name="service.SaleService"/>
     <fullyQualifiedTypeName name="java.awt.TextArea"/>
     <fullyQualifiedTypeName name="javax.swing.JScrollPane"/>
@@ -16,7 +9,6 @@
     <fullyQualifiedTypeName name="java.awt.TextField"/>
     <fullyQualifiedTypeName name="java.awt.GridLayout"/>
     <fullyQualifiedTypeName name="java.awt.Label"/>
-    <fullyQualifiedTypeName name="java.lang.String"/>
     <fullyQualifiedTypeName name="javax.swing.JTextArea"/>
     <fullyQualifiedTypeName name="service.ProductService"/>
     <fullyQualifiedTypeName name="domain.Product"/>
@@ -37,11 +29,8 @@
     <fullyQualifiedTypeName name="domain.SaleInfo"/>
     <fullyQualifiedTypeName name="repository.inerface.ProductRepository"/>
     <fullyQualifiedTypeName name="repository.jdbc.JdbcProductRepository"/>
-    <fullyQualifiedTypeName name="view.HomeFrame"/>
     <fullyQualifiedTypeName name="domain.MessageInfo"/>
     <fullyQualifiedTypeName name="view.RoundedButton"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="java.lang.System"/>
     <fullyQualifiedTypeName name="service.OrderService"/>
     <fullyQualifiedTypeName name="repository.jdbc.JdbcOrderRepository"/>
@@ -53,11 +42,22 @@
     <fullyQualifiedTypeName name="view.paintJPanelEx"/>
     <fullyQualifiedTypeName name="view.class01"/>
     <fullyQualifiedTypeName name="javax.swing.JPanel"/>
-    <fullyQualifiedTypeName name="javax.swing.JFrame"/>
-    <fullyQualifiedTypeName name="javax.swing.JLabel"/>
     <fullyQualifiedTypeName name="java.awt.Font"/>
     <fullyQualifiedTypeName name="javax.swing.JButton"/>
-    <fullyQualifiedTypeName name="java.awt.Color"/>
     <fullyQualifiedTypeName name="view.NotificationWindow"/>
     <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+    <fullyQualifiedTypeName name="view.HomeFrame"/>
+    <fullyQualifiedTypeName name="javax.swing.JFrame"/>
+    <fullyQualifiedTypeName name="java.awt.Color"/>
+    <fullyQualifiedTypeName name="javax.swing.JLabel"/>
+    <fullyQualifiedTypeName name="java.lang.reflect.InvocationTargetException"/>
+    <fullyQualifiedTypeName name="java.sql.SQLException"/>
+    <fullyQualifiedTypeName name="repository.jdbc.DAO"/>
+    <fullyQualifiedTypeName name="service.SuseongMapService"/>
+    <fullyQualifiedTypeName name="repository.jdbc.JdbcSuseongMapRepository"/>
+    <fullyQualifiedTypeName name="javax.swing.JComboBox"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.lang.String"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="domain.SuseongMap"/>
 </qualifiedTypeNameHistroy>

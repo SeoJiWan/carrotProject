@@ -21,7 +21,7 @@ import domain.Product;
 import domain.Sale;
 import domain.SaleInfo;
 
-public class ShopFrame extends HomeFrame {
+public class ShopFrame_preVersion extends HomeFrame {
 
 	/*
 	 * Field
@@ -30,16 +30,19 @@ public class ShopFrame extends HomeFrame {
 	private static int quantity;
 	private JTextField textCreateTotalPrice;
 	private int totalPrice;
-	private int saleBtn_X = 15;
-	private int saleBtn_Y = 70;
+	private int saleBtn_X = 0;
+	private int saleBtn_Y = 0;
+	
 
+	
 	/*
 	 * Constructor
 	 */
-	public ShopFrame() {
+	public ShopFrame_preVersion() {
 
 	}
 
+	
 	/*
 	 * Method
 	 */
@@ -53,232 +56,62 @@ public class ShopFrame extends HomeFrame {
 
 		// 사이드 메뉴바
 		JPanel sidebar = super.drawSidebar();
+		
+		JLabel label = new JLabel("# SHOWCASE #");
+		label.setBounds(360, -10, 300, 200);
+		label.setFont(new Font("Arial", Font.BOLD, 23));
+		
 
-		// search condition 라벨
-		JLabel label = new JLabel("SEARCH CONDITION   :");
-		label.setBounds(200, -45, 300, 200);
-		label.setFont(new Font("Arial", Font.BOLD, 19));
-		label.setForeground(Color.orange);
-		// 쇼케이스1 - 전체 검색
-		RoundedButton frame1 = this.drawShowcaseFrame1();
-		// 쇼케이스2 - 키워드로 검색
-		RoundedButton frame2 = this.drawShowcaseFrame2();
-		// 쇼케이스3 - 주변지역 검색
-		RoundedButton frame3 = this.drawShowcaseFrame3();
+		// 쇼케이스
+		JPanel showcasePanel = this.drawShowcasePanel();
 
 		// 상품등록 버튼
+		RoundedButton postButton = this.postSaleButton();
+		
 
 		// 프레임에 패널 추가
-		frame.add(frame3);
-		frame.add(frame2);
-		frame.add(frame1);
-		frame.add(label);
+		frame.add(postButton);
 		frame.add(sidebar);
+		frame.add(label);
+		frame.add(showcasePanel);
 		frame.setVisible(true);
+
 	}
 
-	/*
-	 * 전체, 키워드, 주변지역 검색 처리
-	 */
-	// 전체 검색
-	private RoundedButton drawShowcaseFrame1() {
+	
+	private JPanel drawShowcasePanel() {
+		// 쇼케이스 담을 패널 - 그리드 레이아웃 - 버튼형식 -> null 로 변경
+		JPanel panel = new JPanel();
+		panel.setBounds(200, 120, 600, 750);
+		panel.setLayout(null);
+//		panel.setBackground(Color.green);
+	
+		List<SaleInfo> saleList = saleService.findAllSales(18);
+		
+		// 패널에 상품 버튼 추가
+		for (SaleInfo saleInfo : saleList) {
+			RoundedButton drawSaleButton = this.drawSaleButton(saleInfo.getProductName(), saleInfo, saleList.size());
+			panel.add(drawSaleButton);
 
-		// 상품 전체 검색 버튼
-		RoundedButton allSearchBtn = new RoundedButton("ALL");
-		allSearchBtn.setBounds(430, 35, 70, 40);
-		allSearchBtn.setBackground(Color.yellow);
+		}
 
-		allSearchBtn.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-
-				JFrame jf = new JFrame("ALL SEARCH");
-				jf.setLayout(null);
-				jf.setBounds(200, 120, 665, 800);
-				jf.setVisible(true);
-
-				JLabel label = new JLabel("# SHOWCASE #");
-				label.setBounds(230, -65, 300, 200);
-				label.setFont(new Font("Arial", Font.BOLD, 23));
-				label.setForeground(Color.orange);
-				jf.add(label);
-
-				// 전체 검색
-				List<SaleInfo> saleList = saleService.findAllSales(HomeFrame.logInMember.getMemberId());
-//				List<SaleInfo> saleList = saleService.findAllSales(18);
-
-				// 패널에 상품 버튼 추가
-				for (SaleInfo saleInfo : saleList) {
-					RoundedButton drawSaleButton = drawProductButton(saleInfo.getProductName(), saleInfo,
-							saleList.size());
-					jf.add(drawSaleButton);
-				}
-
-				// 상품 버튼 추가 후 초기값으로 리셋
-				saleBtn_X = 15;
-				saleBtn_Y = 70;
-
-				// 상품 등록 버튼
-				RoundedButton postButton = postSaleButton();
-				jf.add(postButton);
-
-				// 뒤로가기
-				// 뒤로가기 버튼
-				RoundedButton backBtn = new RoundedButton("BACK");
-				backBtn.setBounds(16, 20, 70, 40);
-				backBtn.setBackground(Color.pink);
-				jf.add(backBtn);
-
-				// 뒤로가기 버튼 클릭시 Details 창 끄기
-				backBtn.addMouseListener(new MouseAdapter() {
-					public void mouseClicked(MouseEvent e) {
-						jf.dispose();
-					}
-				});
-			}
-		});
-
-		return allSearchBtn;
+		return panel;
 	}
-
-	// 키워드로 검색
-	private RoundedButton drawShowcaseFrame2() {
-
-		// 상품 키워드로 검색 버튼
-		RoundedButton keywordSearchBtn = new RoundedButton("KEYWORD");
-		keywordSearchBtn.setBounds(530, 35, 70, 40);
-		keywordSearchBtn.setBackground(Color.yellow);
-
-		keywordSearchBtn.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-
-				// 키워드 입력할 기본 입력창 팝업
-				String keyword = null;
-				keyword = JOptionPane.showInputDialog(frame, "Input keyword !");
-
-				JFrame jf = new JFrame("KEYWORD SEARCH");
-				jf.setLayout(null);
-				jf.setBounds(200, 120, 665, 800);
-				jf.setVisible(true);
-
-				JLabel label = new JLabel("# SHOWCASE #");
-				label.setBounds(230, -65, 300, 200);
-				label.setFont(new Font("Arial", Font.BOLD, 23));
-				label.setForeground(Color.orange);
-				jf.add(label);
-
-				// 키워드로 검색
-				List<SaleInfo> saleList = saleService.findAllSalesByKeyword(HomeFrame.logInMember.getMemberId(), keyword);
-//				List<SaleInfo> saleList = saleService.findAllSalesByKeyword(18, keyword);
-
-				// 패널에 상품 버튼 추가
-				for (SaleInfo saleInfo : saleList) {
-					RoundedButton drawSaleButton = drawProductButton(saleInfo.getProductName(), saleInfo,
-							saleList.size());
-					jf.add(drawSaleButton);
-				}
-
-				// 상품 버튼 추가 후 초기값으로 리셋
-				saleBtn_X = 15;
-				saleBtn_Y = 70;
-
-				// 상품 등록 버튼
-				RoundedButton postButton = postSaleButton();
-				jf.add(postButton);
-
-				// 뒤로가기 버튼
-				RoundedButton backBtn = new RoundedButton("BACK");
-				backBtn.setBounds(16, 20, 70, 40);
-				backBtn.setBackground(Color.pink);
-				jf.add(backBtn);
-
-				// 뒤로가기 버튼 클릭시 Details 창 끄기
-				backBtn.addMouseListener(new MouseAdapter() {
-					public void mouseClicked(MouseEvent e) {
-						jf.dispose();
-					}
-				});
-
-			}
-		});
-
-		return keywordSearchBtn;
-	}
-
-	// 주변지역검색
-	private RoundedButton drawShowcaseFrame3() {
-
-		// 상품 전체 검색 버튼
-		RoundedButton neighborSearchBtn = new RoundedButton("NEIGHBOR");
-		neighborSearchBtn.setBounds(630, 35, 70, 40);
-		neighborSearchBtn.setBackground(Color.yellow);
-
-		neighborSearchBtn.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-
-				JFrame jf = new JFrame("NEIGHBOR SEARCH");
-				jf.setLayout(null);
-				jf.setBounds(200, 120, 665, 800);
-				jf.setVisible(true);
-
-				JLabel label = new JLabel("# SHOWCASE #");
-				label.setBounds(230, -65, 300, 200);
-				label.setFont(new Font("Arial", Font.BOLD, 23));
-				label.setForeground(Color.orange);
-				jf.add(label);
-
-				// 전체 검색
-//					saleList = saleService.findAllSales(HomeFrame.logInMember.getMemberId());
-				List<SaleInfo> saleList = saleService.findAllSales(18);
-
-				// 패널에 상품 버튼 추가
-				for (SaleInfo saleInfo : saleList) {
-					RoundedButton drawSaleButton = drawProductButton(saleInfo.getProductName(), saleInfo,
-							saleList.size());
-					jf.add(drawSaleButton);
-				}
-
-				// 상품 버튼 추가 후 초기값으로 리셋
-				saleBtn_X = 15;
-				saleBtn_Y = 70;
-
-				// 상품 등록 버튼
-				RoundedButton postButton = postSaleButton();
-				jf.add(postButton);
-
-				// 뒤로가기
-				// 뒤로가기 버튼
-				RoundedButton backBtn = new RoundedButton("BACK");
-				backBtn.setBounds(16, 20, 70, 40);
-				backBtn.setBackground(Color.pink);
-				jf.add(backBtn);
-
-				// 뒤로가기 버튼 클릭시 Details 창 끄기
-				backBtn.addMouseListener(new MouseAdapter() {
-					public void mouseClicked(MouseEvent e) {
-						jf.dispose();
-					}
-				});
-			}
-		});
-
-		return neighborSearchBtn;
-	}
-
 
 	// 상품 버튼 생성
-	private RoundedButton drawProductButton(String name, SaleInfo saleInfo, int numOfBtn) { //
+	private RoundedButton drawSaleButton(String name, SaleInfo saleInfo, int numOfBtn) { //
 		RoundedButton saleBtn = new RoundedButton(name);
 
 		saleBtn.setFont(new Font("Arial", Font.BOLD, 18));
 		saleBtn.setSize(100, 100);
-
+		
 		saleBtn.setLocation(saleBtn_X, saleBtn_Y);
 		saleBtn_X += 130;
-		if (saleBtn_X >= 650) {
-			saleBtn_X = 15;
+		if (saleBtn_X >= 520) {
+			saleBtn_X = 0;
 			saleBtn_Y += 130;
 		}
-
+		
 		saleBtn.setBackground(Color.LIGHT_GRAY);
 
 		// 상품 버튼 클리시 디테일창 팝업
@@ -288,7 +121,7 @@ public class ShopFrame extends HomeFrame {
 				JFrame jf = new JFrame("Details");
 				jf.setLayout(null);
 //				jf.setBackground(Color.BLACK);
-				jf.setBounds(900, 120, 500, 700);
+				jf.setBounds(850, 90, 500, 700);
 				jf.setVisible(true);
 
 				/*
@@ -331,7 +164,7 @@ public class ShopFrame extends HomeFrame {
 						JFrame jf3 = new JFrame("MESSAGE");
 						jf3.setLayout(null);
 //						jf.setBackground(Color.BLACK);
-						jf3.setBounds(900, 120, 500, 350);
+						jf3.setBounds(850, 120, 500, 350);
 						jf3.setVisible(true);
 
 						String title = "Send a message to ' " + saleInfo.getIdentification() + " '";
@@ -380,12 +213,11 @@ public class ShopFrame extends HomeFrame {
 								if (textCreateMessage.getText().length() != 0) {
 									messageService.writeMessage(message);
 //									System.out.println("윈도우 - 메세지 전송 선공");
-									JOptionPane.showMessageDialog(frame, "Sending message successful !",
-											"Congratulations !", JOptionPane.INFORMATION_MESSAGE);
+									JOptionPane.showMessageDialog(frame, "Sending message successful !", "Congratulations !", JOptionPane.INFORMATION_MESSAGE);
 									jf3.dispose();
-								} else {
-									JOptionPane.showMessageDialog(frame, "Please fill in the message.",
-											"Sending message failed !", JOptionPane.INFORMATION_MESSAGE);
+								}
+								else {
+									JOptionPane.showMessageDialog(frame, "Please fill in the message.", "Sending message failed !", JOptionPane.INFORMATION_MESSAGE);
 								}
 
 							}
@@ -394,6 +226,7 @@ public class ShopFrame extends HomeFrame {
 					}
 				});
 
+				
 				// 주문버튼
 				RoundedButton orderBtn = new RoundedButton("ORDER");
 				orderBtn.setBounds(400, 610, 60, 40);
@@ -405,10 +238,10 @@ public class ShopFrame extends HomeFrame {
 					public void mouseClicked(MouseEvent e) {
 
 						// 주문 입력폼
-						JFrame jf2 = new JFrame("ORDER");
+						JFrame jf2 = new JFrame("Order");
 						jf2.setLayout(null);
 						jf2.setBackground(Color.BLACK);
-						jf2.setBounds(900, 120, 500, 300);
+						jf2.setBounds(850, 120, 500, 300);
 						jf2.setVisible(true);
 
 						// 구매상품 수량 입력
@@ -461,6 +294,7 @@ public class ShopFrame extends HomeFrame {
 							}
 						});
 
+						
 						// 구매 버튼
 						RoundedButton buyBtn = new RoundedButton("BUY");
 						buyBtn.setBounds(400, 213, 60, 40);
@@ -474,30 +308,28 @@ public class ShopFrame extends HomeFrame {
 								// 주문수량 0개 or 미기입 예외처리
 								if (quantity == 0 || textCreateQuantity.getText().length() == 0) {
 									// 예외처리 팝업
-									JOptionPane.showMessageDialog(frame, "Zero and empty must not exist.",
-											"Order failed !", JOptionPane.INFORMATION_MESSAGE);
+									JOptionPane.showMessageDialog(frame, "Zero and empty must not exist.", "Order failed !", JOptionPane.INFORMATION_MESSAGE);
 									return;
 								}
 								// (주문수량 > 상품재고) 인 경우 예외처리
 								else if (quantity > saleInfo.getProductQuantity()) {
-									JOptionPane.showMessageDialog(frame, "The product is out of stock.",
-											"Order failed !", JOptionPane.INFORMATION_MESSAGE);
-								} else {
+									JOptionPane.showMessageDialog(frame, "The product is out of stock.", "Order failed !", JOptionPane.INFORMATION_MESSAGE);
+								}
+								else {
 									Order order = new Order();
 									order.setBuyerId(HomeFrame.logInMember.getMemberId());
 									order.setSaleId(saleInfo.getSaleId());
 									order.setOrderQuantity(quantity);
 									order.setOrderPrice(totalPrice);
-
-									JOptionPane.showMessageDialog(frame, "Order successfully.", "Congratulation !",
-											JOptionPane.INFORMATION_MESSAGE);
+									
+									JOptionPane.showMessageDialog(frame, "Order successfully.", "Congratulation !", JOptionPane.INFORMATION_MESSAGE);
 									orderService.createOrder(order);
 //									System.out.println(order.toString());
-
+									
 									// 주문 완료 후 구매, 주문 창 다 닫기
 									jf2.dispose();
 									jf.dispose();
-
+								
 								}
 							}
 						});
@@ -509,11 +341,11 @@ public class ShopFrame extends HomeFrame {
 		return saleBtn;
 	}
 
-	
+
 	// 판매등록 버튼
 	private RoundedButton postSaleButton() {
 		RoundedButton saleRegBtn = new RoundedButton("REGISTER");
-		saleRegBtn.setBounds(565, 20, 70, 40);
+		saleRegBtn.setBounds(200, 25, 70, 40);
 		saleRegBtn.setBackground(Color.pink);
 
 		// 판매등록 버튼 클릭시 상품등록 폼 팝업
@@ -610,22 +442,20 @@ public class ShopFrame extends HomeFrame {
 				// 등록 버튼 클릭시 DB에 product, sale 저장
 				postBtn.addMouseListener(new MouseAdapter() {
 					public void mouseClicked(MouseEvent e) {
-
+						
 						// 상품정보 미기입 예외처리
-						if (textCreateName.getText().length() != 0 && textCreatePrice.getText().length() != 0
-								&& textCreateQuantity.getText().length() != 0
-								&& textCreateDiscription.getText().length() != 0) {
+						if (textCreateName.getText().length() != 0 && textCreatePrice.getText().length() != 0 &&
+								textCreateQuantity.getText().length() != 0 && textCreateDiscription.getText().length() != 0) {
 							// 상품 등록
 							Product product = new Product();
 							product.setName(textCreateName.getText());
 							product.setPrice(Integer.parseInt(textCreatePrice.getText()));
 							product.setQuantity(Integer.parseInt(textCreateQuantity.getText()));
 							product.setDescription(textCreateDiscription.getText());
-
-							JOptionPane.showMessageDialog(frame, "Product resistration successfully",
-									"Congratulations !", JOptionPane.INFORMATION_MESSAGE);
+							
+							JOptionPane.showMessageDialog(frame, "Product resistration successfully", "Congratulations !", JOptionPane.INFORMATION_MESSAGE);
 							productService.saveProduct(product);
-
+							
 							int productId = productService.findOneProductById(textCreateName.getText()).getProductId();
 							// 판매 등록
 							Sale sale = new Sale();
@@ -636,9 +466,9 @@ public class ShopFrame extends HomeFrame {
 							saleService.createSale(sale);
 
 							jf.dispose();
-						} else {
-							JOptionPane.showMessageDialog(frame, "Please fill product Info.",
-									"Product resistration failed !", JOptionPane.INFORMATION_MESSAGE);
+						}
+						else {
+							JOptionPane.showMessageDialog(frame, "Please fill product Info.", "Product resistration failed !", JOptionPane.INFORMATION_MESSAGE);
 							return;
 						}
 					}
@@ -649,10 +479,9 @@ public class ShopFrame extends HomeFrame {
 		return saleRegBtn;
 	}
 
-	
-	
+
 	public static void main(String[] args) {
-		new ShopFrame();
+		new ShopFrame_preVersion();
 	}
 
 }

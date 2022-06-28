@@ -127,7 +127,7 @@ public class JdbcMessageRepository extends DAO implements MessageRepository {
 		try {
 			connect();
 
-			String sql = "SELECT m.identification, t.content, p.name, t.send_date, t.sender_id, t.product_id "
+			String sql = "SELECT m.identification, t.content, p.name, t.send_date, t.sender_id, t.product_id, t.message_id "
 						+ "FROM messages t "
 						+ "JOIN members m ON (m.member_id = t.sender_id) "
 						+ "JOIN products p ON (p.product_id = t.product_id)"
@@ -147,6 +147,7 @@ public class JdbcMessageRepository extends DAO implements MessageRepository {
 				messageInfo.setSendDate(rs.getDate(4));
 				messageInfo.setSenderId(rs.getInt(5));
 				messageInfo.setProductId(rs.getInt(6));
+				messageInfo.setMessageId(rs.getInt(7));
 				
 				list.add(messageInfo);
 			}

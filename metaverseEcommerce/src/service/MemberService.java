@@ -60,14 +60,14 @@ public class MemberService {
 	}
 	
 	// 아이디 중복확인
-	public boolean checkIdDupl(String identification) {
+	public int checkIdDupl(String identification) {
 		Member member = memberRepository.checkIdDupl(identification);
 		
 		if (member != null) {
-			return true; // 중복
+			return 1; // 중복
 		}
 		else {
-			return false; // 중복x
+			return 0; // 중복x
 		}
 	}
 }

@@ -6,16 +6,23 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import domain.Member;
+import domain.SuseongMap;
 import repository.jdbc.JdbcMemberRepsitory;
+import repository.jdbc.JdbcSuseongMapRepository;
 import service.MemberService;
+import service.SuseongMapService;
 
 public class RegisterFrame extends JFrame {
 
@@ -29,6 +36,8 @@ public class RegisterFrame extends JFrame {
 	private JPasswordField pwd;
 	private JTextField address;
 	private JTextField phonNum;
+	private JComboBox<String> box;
+	int isIdDupl = 1; // 1: 중복, 0: 중복X
 	// 이미지 SRC - 집
 //	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\reg.PNG";
 	// 이미지 SRC - 학교
@@ -39,18 +48,16 @@ public class RegisterFrame extends JFrame {
 	private int textSize[] = { 260, 40 };
 	private int registerButtonSize[] = { 220, 55 };
 	// memberService
-	private MemberService memberService;
-	
+	private MemberService memberService = new MemberService(JdbcMemberRepsitory.getMemberRepository());
+	private SuseongMapService mapService = new SuseongMapService(JdbcSuseongMapRepository.getMapRepository());
 
 	/*
 	 * Constructor
 	 */
 	public RegisterFrame() {
 		initialize();
-		memberService = new MemberService(JdbcMemberRepsitory.getMemberRepository());
 	}
 
-	
 	/*
 	 * Method
 	 */
@@ -97,22 +104,42 @@ public class RegisterFrame extends JFrame {
 		bgPanel.add(pwd);
 	}
 
-	// ADDRESS 텍스트 입력창
-	private void drawAddress(ImagePanel bgPanel) {
-		address = new JTextField();
-		address.setBounds(frameSize[0] / 2 - textSize[0] / 2, 490, textSize[0], textSize[1]);
-		bgPanel.add(address);
-	}
-
 	// PHONE NUMBER 텍스트 입력창
 	private void drawPhoneNum(ImagePanel bgPanel) {
 		phonNum = new JTextField();
-		phonNum.setBounds(frameSize[0] / 2 - textSize[0] / 2, 570, textSize[0], textSize[1]);
+		phonNum.setBounds(frameSize[0] / 2 - textSize[0] / 2, 490, textSize[0], textSize[1]);
 		bgPanel.add(phonNum);
+	}
+
+	// ADDRESS 텍스트 입력창
+	private void drawAddress(ImagePanel bgPanel) {
+		address = new JTextField();
+		address.setBounds(frameSize[0] / 2 - textSize[0] / 2, 570, textSize[0], textSize[1]);
+
+		// 지역 기입 콤보박스
+		List<SuseongMap> allRegion = mapService.findAllRegion();
+		List<String> regionName = new ArrayList<String>();
+		for (SuseongMap region : allRegion) {
+			regionName.add(region.getEmdNn());
+		}
+		box = new JComboBox<String>(regionName.toArray(new String[regionName.size()]));
+		box.setBounds(frameSize[0] / 2 + textSize[0] / 2, 570, textSize[0] - 150, textSize[1]);
+		
+		// 콤보박스 클릭시 address에 세팅
+		box.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				address.setText(box.getSelectedItem().toString());
+			}
+		});
+
+		
+		bgPanel.add(box);
+		bgPanel.add(address);
 	}
 
 	// REGISTER 버튼 이미지로
 	private RoundedButton drawRegisterButton() {
+		
 		RoundedButton btn = new RoundedButton("REGISTER");
 		btn.setLocation(frameSize[0] / 2 - registerButtonSize[0] / 2, 650);
 		btn.setSize(registerButtonSize[0], registerButtonSize[1]);
@@ -123,44 +150,47 @@ public class RegisterFrame extends JFrame {
 		btn.setBorderPainted(false);
 		btn.setFocusPainted(false);
 
-		/*
-		 * 예외처리 필요 -> 입력값 4개중 하나라도 null 값이 있으면 회원가입 x
-		 */
 		// REGISTER 버튼 클릭시 동작
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// 회원가입
 				Member member = new Member();
-				
+
 				member.setIdentification(id.getText());
 				member.setPassword(Arrays.toString(pwd.getPassword()));
 				member.setPhoneNumber(phonNum.getText());
 				member.setAddress(address.getText());
-				
-				System.out.println(id.getText().length());
-				System.out.println(pwd.getPassword().length);
-				System.out.println(phonNum.getText().length());
-				System.out.println(address.getText().length());
-				
+
+//				System.out.println(id.getText().length());
+//				System.out.println(pwd.getPassword().length);
+//				System.out.println(phonNum.getText().length());
+//				System.out.println(address.getText().length());
+
 				// 회원가입 유저정보 미기입 예외처리
-				if (id.getText().length() != 0 && pwd.getPassword().length != 0 
-						&& phonNum.getText().length() != 0 && address.getText().length() != 0) {
-					int memberId = memberService.joinMember(member);
-					if (memberId != -1) {
+				if (isIdDupl != 1) {
+					if (id.getText().length() != 0 && pwd.getPassword().length != 0 && phonNum.getText().length() != 0
+							&& address.getText().length() != 0) {
+						int memberId = memberService.joinMember(member);
+						if (memberId != -1) {
 //						System.out.println("윈도우 - 회원가입성공");
+							// 알림 팝업창
+							JOptionPane.showMessageDialog(frame, "Registration Successfully.", "Congratulations !",
+									JOptionPane.INFORMATION_MESSAGE);
+							new LoginFrame();
+							frame.dispose();
+						}
+					} else {
 						// 알림 팝업창
-						JOptionPane.showMessageDialog(frame, "Registration Successfully.", "Congratulations !", JOptionPane.INFORMATION_MESSAGE);
-						new LoginFrame();
-						frame.dispose();
-					}
-				}
-				else {
-						// 알림 팝업창
-						JOptionPane.showMessageDialog(frame, "Please fill your Info.", "Registration Failed.", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(frame, "Please fill your Info.", "Registration Failed.",
+								JOptionPane.INFORMATION_MESSAGE);
 						return;
 						
 					}
-				
+				}
+				else {
+					JOptionPane.showMessageDialog(frame, "Check the duplication first.", "Registration Failed.", JOptionPane.INFORMATION_MESSAGE);
+				}
+
 			}
 		});
 
@@ -182,17 +212,20 @@ public class RegisterFrame extends JFrame {
 		// Check Duplication 버튼 클릭시 동작
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				String getId = id.getText();
 				// 중복확인 예외처리
-				boolean isIdDupl = memberService.checkIdDupl(getId);
-				if (isIdDupl) {
+				isIdDupl = memberService.checkIdDupl(getId);
+				if (isIdDupl == 1) {
 //					System.out.println("윈도우 - 이미 존재하는 아이디입니다.");
-					JOptionPane.showMessageDialog(frame, "This ID already exists.", "Duplicate check failed !", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "This ID already exists.", "Duplicate check failed !",
+							JOptionPane.INFORMATION_MESSAGE);
 					id.setText("");
-					
+
 				} else {
 //					System.out.println("윈도우 - 사용가능한 아이디입니다.");
-					JOptionPane.showMessageDialog(frame, "This ID is available.", "Congratulations !", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "This ID is available.", "Congratulations !",
+							JOptionPane.INFORMATION_MESSAGE);
 				}
 
 			}
@@ -201,8 +234,6 @@ public class RegisterFrame extends JFrame {
 		return btn;
 	}
 
-	
-	
 	class ImagePanel extends JPanel {
 		// 워닝 방지 코드
 		private static final long serialVersionUID = 1L;
@@ -213,8 +244,8 @@ public class RegisterFrame extends JFrame {
 		}
 
 		public void paintComponent(Graphics g) {
-			g.drawImage(img, (frameSize[0] / 2) - (mainImgSize[0] / 2 + 20), (frameSize[1] / 2) - (mainImgSize[1] / 2 + 150),
-					mainImgSize[0], mainImgSize[1], null);
+			g.drawImage(img, (frameSize[0] / 2) - (mainImgSize[0] / 2 + 20),
+					(frameSize[1] / 2) - (mainImgSize[1] / 2 + 150), mainImgSize[0], mainImgSize[1], null);
 		}
 	}
 

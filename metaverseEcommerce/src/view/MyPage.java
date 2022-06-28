@@ -183,7 +183,7 @@ public class MyPage extends HomeFrame {
 
 							// 뒤로가기 버튼
 							RoundedButton backBtn = new RoundedButton("BACK");
-							backBtn.setBounds(300, 30, 60, 40);
+							backBtn.setBounds(220, 30, 60, 40);
 							backBtn.setBackground(Color.pink);
 							jf2.add(backBtn);
 
@@ -191,6 +191,23 @@ public class MyPage extends HomeFrame {
 							backBtn.addMouseListener(new MouseAdapter() {
 								public void mouseClicked(MouseEvent e) {
 									jf2.dispose();
+								}
+							});
+							
+							// 메세지 삭제 버튼
+							RoundedButton deleteBtn = new RoundedButton("DELETE");
+							deleteBtn.setBounds(310, 30, 60, 40);
+							deleteBtn.setBackground(Color.pink);
+							jf2.add(deleteBtn);
+
+							// 메세지 삭제 버튼 클릭
+							deleteBtn.addMouseListener(new MouseAdapter() {
+								public void mouseClicked(MouseEvent e) {
+									
+									messageService.deleteMessage(msi.getMessageId());
+									JOptionPane.showMessageDialog(frame, "Delete message successful !", "Congratulations !", JOptionPane.INFORMATION_MESSAGE);
+									jf2.dispose();
+									jf1.dispose();
 								}
 							});
 
@@ -225,9 +242,9 @@ public class MyPage extends HomeFrame {
 
 									// 뒤로가기 버튼
 									RoundedButton backBtn = new RoundedButton("BACK");
-									backBtn.setBounds(300, 30, 60, 40);
+									backBtn.setBounds(300, 20, 60, 40);
 									backBtn.setBackground(Color.pink);
-									jf2.add(backBtn);
+									jf3.add(backBtn);
 
 									// 뒤로가기 클릭
 									backBtn.addMouseListener(new MouseAdapter() {
@@ -238,13 +255,10 @@ public class MyPage extends HomeFrame {
 
 									// 보내기 버튼
 									RoundedButton sendBtn = new RoundedButton("SEND");
-									sendBtn.setBounds(400, 30, 60, 40);
+									sendBtn.setBounds(400, 20, 60, 40);
 									sendBtn.setBackground(Color.pink);
 									jf3.add(sendBtn);
 
-									/*
-									 * 예외처리 필요 -> null값 등록 x
-									 */
 									// 답장 버튼 클릭시 DB에 message 저장
 									sendBtn.addMouseListener(new MouseAdapter() {
 										public void mouseClicked(MouseEvent e) {

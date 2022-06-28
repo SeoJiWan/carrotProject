@@ -159,4 +159,92 @@ public class JdbcSaleRepository extends DAO implements SaleRepository{
 		}
 		return list;
 	}
+	
+	@Override
+	public List<SaleInfo> selectAllByKeyword(int loginMemberId, String keyword) {
+		List<SaleInfo> list = new ArrayList<SaleInfo>();
+
+		try {
+			connect();
+
+			String sql = "SELECT s.sale_id, s.seller_id, m.identification, s.sale_status, p.name, p.quantity, p.price, p.description, m.address, s.product_id "
+						+ "FROM sales s "
+						+ "JOIN products p ON (s.product_id = p.product_id) "
+						+ "JOIN members m ON (s.seller_id = m.member_id) "
+						+ "WHERE p.quantity > 0 "
+						+ "AND s.seller_id <> ? "
+						+ "AND p.name like '%'||?||'%'"
+						+ "ORDER BY s.product_id desc";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, loginMemberId);
+			ps.setString(2, keyword);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				SaleInfo saleInfo = new SaleInfo();
+				saleInfo.setSaleId(rs.getInt(1));
+				saleInfo.setSellerId(rs.getInt(2));
+				saleInfo.setIdentification(rs.getString(3));
+				saleInfo.setSaleStatus(rs.getString(4));
+				saleInfo.setProductName(rs.getString(5));
+				saleInfo.setProductQuantity(rs.getInt(6));
+				saleInfo.setProductPrice(rs.getInt(7));
+				saleInfo.setProductDescription(rs.getString(8));
+				saleInfo.setAddress(rs.getString(9));
+				saleInfo.setProduct_id(rs.getInt(10));
+				
+				
+				list.add(saleInfo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return list;
+	}
+	
+	@Override
+	public List<SaleInfo> selectAllByNeighbor(int address) {
+		List<SaleInfo> list = new ArrayList<SaleInfo>();
+
+		try {
+			connect();
+
+			String sql = "SELECT s.sale_id, s.seller_id, m.identification, s.sale_status, p.name, p.quantity, p.price, p.description, m.address, s.product_id, m.address, o.emd_cd "
+						+ "FROM sales s "
+						+ "JOIN products p ON (s.product_id = p.product_id) "
+						+ "JOIN members m ON (s.seller_id = m.member_id) "
+						+ "JOIN suseong_map o ON (m.address = o.emd_nn "
+						+ "WHERE p.quantity > 0 AND s.seller_id <> ? "
+						+ "ORDER BY s.product_id desc";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, address);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				SaleInfo saleInfo = new SaleInfo();
+				saleInfo.setSaleId(rs.getInt(1));
+				saleInfo.setSellerId(rs.getInt(2));
+				saleInfo.setIdentification(rs.getString(3));
+				saleInfo.setSaleStatus(rs.getString(4));
+				saleInfo.setProductName(rs.getString(5));
+				saleInfo.setProductQuantity(rs.getInt(6));
+				saleInfo.setProductPrice(rs.getInt(7));
+				saleInfo.setProductDescription(rs.getString(8));
+				saleInfo.setAddress(rs.getString(9));
+				saleInfo.setProduct_id(rs.getInt(10));
+				
+				
+				list.add(saleInfo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return list;
+	}
 }

@@ -16,4 +16,8 @@ public interface SaleRepository {
 	Sale selectOne(int saleId);
 	
 	List<SaleInfo> selectAll(int loginMemberId);
+	
+	List<SaleInfo> selectAllByKeyword(int loginMemberId, String keyword);
+	
+	List<SaleInfo> selectAllByNeighbor(int address);
 }
