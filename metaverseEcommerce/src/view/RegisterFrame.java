@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -38,9 +39,9 @@ public class RegisterFrame extends JFrame {
 	private JComboBox<String> box;
 	int isIdDupl = 1; // 1: 중복, 0: 중복X
 	// 이미지 SRC - 집
-	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\reg.PNG";
+//	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\reg.PNG";
 	// 이미지 SRC - 학교
-//	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\reg.PNG";
+	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\reg.PNG";
 	// 이미지 크기
 	private int frameSize[] = { 1440, 960 };
 	private int mainImgSize[] = { 1200, 800 };
@@ -82,7 +83,7 @@ public class RegisterFrame extends JFrame {
 
 		// 중복체크 버튼
 		RoundedButton checkIdDuplButton = this.drawCheckIdDuplButton();
-		
+
 		// 뒤로가기 버튼
 		RoundedButton backBtn = new RoundedButton("BACK");
 		backBtn.setBounds(16, 20, 70, 40);
@@ -97,7 +98,14 @@ public class RegisterFrame extends JFrame {
 			}
 		});
 
+		// made by 라벨 추가
+		JLabel madeBy = new JLabel("@  made by wana");
+		madeBy.setBounds(1250, 800, 300, 200);
+		madeBy.setFont(new Font("Arial", Font.BOLD, 19));
+		madeBy.setForeground(Color.orange);
+
 		// 프레임에 메인패널 추가
+		frame.add(madeBy);
 		frame.add(checkIdDuplButton);
 		frame.add(registerButton);
 		frame.getContentPane().add(bgPanel);
@@ -138,7 +146,7 @@ public class RegisterFrame extends JFrame {
 		}
 		box = new JComboBox<String>(regionName.toArray(new String[regionName.size()]));
 		box.setBounds(frameSize[0] / 2 + textSize[0] / 2, 570, textSize[0] - 150, textSize[1]);
-		
+
 		// 콤보박스 클릭시 address에 세팅
 		box.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -146,14 +154,13 @@ public class RegisterFrame extends JFrame {
 			}
 		});
 
-		
 		bgPanel.add(box);
 		bgPanel.add(address);
 	}
 
 	// REGISTER 버튼 이미지로
 	private RoundedButton drawRegisterButton() {
-		
+
 		RoundedButton btn = new RoundedButton("REGISTER");
 		btn.setLocation(frameSize[0] / 2 - registerButtonSize[0] / 2, 650);
 		btn.setSize(registerButtonSize[0], registerButtonSize[1]);
@@ -198,11 +205,11 @@ public class RegisterFrame extends JFrame {
 						JOptionPane.showMessageDialog(frame, "Please fill your Info.", "Registration Failed.",
 								JOptionPane.INFORMATION_MESSAGE);
 						return;
-						
+
 					}
-				}
-				else {
-					JOptionPane.showMessageDialog(frame, "Check the duplication first.", "Registration Failed.", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(frame, "Check the duplication first.", "Registration Failed.",
+							JOptionPane.INFORMATION_MESSAGE);
 				}
 
 			}
@@ -226,7 +233,7 @@ public class RegisterFrame extends JFrame {
 		// Check Duplication 버튼 클릭시 동작
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				String getId = id.getText();
 				// 중복확인 예외처리
 				isIdDupl = memberService.checkIdDupl(getId);

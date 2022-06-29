@@ -125,7 +125,7 @@ public class JdbcSaleRepository extends DAO implements SaleRepository{
 		try {
 			connect();
 
-			String sql = "SELECT s.sale_id, s.seller_id, m.identification, s.sale_status, p.name, p.quantity, p.price, p.description, m.address, s.product_id "
+			String sql = "SELECT s.sale_id, s.seller_id, m.identification, s.sale_status, p.name, p.quantity, p.price, p.description, m.address, s.product_id, p.image "
 						+ "FROM sales s "
 						+ "JOIN products p ON (s.product_id = p.product_id) "
 						+ "JOIN members m ON (s.seller_id = m.member_id) "
@@ -148,6 +148,7 @@ public class JdbcSaleRepository extends DAO implements SaleRepository{
 				saleInfo.setProductDescription(rs.getString(8));
 				saleInfo.setAddress(rs.getString(9));
 				saleInfo.setProduct_id(rs.getInt(10));
+				saleInfo.setProductImage(rs.getString(11));
 				
 				
 				list.add(saleInfo);
@@ -167,7 +168,7 @@ public class JdbcSaleRepository extends DAO implements SaleRepository{
 		try {
 			connect();
 
-			String sql = "SELECT s.sale_id, s.seller_id, m.identification, s.sale_status, p.name, p.quantity, p.price, p.description, m.address, s.product_id "
+			String sql = "SELECT s.sale_id, s.seller_id, m.identification, s.sale_status, p.name, p.quantity, p.price, p.description, m.address, s.product_id, p.image  "
 						+ "FROM sales s "
 						+ "JOIN products p ON (s.product_id = p.product_id) "
 						+ "JOIN members m ON (s.seller_id = m.member_id) "
@@ -193,6 +194,7 @@ public class JdbcSaleRepository extends DAO implements SaleRepository{
 				saleInfo.setProductDescription(rs.getString(8));
 				saleInfo.setAddress(rs.getString(9));
 				saleInfo.setProduct_id(rs.getInt(10));
+				saleInfo.setProductImage(rs.getString(11));
 				
 				
 				list.add(saleInfo);
@@ -212,7 +214,7 @@ public class JdbcSaleRepository extends DAO implements SaleRepository{
 		try {
 			connect();
 
-			String sql = "SELECT s.sale_id, s.seller_id, m.identification, s.sale_status, p.name, p.quantity, p.price, p.description, m.address, s.product_id, o.emd_cd "
+			String sql = "SELECT s.sale_id, s.seller_id, m.identification, s.sale_status, p.name, p.quantity, p.price, p.description, m.address, s.product_id, o.emd_cd, p.image  "
 						+ "FROM sales s "
 						+ "JOIN products p ON (s.product_id = p.product_id) "
 						+ "JOIN members m ON (s.seller_id = m.member_id) "
@@ -240,6 +242,7 @@ public class JdbcSaleRepository extends DAO implements SaleRepository{
 				saleInfo.setAddress(rs.getString(9));
 				saleInfo.setProduct_id(rs.getInt(10));
 				saleInfo.setEmdCd(rs.getInt(11));
+				saleInfo.setProductImage(rs.getString(12));
 				
 				
 				list.add(saleInfo);

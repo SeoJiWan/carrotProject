@@ -38,12 +38,13 @@ public class JdbcProductRepository extends DAO implements ProductRepository {
 			connect();
 			
 			String sql = "INSERT INTO products "
-						+ "VALUES (products_seq.nextval ,?, ?, ?, ?)";
+						+ "VALUES (products_seq.nextval ,?, ?, ?, ?, ?)";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, product.getName());
 			ps.setInt(2, product.getQuantity());
 			ps.setInt(3, product.getPrice());
 			ps.setString(4, product.getDescription());
+			ps.setString(5, product.getImage());
 			
 			int result = ps.executeUpdate();
 			
@@ -127,11 +128,13 @@ public class JdbcProductRepository extends DAO implements ProductRepository {
 			
 			if (rs.next()) {
 				product = new Product();
+				
 				product.setProductId(rs.getInt(1));
 				product.setName(rs.getString(2));
 				product.setQuantity(rs.getInt(3));
 				product.setPrice(rs.getInt(4));
 				product.setDescription(rs.getString(5));
+				product.setImage(rs.getString(6));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -161,6 +164,7 @@ public class JdbcProductRepository extends DAO implements ProductRepository {
 				product.setQuantity(rs.getInt(3));
 				product.setPrice(rs.getInt(4));
 				product.setDescription(rs.getString(5));
+				product.setImage(rs.getString(6));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -189,6 +193,7 @@ public class JdbcProductRepository extends DAO implements ProductRepository {
 				product.setQuantity(rs.getInt(3));
 				product.setPrice(rs.getInt(4));
 				product.setDescription(rs.getString(5));
+				product.setImage(rs.getString(6));
 				
 				list.add(product);
 			}

@@ -16,10 +16,10 @@ public class DAO {
 	 * Field
 	 */
 	// DB configuration
-	private String driver;
-	private String url;
-	private String id;
-	private String pwd;
+	private String driver = "oracle.jdbc.driver.OracleDriver";
+	private String url = "jdbc:oracle:thin:@localhost:1521:xe";
+	private String id = "carrot";
+	private String pwd = "carrot";
 	// 공통 사용 필드
 	protected Connection conn;
 	protected PreparedStatement ps;
@@ -30,27 +30,27 @@ public class DAO {
 	/*
 	 * Method
 	 */
-	private void dbConfig() {
-		String src = "config/db.properties";
-		Properties properties = new Properties();
-		
-		try {
-			String path = ClassLoader.getSystemClassLoader().getResource(src).getPath();
-			properties.load(new FileInputStream(path));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		driver = properties.getProperty("driver");
-		url = properties.getProperty("url");
-		id = properties.getProperty("id");
-		pwd = properties.getProperty("pwd");
-	}
+//	private void dbConfig() {
+//		String src = "config/db.properties";
+//		Properties properties = new Properties();
+//		
+//		try {
+//			String path = ClassLoader.getSystemClassLoader().getResource(src).getPath();
+//			properties.load(new FileInputStream(path));
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		driver = properties.getProperty("driver");
+//		url = properties.getProperty("url");
+//		id = properties.getProperty("id");
+//		pwd = properties.getProperty("pwd");
+//	}
 	
 	public void connect() {
-		dbConfig();
+//		dbConfig();
 		
 		try {
 			Class.forName(driver);

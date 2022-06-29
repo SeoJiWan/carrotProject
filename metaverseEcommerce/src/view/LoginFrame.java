@@ -10,6 +10,7 @@ import java.util.Arrays;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -28,17 +29,17 @@ public class LoginFrame extends JFrame{ // 탑레벨 컨테이너, 윈도우 창
 	private JTextField id;
 	private JPasswordField pwd;
 	// 이미지 SRC - 집
-	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\carrot.png";
+//	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\carrot.png";
 	// 이미지 SRC - 학교
-//	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\carrot.PNG";
+	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\carrot.PNG";
 	// 이미지 크기
 	private int frameSize[] = { 1440, 960 };
 	private int mainImgSize[] = { 300, 500 };
 	private int textSize[] = { 260, 40 };
 	private int loginImgsize[] = { 220, 55 };
 	// memberService
-	private MemberService memberService;
-	// 로그인 멤버
+	private MemberService memberService = new MemberService(JdbcMemberRepsitory.getMemberRepository());;
+	
 	
 
 	/*
@@ -46,7 +47,6 @@ public class LoginFrame extends JFrame{ // 탑레벨 컨테이너, 윈도우 창
 	 */
 	public LoginFrame() {
 		initialize();
-		memberService = new MemberService(JdbcMemberRepsitory.getMemberRepository());
 	}
 
 	
@@ -63,7 +63,11 @@ public class LoginFrame extends JFrame{ // 탑레벨 컨테이너, 윈도우 창
 		frame.setBackground(Color.white);
 		frame.setSize(frameSize[0], frameSize[1]);
 		
-		
+//		Icon icon = new ImageIcon("D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\ev6.jpg");
+//		JButton imgBtn = new JButton();
+//		imgBtn.setIcon(icon);
+//		imgBtn.setBounds(0, 0, 500, 300);
+//		frame.add(imgBtn);
 
 		// ID, PWD 텍스트 입력창
 		this.drawId(bgPanel);
@@ -74,8 +78,15 @@ public class LoginFrame extends JFrame{ // 탑레벨 컨테이너, 윈도우 창
 
 		// SIGN UP 버튼
 		JButton signupButton = this.drawSignupButton();
+		
+		// made by 라벨 추가
+		JLabel madeBy = new JLabel("@  made by wana");
+		madeBy.setBounds(1250, 800, 300, 200);
+		madeBy.setFont(new Font("Arial", Font.BOLD, 19));
+		madeBy.setForeground(Color.orange);
 
 		// 프레임에 메인패널 추가
+		frame.add(madeBy);
 		frame.add(signupButton);
 		frame.add(logInButton);
 		frame.getContentPane().add(bgPanel);

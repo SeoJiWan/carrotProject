@@ -3,12 +3,17 @@ package view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -68,9 +73,14 @@ public class ShopFrame extends HomeFrame {
 		// 쇼케이스3 - 주변지역 검색
 		RoundedButton frame3 = this.drawShowcaseFrame3();
 
-		// 상품등록 버튼
+		// made by 라벨 추가
+		JLabel madeBy = new JLabel("@  made by wana");
+		madeBy.setBounds(1250, 800, 300, 200);
+		madeBy.setFont(new Font("Arial", Font.BOLD, 19));
+		madeBy.setForeground(Color.orange);
 
 		// 프레임에 패널 추가
+		frame.add(madeBy);
 		frame.add(frame3);
 		frame.add(frame2);
 		frame.add(frame1);
@@ -168,7 +178,8 @@ public class ShopFrame extends HomeFrame {
 				searchFrame.add(label);
 
 				// 키워드로 검색
-				List<SaleInfo> saleList = saleService.findAllSalesByKeyword(HomeFrame.logInMember.getMemberId(), keyword);
+				List<SaleInfo> saleList = saleService.findAllSalesByKeyword(HomeFrame.logInMember.getMemberId(),
+						keyword);
 //				List<SaleInfo> saleList = saleService.findAllSalesByKeyword(18, keyword);
 
 				// 패널에 상품 버튼 추가
@@ -228,15 +239,18 @@ public class ShopFrame extends HomeFrame {
 				searchFrame.add(label);
 
 				//// 주변지역 검색
-				// 현재 로그인된 
+				// 현재 로그인된
 				int loginMemberEmdCd = mapService.findOneByName(HomeFrame.logInMember.getAddress()).getEmdCd();
 				// 주변지역 코드 및 동명 출력
-				System.out.println("loginMemberEmdCd = " + loginMemberEmdCd + "(" + HomeFrame.logInMember.getAddress() + ")");
-				System.out.println("neighborEmdCd = " 
-								+ (loginMemberEmdCd-1) + "(" + mapService.findOneByCode(loginMemberEmdCd-1).getEmdNn() + "), "
-								+ (loginMemberEmdCd+1) + "(" + mapService.findOneByCode(loginMemberEmdCd+1).getEmdNn() + ") ");
-				
-				List<SaleInfo> saleList = saleService.findAllSalesByNeighbor(HomeFrame.logInMember.getMemberId(), loginMemberEmdCd-1, loginMemberEmdCd+1);
+				System.out.println(
+						"loginMemberEmdCd = " + loginMemberEmdCd + "(" + HomeFrame.logInMember.getAddress() + ")");
+				System.out.println("neighborEmdCd = " + (loginMemberEmdCd - 1) + "("
+						+ mapService.findOneByCode(loginMemberEmdCd - 1).getEmdNn() + "), " + (loginMemberEmdCd + 1)
+						+ "(" + mapService.findOneByCode(loginMemberEmdCd + 1).getEmdNn() + ") ");
+				System.out.println();
+
+				List<SaleInfo> saleList = saleService.findAllSalesByNeighbor(HomeFrame.logInMember.getMemberId(),
+						loginMemberEmdCd - 1, loginMemberEmdCd + 1);
 
 				// 패널에 상품 버튼 추가
 				for (SaleInfo saleInfo : saleList) {
@@ -272,7 +286,6 @@ public class ShopFrame extends HomeFrame {
 		return neighborSearchBtn;
 	}
 
-
 	// 상품 버튼 생성
 	private RoundedButton drawProductButton(String name, SaleInfo saleInfo, int numOfBtn) { //
 		RoundedButton saleBtn = new RoundedButton(name);
@@ -299,13 +312,18 @@ public class ShopFrame extends HomeFrame {
 				jf.setBounds(900, 120, 500, 700);
 				jf.setVisible(true);
 
-				/*
-				 * 추후 이미지 삽입
-				 */
-				JLabel label = new JLabel("image");
-				label.setBounds(220, 150, 150, 50);
-				label.setFont(new Font("Arial", Font.BOLD, 18));
-				jf.add(label);
+				// 제품 이미지 설정
+				Icon icon = new ImageIcon(saleInfo.getProductImage());
+				// 디폴트 이미지 설정 - 아이콘에 이미지를 담지 못하면 width 가 -1 이 나옴
+				if (icon.getIconWidth() == -1) {
+					icon = new ImageIcon(
+							"D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\productImg\\homeview.jpg");
+				}
+
+				JButton imgBtn = new JButton();
+				imgBtn.setIcon(icon);
+				imgBtn.setBounds(0, 0, 500, 300);
+				jf.add(imgBtn);
 
 				// 판매상품의 디테일정보 출력할 text area 생성
 				TextArea textArea = new TextArea();
@@ -397,8 +415,7 @@ public class ShopFrame extends HomeFrame {
 									JOptionPane.showMessageDialog(frame, "Please fill in the message.",
 											"Sending message failed !", JOptionPane.INFORMATION_MESSAGE);
 								}
-								
-								
+
 							}
 						});
 
@@ -521,7 +538,6 @@ public class ShopFrame extends HomeFrame {
 		return saleBtn;
 	}
 
-	
 	// 판매등록 버튼
 	private RoundedButton postSaleButton() {
 		RoundedButton saleRegBtn = new RoundedButton("REGISTER");
@@ -550,8 +566,8 @@ public class ShopFrame extends HomeFrame {
 				panel.add(lblNewLabe2);
 
 				int yGap = 49;
-				int labelStartY = 310;
-				int textStartY = 337;
+				int labelStartY = 260;
+				int textStartY = 287;
 				int lableStartX = 30;
 				int textStartX = 180;
 
@@ -588,14 +604,33 @@ public class ShopFrame extends HomeFrame {
 				panel.add(textCreateQuantity);
 				textCreateQuantity.setColumns(10);
 
-				// 상품 설명 입력 - text area
-				JLabel lblNewLabel2_4 = new JLabel("DISCRIPTION");
-				lblNewLabel2_4.setBounds(lableStartX, labelStartY + 3 * yGap, 120, 80);
+				// 이미지 입력
+				JLabel lblNewLabel2_4 = new JLabel("IMAGE");
+				lblNewLabel2_4.setBounds(lableStartX, labelStartY + 3 * yGap, 100, 80);
 				lblNewLabel2_4.setFont(new Font("굴림", Font.BOLD, 18));
 				panel.add(lblNewLabel2_4);
 
+				JTextField textCreateImage = new JTextField();
+				textCreateImage.setBounds(textStartX, textStartY + 3 * yGap, 231, 25);
+				panel.add(textCreateImage);
+				textCreateImage.setColumns(10);
+
+				textCreateName.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						textCreateImage.setText(
+								"D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\productImg\\"
+										+ textCreateName.getText() + ".jpg");
+					}
+				});
+
+				// 상품 설명 입력 - text area
+				JLabel lblNewLabel2_5 = new JLabel("DISCRIPTION");
+				lblNewLabel2_5.setBounds(lableStartX, labelStartY + 4 * yGap, 120, 80);
+				lblNewLabel2_5.setFont(new Font("굴림", Font.BOLD, 18));
+				panel.add(lblNewLabel2_5);
+
 				JTextArea textCreateDiscription = new JTextArea();
-				textCreateDiscription.setBounds(textStartX, textStartY + 3 * yGap, 231, 100);
+				textCreateDiscription.setBounds(textStartX, textStartY + 4 * yGap, 231, 100);
 				textCreateDiscription.setLineWrap(true); // 자동 줄바꿈
 				panel.add(textCreateDiscription);
 				textCreateDiscription.setColumns(10);
@@ -632,7 +667,11 @@ public class ShopFrame extends HomeFrame {
 							product.setName(textCreateName.getText());
 							product.setPrice(Integer.parseInt(textCreatePrice.getText()));
 							product.setQuantity(Integer.parseInt(textCreateQuantity.getText()));
+							product.setImage(textCreateImage.getText());
 							product.setDescription(textCreateDiscription.getText());
+							/*
+							 * 이미지 디비에 넣는 작업 필요
+							 */
 
 							JOptionPane.showMessageDialog(frame, "Product resistration successfully",
 									"Congratulations !", JOptionPane.INFORMATION_MESSAGE);
@@ -662,8 +701,21 @@ public class ShopFrame extends HomeFrame {
 		return saleRegBtn;
 	}
 
-	
-	
+	// 패널에 그림을 올려주는 클래스
+	class ImagePanel extends JPanel {
+
+		private static final long serialVersionUID = 1L;
+		private Image img;
+
+		public ImagePanel(Image img) {
+			this.img = img;
+		}
+
+		public void paintComponent(Graphics g) {
+			g.drawImage(img, 0, 0, 1000, 1000, null);
+		}
+	}
+
 //	public static void main(String[] args) {
 //		new ShopFrame();
 //	}

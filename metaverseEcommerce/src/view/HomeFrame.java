@@ -32,13 +32,13 @@ public class HomeFrame extends JFrame {
 	 */
 	protected JFrame frame;
 	// 이미지 SRC - 집
-	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\homeview.jpg";
+//	private String mainImgSrc = "C:\\Users\\Wana\\dev\\workSpace\\eclipse-workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\homeview.jpg";
 	// 이미지 SRC - 학교
-//	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\homeview.jpg";
+	private String mainImgSrc = "D:\\dev\\workspace\\eclipse_workspace\\carrotProject\\metaverseEcommerce\\src\\view\\img\\homeview.jpg";
 	// 컴포넌트 크기
 	protected int frameSize[] = { 1440, 960 };
 	protected int mainImgSize[] = { 600, 600 };
-	protected int sideButtonSize[] = {150, 60}; 
+	protected int sideButtonSize[] = { 150, 60 };
 
 	protected static final long serialVersionUID = 1L;
 	protected static Member logInMember;
@@ -49,8 +49,6 @@ public class HomeFrame extends JFrame {
 	protected static OrderService orderService = new OrderService(JdbcOrderRepository.getOrderRepository());
 	protected static MessageService messageService = new MessageService(JdbcMessageRepository.getMessageRepository());
 	protected static SuseongMapService mapService = new SuseongMapService(JdbcSuseongMapRepository.getMapRepository());
-	
-
 
 	/*
 	 * Constructor
@@ -69,29 +67,32 @@ public class HomeFrame extends JFrame {
 		frame.setSize(new Dimension(frameSize[0], frameSize[1]));
 		frame.setLayout(null); // layout : null --> setBounds 를 이용해 위치 직접 지정
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // window 창 닫을 시 프로그램 종료
-		
+
 		// 메인 패널
 		ImagePanel bgPanel = new ImagePanel(new ImageIcon(mainImgSrc).getImage());
 		bgPanel.setLayout(null);
 		bgPanel.setBounds(100, 0, 1000, 600);
 //		bgPanel.setBackground(Color.black);
-		
+
 		// 사이드바
 		JPanel sidebar = this.drawSidebar();
-		
-		
+
 		// 웰컴메세지
 		String welcomeMessage = "Welcome to Carrot World, " + logInMember.getIdentification() + " !";
 		JLabel label = new JLabel(welcomeMessage);
 		label.setBounds(500, 700, 1000, 100);
 		label.setFont(new Font("Arial Black", Font.BOLD, 30));
-		
-		frame.add(label);
-		
-		
+
+		// made by 라벨 추가
+		JLabel madeBy = new JLabel("@  made by wana");
+		madeBy.setBounds(1250, 800, 300, 200);
+		madeBy.setFont(new Font("Arial", Font.BOLD, 19));
+		madeBy.setForeground(Color.orange);
 
 		// 프레임에 메인패널 추가
+		frame.add(madeBy);
 //		bgPanel.add(label);
+		frame.add(label);
 		frame.add(sidebar);
 		frame.getContentPane().add(bgPanel);
 		frame.setVisible(true);
@@ -100,22 +101,22 @@ public class HomeFrame extends JFrame {
 
 	// 사이드바
 	protected JPanel drawSidebar() {
-		
+
 		JPanel sidePanel = new JPanel();
 		sidePanel.setLayout(null); // layout : null --> setBounds 를 이용해 위치 직접 지정
 		sidePanel.setBounds(0, 0, 150, 1440);
 		sidePanel.setBackground(Color.orange);
-				
+
 		RoundedButton btn1 = this.drawButton("HOME", 0, 0);
 		RoundedButton btn2 = this.drawButton("SHOP", 0, sideButtonSize[1]);
-		RoundedButton btn3 = this.drawButton("MY PAGE", 0, sideButtonSize[1]*2);
+		RoundedButton btn3 = this.drawButton("MY PAGE", 0, sideButtonSize[1] * 2);
 		RoundedButton btn4 = this.drawButton("LOGOUT", 0, 860);
-		
+
 		sidePanel.add(btn1);
 		sidePanel.add(btn2);
 		sidePanel.add(btn3);
 		sidePanel.add(btn4);
-		
+
 		return sidePanel;
 	}
 
@@ -133,22 +134,22 @@ public class HomeFrame extends JFrame {
 		// REGISTER 버튼 클릭시 동작
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				if (category.equals("HOME")) {
 					new HomeFrame();
 					frame.dispose();
 				}
-				
+
 				if (category.equals("SHOP")) {
 					new ShopFrame();
 					frame.dispose();
 				}
-				
+
 				if (category.equals("MY PAGE")) {
 					new MyPage();
 					frame.dispose();
 				}
-				
+
 				if (category.equals("LOGOUT")) {
 					logInMember = null;
 					new LoginFrame();
@@ -160,7 +161,7 @@ public class HomeFrame extends JFrame {
 
 		return btn;
 	}
-	
+
 //	// 수정 필요
 //	protected JLabel drawWelcomMessageLabel() {
 ////		String welcomMessage = "Welcome to Carrot World!, " + logInMember.getIdentification();
@@ -174,9 +175,7 @@ public class HomeFrame extends JFrame {
 //		
 //		return label;
 //	}
-	
-		
-	
+
 	class ImagePanel extends JPanel {
 		// 워닝 방지 코드
 		private static final long serialVersionUID = 1L;
@@ -191,9 +190,7 @@ public class HomeFrame extends JFrame {
 					mainImgSize[0], mainImgSize[1], null);
 		}
 	}
-	
-	
-	
+
 //	public static void main(String[] args) {
 //		new WelcomeFrame();
 //	}

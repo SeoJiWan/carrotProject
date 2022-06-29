@@ -16,8 +16,8 @@ public class SaleInfo {
 	private String address;
 	private int product_id;
 	private int emdCd;
+	private String productImage;
 	
-
 	
 	/*
 	 * Method
@@ -87,6 +87,12 @@ public class SaleInfo {
 	}
 	public void setEmdCd(int emdCd) {
 		this.emdCd = emdCd;
+	}
+	public String getProductImage() {
+		return productImage;
+	}
+	public void setProductImage(String productImage) {
+		this.productImage = productImage;
 	}
 	@Override
 	public String toString() {
