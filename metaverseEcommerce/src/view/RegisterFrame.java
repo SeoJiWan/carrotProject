@@ -84,7 +84,7 @@ public class RegisterFrame extends JFrame {
 
 		// 뒤로가기 버튼
 		RoundedButton backBtn = new RoundedButton("BACK");
-		backBtn.setBounds(16, 20, 70, 40);
+		backBtn.setBounds(16, 20, 70, 40); // x좌표, y좌표, width, height
 		backBtn.setBackground(Color.pink);
 		frame.add(backBtn);
 
@@ -156,7 +156,7 @@ public class RegisterFrame extends JFrame {
 		bgPanel.add(address);
 	}
 
-	// REGISTER 버튼 이미지로
+	// REGISTER 버튼
 	private RoundedButton drawRegisterButton() {
 
 		RoundedButton btn = new RoundedButton("REGISTER");
@@ -165,9 +165,6 @@ public class RegisterFrame extends JFrame {
 		btn.setFont(new Font("Arial Black", Font.BOLD, 20));
 		btn.setForeground(Color.BLACK);
 		btn.setBackground(Color.ORANGE);
-		// 버튼 이미지 테두리 없애기
-		btn.setBorderPainted(false);
-		btn.setFocusPainted(false);
 
 		// REGISTER 버튼 클릭시 동작
 		btn.addActionListener(new ActionListener() {
@@ -180,24 +177,21 @@ public class RegisterFrame extends JFrame {
 				member.setPhoneNumber(phonNum.getText());
 				member.setAddress(address.getText());
 
-//				System.out.println(id.getText().length());
-//				System.out.println(pwd.getPassword().length);
-//				System.out.println(phonNum.getText().length());
-//				System.out.println(address.getText().length());
-
-				// 회원가입 유저정보 미기입 예외처리
+				// 중복체크 여부 확인
 				if (isIdDupl != 1) {
+					// 회원가입 유저정보 미기입 예외처리
 					if (id.getText().length() != 0 && pwd.getPassword().length != 0 && phonNum.getText().length() != 0
 							&& address.getText().length() != 0) {
+						// 회원가입 - db에 멤버 저장 (멤버아이디를 리턴)
 						int memberId = memberService.joinMember(member);
 						if (memberId != -1) {
-//						System.out.println("윈도우 - 회원가입성공");
 							// 알림 팝업창
 							JOptionPane.showMessageDialog(frame, "Registration Successfully.", "Congratulations !",
 									JOptionPane.INFORMATION_MESSAGE);
 							new LoginFrame();
 							frame.dispose();
 						}
+					// 입력란 한 개라도 미기입
 					} else {
 						// 알림 팝업창
 						JOptionPane.showMessageDialog(frame, "Please fill your Info.", "Registration Failed.",
@@ -233,16 +227,15 @@ public class RegisterFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				String getId = id.getText();
-				// 중복확인 예외처리
+				// 중복체크 - 해당 아이디가 이미 존재하면 1 반환, 존재하지 않으면 0반환
 				isIdDupl = memberService.checkIdDupl(getId);
+				// 중복
 				if (isIdDupl == 1) {
-//					System.out.println("윈도우 - 이미 존재하는 아이디입니다.");
 					JOptionPane.showMessageDialog(frame, "This ID already exists.", "Duplicate check failed !",
 							JOptionPane.INFORMATION_MESSAGE);
 					id.setText("");
-
+				// 중복X
 				} else {
-//					System.out.println("윈도우 - 사용가능한 아이디입니다.");
 					JOptionPane.showMessageDialog(frame, "This ID is available.", "Congratulations !",
 							JOptionPane.INFORMATION_MESSAGE);
 				}

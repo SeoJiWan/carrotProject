@@ -88,7 +88,6 @@ public class MyPage extends HomeFrame {
 				jf1.setBounds(200, 150, 500, 700);
 				jf1.setVisible(true);
 
-//				JLabel label1 = new JLabel("' wana1997 '  message box.");
 				JLabel label1 = new JLabel("' " + HomeFrame.logInMember.getIdentification() + " '  message box.");
 				label1.setBounds(20, 10, 500, 50);
 				label1.setFont(new Font("Arial", Font.BOLD, 18));
@@ -103,9 +102,6 @@ public class MyPage extends HomeFrame {
 				// 메시지 DB에서 받기
 				List<MessageInfo> messages = messageService
 						.findAllMessageByReceiver(HomeFrame.logInMember.getMemberId());
-//				List<MessageInfo> messages = messageService.findAllMessageByReceiver(17);
-//				System.out.println("messages.size() = " + messages.size());
-//				messages.forEach(System.out::println);
 
 				//// DB에서 받은 메세지를 라벨에 추가
 				// 메세지 카테고리
@@ -159,25 +155,21 @@ public class MyPage extends HomeFrame {
 							JLabel label1 = new JLabel("SENDER  :  " + msi.getSenderidentification());
 							label1.setBounds(20, 30, 150, 20);
 							label1.setOpaque(true);
-//							label1.setBackground(Color.red);
 							jf2.add(label1);
 
 							JLabel label2 = new JLabel("PRODUCT  :  " + msi.getProductName());
 							label2.setBounds(20, 50, 150, 20);
 							label2.setOpaque(true);
-//							label2.setBackground(Color.yellow);
 							jf2.add(label2);
 
 							JLabel label3 = new JLabel("SEND DATE  :  " + (msi.getSendDate()).toString());
 							label3.setBounds(20, 70, 150, 20);
 							label3.setOpaque(true);
-//							label3.setBackground(Color.pink);
 							jf2.add(label3);
 
 							JLabel label4 = new JLabel("CONTENT  :  ");
 							label4.setBounds(20, 90, 150, 20);
 							label4.setOpaque(true);
-//							label4.setBackground(Color.green);
 							jf2.add(label4);
 
 							// 메세지내용 출력할 text area 생성
@@ -226,24 +218,23 @@ public class MyPage extends HomeFrame {
 							replyBtn.setBackground(Color.pink);
 							jf2.add(replyBtn);
 
-							/*
-							 * 예외처리 필요 -> null값 등록 x
-							 */
-							// 답장 버튼 클릭시 DB에 message 저장
+							// 답장 버튼 클릭시 메세지창 팝업
 							replyBtn.addMouseListener(new MouseAdapter() {
 								public void mouseClicked(MouseEvent e) {
+									// 메세지창
 									JFrame jf3 = new JFrame("MESSAGE");
 									jf3.setLayout(null);
-//									jf.setBackground(Color.BLACK);
 									jf3.setBounds(700, 300, 500, 350);
 									jf3.setVisible(true);
 
+									// 메세지 창 라벨
 									String title = "Send a message to ' " + msi.getSenderidentification() + " '";
 									JLabel label = new JLabel(title);
 									label.setBounds(10, 10, 400, 50);
 									label.setFont(new Font("굴림", Font.BOLD, 16));
 									jf3.add(label);
 
+									// 메세지 입력 창
 									JTextArea textCreateMessage = new JTextArea();
 									textCreateMessage.setBounds(10, 70, 460, 225);
 									textCreateMessage.setLineWrap(true); // 자동 줄바꿈
@@ -278,15 +269,9 @@ public class MyPage extends HomeFrame {
 											message.setContent(textCreateMessage.getText());
 											message.setProductId(msi.getProductId());
 
-//											System.out.println(message.toString());
-//											messageService.writeMessage(message);
-//											System.out.println("윈도우 - 메세지 전송 선공");
-//											jf3.dispose();
-
 											// 빈 메세지 예외처리
 											if (textCreateMessage.getText().length() != 0) {
 												messageService.writeMessage(message);
-//												System.out.println("윈도우 - 메세지 전송 선공");
 												JOptionPane.showMessageDialog(frame, "Sending message successful !",
 														"Congratulations !", JOptionPane.INFORMATION_MESSAGE);
 												jf3.dispose();
@@ -350,11 +335,10 @@ public class MyPage extends HomeFrame {
 		// 거래내역 조회 버튼 클릭시 거래내역 창 팝업
 		trdBtn.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-
+				// 거래내역 창
 				JFrame jf1 = new JFrame("MY TRADE");
 				jf1.setLayout(null);
 				jf1.setBounds(200, 150, 1000, 700);
-//				jf1.getContentPane().setBackground(Color.white);
 				jf1.setVisible(true);
 
 				// 뒤로가기 버튼
@@ -385,10 +369,8 @@ public class MyPage extends HomeFrame {
 						JFrame jf2 = new JFrame("ORDER LIST");
 						jf2.setLayout(null);
 						jf2.setBounds(250, 260, 900, 550);
-//						jf1.getContentPane().setBackground(Color.white);
 						jf2.setVisible(true);
 
-//						JLabel label1 = new JLabel("' wana1997 '  order list.");
 						JLabel label1 = new JLabel(
 								"' " + HomeFrame.logInMember.getIdentification() + " '  order list.");
 						label1.setBounds(20, 10, 500, 50);
@@ -449,8 +431,6 @@ public class MyPage extends HomeFrame {
 
 						// DB에서 구매내역 조회
 						List<MyTrade> myOrders = orderService.findMyOrders(HomeFrame.logInMember.getMemberId());
-//						List<MyTrade> myOrders = orderService.findMyOrders(17);
-//						myOrders.forEach(System.out::println);
 
 						// 카테고리별로 구매내역 패널에 뿌리기
 						int posY = 5;
@@ -569,8 +549,6 @@ public class MyPage extends HomeFrame {
 
 						// DB에서 판매내역 조회
 						List<MyTrade> mySales = orderService.findMySales(HomeFrame.logInMember.getMemberId());
-//						List<MyTrade> mySales = orderService.findMySales(17);
-//						mySales.forEach(System.out::println);
 
 						// 카테고리별로 판매내역 패널에 뿌리기
 						int posY = 5;
@@ -685,14 +663,12 @@ public class MyPage extends HomeFrame {
 
 						// 구매왕 데이터 받아서 그래프 그리기
 						List<TopInfo> topBuyer = orderService.findTopBuyer();
-//						topBuyer.forEach(System.out::println);
 
 						int gapX = 843 / topBuyer.size();
 						int posX = 843 / (topBuyer.size() * 2);
 
 						for (TopInfo topInfo : topBuyer) {
 							// x좌표 - 유저이름
-//							System.out.println("posX = " + posX);
 							JLabel label = new JLabel(topInfo.getIdentification());
 							label.setBounds(posX, 370, 150, 50);
 							label.setFont(new Font("Arial", Font.BOLD, 13));
@@ -770,14 +746,12 @@ public class MyPage extends HomeFrame {
 
 						// 판매왕 데이터 받아서 그래프 그리기
 						List<TopInfo> topSeller = orderService.findTopSeller();
-//						topSeller.forEach(System.out::println);
 
 						int gapX = 843 / topSeller.size();
 						int posX = 843 / (topSeller.size() * 2);
 
 						for (TopInfo topInfo : topSeller) {
 							// x좌표 - 유저이름
-//							System.out.println("posX = " + posX);
 							JLabel label = new JLabel(topInfo.getIdentification());
 							label.setBounds(posX, 370, 150, 50);
 							label.setFont(new Font("Arial", Font.BOLD, 13));
@@ -821,9 +795,4 @@ public class MyPage extends HomeFrame {
 
 		return topBtn;
 	}
-
-//	public static void main(String[] args) {
-//		new MyPage();
-//	}
-
 }

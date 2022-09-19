@@ -37,7 +37,6 @@ public class OrderService {
 	// 주문 생성
 	public void createOrder(Order order) {
 		orderRepository.insert(order);
-		
 		// 주문 생성 시점 --> 해당 상품의 수량 업데이트 (주문후 수량 = 상품수량 - 주문수량)
 		// order -> sale -> product 으로 엔티티가 접근
 		Sale sale = saleRepository.selectOne(order.getSaleId());
@@ -46,8 +45,6 @@ public class OrderService {
 		product.removeQuantity(order.getOrderQuantity(), product);
 		// 주문 후 수량으로 product tbl 업데이트
 		productRepository.update(product.getProductId(), product.getQuantity());
-		
-		
 	}
 	
 	// 주문 수정

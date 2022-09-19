@@ -101,7 +101,7 @@ public class LoginFrame extends JFrame{ // 탑레벨 컨테이너, 윈도우 창
 		bgPanel.add(pwd);
 	}
 
-	// LOGIN 버튼 이미지로
+	// LOGIN 버튼
 	private RoundedButton drawLogInButton() {
 		RoundedButton btn = new RoundedButton("LOG IN");
 		btn.setLocation(frameSize[0] / 2 - loginImgsize[0] / 2, 650);
@@ -113,18 +113,21 @@ public class LoginFrame extends JFrame{ // 탑레벨 컨테이너, 윈도우 창
 		// LOGIN 버튼 클릭시 동작
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// 로그인시도 -> 해당 id 와 pwd 값이 있다면 멤버 객체 반환하여 HomeFrame 로그인 세션에 등록
 				HomeFrame.logInMember = memberService.logIn(id.getText(), Arrays.toString(pwd.getPassword()));
-//				System.out.println("현재 로그인 멤버 : " + HomeFrame.logInMember);
+				// 로그인 실패
 				if (HomeFrame.logInMember == null) {
 					JOptionPane.showMessageDialog(frame, "Please check ID and PWD.", "Login Failed.", JOptionPane.INFORMATION_MESSAGE);
 					// 입력 창 초기화
 					id.setText("");
 					pwd.setText("");
 				}
+				// 로그인 성공
 				else {
 					JOptionPane.showMessageDialog(frame, "Login Successfully.", "Congratulations!", JOptionPane.INFORMATION_MESSAGE);
-					
+					// 홈 프레임 띄우기
 					new HomeFrame();
+					// 현재 띄워진 프레임 (로그인 프레임) 닫기
 					frame.dispose();
 				}
 				
@@ -139,6 +142,7 @@ public class LoginFrame extends JFrame{ // 탑레벨 컨테이너, 윈도우 창
 		JButton btn = new JButton("Sign Up");
 		btn.setBounds(730, 720, 150, 50);
 		btn.setFont(new Font("Arial Black", Font.BOLD, 22));
+		// 버튼 테두리 제거
 		btn.setBorderPainted(false);
 		btn.setFocusPainted(false);
 		btn.setForeground(Color.BLACK);
@@ -147,7 +151,9 @@ public class LoginFrame extends JFrame{ // 탑레벨 컨테이너, 윈도우 창
 		// sign up 버튼 클릭시 동작
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// 회원가입 프레임 띄우기
 				new RegisterFrame();
+				// 현재 띄워진 프레임 (로그인 프레임) 닫기
 				frame.dispose();
 			}
 		});

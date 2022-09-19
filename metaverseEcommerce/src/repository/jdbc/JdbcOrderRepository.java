@@ -192,7 +192,7 @@ public class JdbcOrderRepository extends DAO implements OrderRepository {
 		return list;
 	}
 
-	// 내 판매내역
+	// 내 판매내역 - 주문이 이루어져야 판매가 등록이 되어서 주문 리포지토리에 있는 것임
 	@Override
 	public List<MyTrade> selectMySales(int sellerId) {
 		List<MyTrade> list = new ArrayList<MyTrade>();

@@ -37,8 +37,9 @@ public class HomeFrame extends JFrame {
 	protected int frameSize[] = { 1440, 960 };
 	protected int mainImgSize[] = { 600, 600 };
 	protected int sideButtonSize[] = { 150, 60 };
-
+	// 워닝 방지 코드
 	protected static final long serialVersionUID = 1L;
+	// 로그인 멤버 필드
 	protected static Member logInMember;
 	// 서비스 로직
 	protected static MemberService memberService = new MemberService(JdbcMemberRepsitory.getMemberRepository());
@@ -89,7 +90,6 @@ public class HomeFrame extends JFrame {
 
 		// 프레임에 메인패널 추가
 		frame.add(madeBy);
-//		bgPanel.add(label);
 		frame.add(label);
 		frame.add(sidebar);
 		frame.getContentPane().add(bgPanel);
@@ -105,6 +105,7 @@ public class HomeFrame extends JFrame {
 		sidePanel.setBounds(0, 0, 150, 1440);
 		sidePanel.setBackground(Color.orange);
 
+		// 카테고리 이동 버튼 생성
 		RoundedButton btn1 = this.drawButton("HOME", 0, 0);
 		RoundedButton btn2 = this.drawButton("SHOP", 0, sideButtonSize[1]);
 		RoundedButton btn3 = this.drawButton("MY PAGE", 0, sideButtonSize[1] * 2);
@@ -118,6 +119,7 @@ public class HomeFrame extends JFrame {
 		return sidePanel;
 	}
 
+	// 카테고리 버튼 메서드
 	protected RoundedButton drawButton(String category, int x, int y) {
 		RoundedButton btn = new RoundedButton(category);
 		btn.setSize(sideButtonSize[0], sideButtonSize[1]);
@@ -129,7 +131,7 @@ public class HomeFrame extends JFrame {
 		btn.setBorderPainted(false);
 		btn.setFocusPainted(false);
 
-		// REGISTER 버튼 클릭시 동작
+		// 각 카테고리 버튼 클릭시 동작
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -153,27 +155,12 @@ public class HomeFrame extends JFrame {
 					new LoginFrame();
 					frame.dispose();
 				}
-
 			}
 		});
-
 		return btn;
 	}
 
-//	// 수정 필요
-//	protected JLabel drawWelcomMessageLabel() {
-////		String welcomMessage = "Welcome to Carrot World!, " + logInMember.getIdentification();
-//		String welcomMessage = "Welcome to Carrot World!, ";
-//		
-//		JLabel label = new JLabel();
-//		label.setText(welcomMessage);
-//		
-//		label.setLocation(frameSize[0] / 2, 1000);
-//		
-//		
-//		return label;
-//	}
-
+	// 이미지 패널
 	class ImagePanel extends JPanel {
 		// 워닝 방지 코드
 		private static final long serialVersionUID = 1L;
@@ -188,9 +175,4 @@ public class HomeFrame extends JFrame {
 					mainImgSize[0], mainImgSize[1], null);
 		}
 	}
-
-//	public static void main(String[] args) {
-//		new WelcomeFrame();
-//	}
-
 }

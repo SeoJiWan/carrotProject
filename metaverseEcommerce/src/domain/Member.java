@@ -10,9 +10,7 @@ public class Member {
 	private String password;
 	private String phoneNumber;
 	private String address;
-//	private int role; // 0:관리자, 1:사용자
 
-	
 	/*
 	 * Method
 	 */

@@ -75,8 +75,4 @@ public class MessageInfo {
 				+ ", sendDate=" + sendDate 
 				+ ", productName=" + productName + "]";
 	}
-	
-
-	
-
 }

@@ -118,6 +118,7 @@ public class JdbcSaleRepository extends DAO implements SaleRepository{
 		return sale;
 	}
 
+	// 상품 전체 검색
 	@Override
 	public List<SaleInfo> selectAll(int loginMemberId) {
 		List<SaleInfo> list = new ArrayList<SaleInfo>();
@@ -161,6 +162,7 @@ public class JdbcSaleRepository extends DAO implements SaleRepository{
 		return list;
 	}
 	
+	// 상품 키워드로 검색
 	@Override
 	public List<SaleInfo> selectAllByKeyword(int loginMemberId, String keyword) {
 		List<SaleInfo> list = new ArrayList<SaleInfo>();
@@ -208,6 +210,7 @@ public class JdbcSaleRepository extends DAO implements SaleRepository{
 		return list;
 	}
 	
+	// 상품 주변지역으로 검색
 	@Override
 	public List<SaleInfo> selectAllByNeighbor(int loginMemberId, int prevEmdCd, int nextEmdCd) {
 		List<SaleInfo> list = new ArrayList<SaleInfo>();

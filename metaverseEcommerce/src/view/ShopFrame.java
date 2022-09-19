@@ -43,7 +43,7 @@ public class ShopFrame extends HomeFrame {
 	 * Constructor
 	 */
 	public ShopFrame() {
-
+		// 부모인 HomeFrame 생성자 호출로 initialize 메서드 자동 호출
 	}
 
 	/*
@@ -114,13 +114,12 @@ public class ShopFrame extends HomeFrame {
 				label.setForeground(Color.orange);
 				searchFrame.add(label);
 
-				// 전체 검색
+				// 판매중인 상품 전체 검색
 				List<SaleInfo> saleList = saleService.findAllSales(HomeFrame.logInMember.getMemberId());
 
 				// 패널에 상품 버튼 추가
 				for (SaleInfo saleInfo : saleList) {
-					RoundedButton drawSaleButton = drawProductButton(saleInfo.getProductName(), saleInfo,
-							saleList.size());
+					RoundedButton drawSaleButton = drawProductButton(saleInfo.getProductName(), saleInfo, saleList.size());
 					searchFrame.add(drawSaleButton);
 				}
 
@@ -176,13 +175,12 @@ public class ShopFrame extends HomeFrame {
 				label.setForeground(Color.orange);
 				searchFrame.add(label);
 
-				// 키워드로 검색
+				// 판매중인 상품 키워드로 검색
 				List<SaleInfo> saleList = saleService.findAllSalesByKeyword(HomeFrame.logInMember.getMemberId(), keyword);
 
 				// 패널에 상품 버튼 추가
 				for (SaleInfo saleInfo : saleList) {
-					RoundedButton drawSaleButton = drawProductButton(saleInfo.getProductName(), saleInfo,
-							saleList.size());
+					RoundedButton drawSaleButton = drawProductButton(saleInfo.getProductName(), saleInfo, saleList.size());
 					searchFrame.add(drawSaleButton);
 				}
 
@@ -236,7 +234,7 @@ public class ShopFrame extends HomeFrame {
 				searchFrame.add(label);
 
 				//// 주변지역 검색
-				// 현재 로그인된
+				// 현재 로그인된 유저의 지역 검색
 				int loginMemberEmdCd = mapService.findOneByName(HomeFrame.logInMember.getAddress()).getEmdCd();
 				// 주변지역 코드 및 동명 출력
 				System.out.println(
@@ -246,13 +244,12 @@ public class ShopFrame extends HomeFrame {
 						+ "(" + mapService.findOneByCode(loginMemberEmdCd + 1).getEmdNn() + ") ");
 				System.out.println();
 
-				List<SaleInfo> saleList = saleService.findAllSalesByNeighbor(HomeFrame.logInMember.getMemberId(),
-						loginMemberEmdCd - 1, loginMemberEmdCd + 1);
+				// 판매중인 상품 주변 지역으로 검색
+				List<SaleInfo> saleList = saleService.findAllSalesByNeighbor(HomeFrame.logInMember.getMemberId(), loginMemberEmdCd - 1, loginMemberEmdCd + 1);
 
 				// 패널에 상품 버튼 추가
 				for (SaleInfo saleInfo : saleList) {
-					RoundedButton drawSaleButton = drawProductButton(saleInfo.getProductName(), saleInfo,
-							saleList.size());
+					RoundedButton drawSaleButton = drawProductButton(saleInfo.getProductName(), saleInfo, saleList.size());
 					searchFrame.add(drawSaleButton);
 				}
 
@@ -291,6 +288,7 @@ public class ShopFrame extends HomeFrame {
 		saleBtn.setSize(100, 100);
 
 		saleBtn.setLocation(saleBtn_X, saleBtn_Y);
+		// 상품 버튼 그리드 형식으로 출력
 		saleBtn_X += 130;
 		if (saleBtn_X >= 650) {
 			saleBtn_X = 15;
@@ -305,11 +303,10 @@ public class ShopFrame extends HomeFrame {
 				// 디테일창
 				JFrame jf = new JFrame("Details");
 				jf.setLayout(null);
-//				jf.setBackground(Color.BLACK);
 				jf.setBounds(900, 120, 500, 700);
 				jf.setVisible(true);
 
-				// 제품 이미지 설정
+				// 상품 이미지 출력
 				Icon icon = new ImageIcon(ShopFrame.class.getResource("").getPath() + "img/productImg/" + saleInfo.getProductImage());
 				// 디폴트 이미지 설정 - 아이콘에 이미지를 담지 못하면 width 가 -1 이 나옴
 				if (icon.getIconWidth() == -1) {
@@ -516,7 +513,6 @@ public class ShopFrame extends HomeFrame {
 									JOptionPane.showMessageDialog(frame, "Order successfully.", "Congratulation !",
 											JOptionPane.INFORMATION_MESSAGE);
 									orderService.createOrder(order);
-//									System.out.println(order.toString());
 
 									// 주문 완료 후 구매, 주문 창 다 닫기
 									jf2.dispose();
@@ -553,14 +549,14 @@ public class ShopFrame extends HomeFrame {
 
 				JPanel panel = new JPanel();
 				panel.setBounds(0, 0, 500, 700);
-//				panel.setBackground(Color.blue);
 				panel.setLayout(null);
 
 				JLabel lblNewLabe2 = new JLabel("# Register your product #");
 				lblNewLabe2.setBounds(120, 20, 300, 35);
 				lblNewLabe2.setFont(new Font("휴먼둥근헤드라인", Font.BOLD, 20));
 				panel.add(lblNewLabe2);
-
+				
+				// 입력 란 시작 위치 및 간격
 				int yGap = 49;
 				int labelStartY = 260;
 				int textStartY = 287;
@@ -610,10 +606,10 @@ public class ShopFrame extends HomeFrame {
 				textCreateImage.setBounds(textStartX, textStartY + 3 * yGap, 231, 25);
 				panel.add(textCreateImage);
 				textCreateImage.setColumns(10);
-
+				
+				// 상품 이름에서 이름 입력 후 엔터 치면 이미지 이름 자동 완성
 				textCreateName.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-//						
+					public void actionPerformed(ActionEvent e) {					
 						textCreateImage.setText(textCreateName.getText() + ".jpg");
 					}
 				});
@@ -664,25 +660,26 @@ public class ShopFrame extends HomeFrame {
 							product.setQuantity(Integer.parseInt(textCreateQuantity.getText()));
 							product.setImage(textCreateImage.getText());
 							product.setDescription(textCreateDiscription.getText());
-							/*
-							 * 이미지 디비에 넣는 작업 필요
-							 */
 
 							JOptionPane.showMessageDialog(frame, "Product resistration successfully",
 									"Congratulations !", JOptionPane.INFORMATION_MESSAGE);
 							productService.saveProduct(product);
-
+							
+							// 상품 고유 번호(시퀀스) 받아서 Sales 테이블에 저장 
 							int productId = productService.findOneProductById(textCreateName.getText()).getProductId();
 							// 판매 등록
 							Sale sale = new Sale();
 							sale.setSellerId(HomeFrame.logInMember.getMemberId());
 							sale.setProductId(productId);
 							sale.setSaleStatus("판매중");
-
+							
+							// 판매 내역 DB에 저장
 							saleService.createSale(sale);
 
 							jf.dispose();
 							searchFrame.dispose();
+							
+						// 상품 정보 한 개라도 미기입 
 						} else {
 							JOptionPane.showMessageDialog(frame, "Please fill product Info.",
 									"Product resistration failed !", JOptionPane.INFORMATION_MESSAGE);

@@ -72,9 +72,4 @@ public class MyTrade {
 				+ ", identification=" + identification + ", productName=" + productName + ", orderQuatity="
 				+ orderQuatity + ", orderPrice=" + orderPrice + "]";
 	}
-	
-
-
-	
-
 }
